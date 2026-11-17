@@ -34,6 +34,5 @@ Open `workflow.Rmd` and run each command in order. Mothur commands run immediate
 
 Each new run and each Knit creates a fresh folder under `runs/`; ensure you have enough disk space. The bundled pages are `workflow-results-side-by-side.html` (every command with its output and figures) and `workflow-code-side-by-side.html` (the same commands with explanations and a Copy button). Their mothur outputs come from the completed test run; their R outputs and figures were produced from the mothur tables in `results/mothur` and are saved in `report_outputs/by_study`. Knit the current notebook to generate a matching report from your own run. To rerun only the R analysis from the finished mothur tables, run `source("scripts/downstream_by_study.R")`.
 
-All packages are loaded in one chunk at the start of the R part. Figure colours and theme follow Marzouk et al., npj Parkinson's Disease 2025 (https://www.nature.com/articles/s41531-025-00950-z).
 
 Each study has only three samples per condition. The studies differ in read-filter identity threshold, so pooled and study-specific results should be interpreted with care. See [FILTERING.md](FILTERING.md) for how the supplied reads were selected.

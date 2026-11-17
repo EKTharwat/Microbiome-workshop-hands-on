@@ -1,0 +1,2654 @@
+Mac version
+
+Using ReadLine,Boost,HDF5,GSL
+mothur v.1.48.6
+Last updated: 7/29/26
+by
+Patrick D. Schloss
+
+Department of Microbiology & Immunology
+
+University of Michigan
+http://www.mothur.org
+
+When using, please cite:
+Schloss, P.D., et al., Introducing mothur: Open-source, platform-independent, community-supported software for describing and comparing microbial communities. Appl Environ Microbiol, 2009. 75(23):7537-41.
+
+Distributed under the GNU General Public License
+
+Type 'help()' for information on the commands that are available
+
+For questions and analysis support, please visit our forum at https://forum.mothur.org
+
+Type 'quit()' to exit program
+
+[NOTE]: Setting random seed to 19760620.
+
+Batch Mode
+
+
+
+mothur > set.current(processors=4)
+
+Using 4 processors.
+
+Current files saved by mothur:
+processors=4
+
+Output File Names: 
+current_files.summary
+
+
+mothur > set.seed(seed=20261114)
+Setting random seed to 20261114.
+
+Setting random seed to 20261114.
+
+
+mothur > make.contigs(file=reads.files)
+
+Using 4 processors.
+
+>>>>>	Processing file pair filtered_fastq/S08_R1.fastq.gz - filtered_fastq/S08_R2.fastq.gz (files 8 of 30)	<<<<<
+
+>>>>>	Processing file pair filtered_fastq/S15_R1.fastq.gz - filtered_fastq/S15_R2.fastq.gz (files 15 of 30)	<<<<<
+
+>>>>>	Processing file pair filtered_fastq/S01_R1.fastq.gz - filtered_fastq/S01_R2.fastq.gz (files 1 of 30)	<<<<<
+
+>>>>>	Processing file pair filtered_fastq/S23_R1.fastq.gz - filtered_fastq/S23_R2.fastq.gz (files 23 of 30)	<<<<<
+Making contigs...
+Making contigs...
+Making contigs...
+Making contigs...
+1000
+1000
+1000
+1000
+1164
+Done.
+
+It took 1 secs to assemble 1164 reads.
+
+
+>>>>>	Processing file pair filtered_fastq/S02_R1.fastq.gz - filtered_fastq/S02_R2.fastq.gz (files 2 of 30)	<<<<<
+Making contigs...
+338
+Done.
+
+It took 0 secs to assemble 338 reads.
+
+
+>>>>>	Processing file pair filtered_fastq/S03_R1.fastq.gz - filtered_fastq/S03_R2.fastq.gz (files 3 of 30)	<<<<<
+Making contigs...
+2000
+2000
+2000
+2130
+Done.
+
+It took 1 secs to assemble 2130 reads.
+
+
+>>>>>	Processing file pair filtered_fastq/S09_R1.fastq.gz - filtered_fastq/S09_R2.fastq.gz (files 9 of 30)	<<<<<
+Making contigs...
+2835
+Done.
+
+It took 2 secs to assemble 2835 reads.
+
+
+>>>>>	Processing file pair filtered_fastq/S16_R1.fastq.gz - filtered_fastq/S16_R2.fastq.gz (files 16 of 30)	<<<<<
+Making contigs...
+1000
+3000
+1000
+1000
+4000
+2000
+2000
+2142
+Done.
+
+It took 2 secs to assemble 2142 reads.
+
+
+>>>>>	Processing file pair filtered_fastq/S10_R1.fastq.gz - filtered_fastq/S10_R2.fastq.gz (files 10 of 30)	<<<<<
+Making contigs...
+2542
+Done.
+
+It took 2 secs to assemble 2542 reads.
+
+
+>>>>>	Processing file pair filtered_fastq/S04_R1.fastq.gz - filtered_fastq/S04_R2.fastq.gz (files 4 of 30)	<<<<<
+Making contigs...
+2000
+5000
+1000
+715
+Done.
+
+It took 1 secs to assemble 715 reads.
+
+
+>>>>>	Processing file pair filtered_fastq/S05_R1.fastq.gz - filtered_fastq/S05_R2.fastq.gz (files 5 of 30)	<<<<<
+Making contigs...
+3000
+6000
+2000
+3917
+Done.
+
+It took 3 secs to assemble 3917 reads.
+
+
+>>>>>	Processing file pair filtered_fastq/S17_R1.fastq.gz - filtered_fastq/S17_R2.fastq.gz (files 17 of 30)	<<<<<
+Making contigs...
+1000
+140
+Done.
+
+It took 0 secs to assemble 140 reads.
+
+
+>>>>>	Processing file pair filtered_fastq/S18_R1.fastq.gz - filtered_fastq/S18_R2.fastq.gz (files 18 of 30)	<<<<<
+Making contigs...
+7000
+3000
+1604
+Done.
+
+It took 1 secs to assemble 1604 reads.
+
+
+>>>>>	Processing file pair filtered_fastq/S06_R1.fastq.gz - filtered_fastq/S06_R2.fastq.gz (files 6 of 30)	<<<<<
+Making contigs...
+8000
+1000
+4000
+1000
+9000
+5000
+2000
+10000
+2000
+6000
+2170
+Done.
+
+It took 3 secs to assemble 2170 reads.
+
+
+>>>>>	Processing file pair filtered_fastq/S07_R1.fastq.gz - filtered_fastq/S07_R2.fastq.gz (files 7 of 30)	<<<<<
+Making contigs...
+3000
+11000
+756
+Done.
+
+It took 0 secs to assemble 756 reads.
+
+7000
+12000
+3986
+Done.
+
+It took 4 secs to assemble 3986 reads.
+
+
+>>>>>	Processing file pair filtered_fastq/S19_R1.fastq.gz - filtered_fastq/S19_R2.fastq.gz (files 19 of 30)	<<<<<
+Making contigs...
+8000
+13000
+9000
+1000
+14000
+10000
+2000
+15000
+11000
+2613
+Done.
+
+It took 2 secs to assemble 2613 reads.
+
+
+>>>>>	Processing file pair filtered_fastq/S20_R1.fastq.gz - filtered_fastq/S20_R2.fastq.gz (files 20 of 30)	<<<<<
+Making contigs...
+16000
+16138
+Done.
+
+It took 11 secs to assemble 16138 reads.
+
+
+>>>>>	Processing file pair filtered_fastq/S24_R1.fastq.gz - filtered_fastq/S24_R2.fastq.gz (files 24 of 30)	<<<<<
+Making contigs...
+12000
+604
+Done.
+
+It took 1 secs to assemble 604 reads.
+
+
+>>>>>	Processing file pair filtered_fastq/S25_R1.fastq.gz - filtered_fastq/S25_R2.fastq.gz (files 25 of 30)	<<<<<
+Making contigs...
+1000
+1462
+Done.
+
+It took 1 secs to assemble 1462 reads.
+
+
+>>>>>	Processing file pair filtered_fastq/S21_R1.fastq.gz - filtered_fastq/S21_R2.fastq.gz (files 21 of 30)	<<<<<
+Making contigs...
+13000
+390
+Done.
+
+It took 0 secs to assemble 390 reads.
+
+
+>>>>>	Processing file pair filtered_fastq/S22_R1.fastq.gz - filtered_fastq/S22_R2.fastq.gz (files 22 of 30)	<<<<<
+Making contigs...
+1000
+340
+Done.
+
+It took 1 secs to assemble 340 reads.
+
+14000
+1512
+Done.
+
+It took 1 secs to assemble 1512 reads.
+
+
+>>>>>	Processing file pair filtered_fastq/S26_R1.fastq.gz - filtered_fastq/S26_R2.fastq.gz (files 26 of 30)	<<<<<
+Making contigs...
+15000
+1000
+1449
+Done.
+
+It took 1 secs to assemble 1449 reads.
+
+
+>>>>>	Processing file pair filtered_fastq/S27_R1.fastq.gz - filtered_fastq/S27_R2.fastq.gz (files 27 of 30)	<<<<<
+Making contigs...
+16000
+1000
+17000
+2000
+17989
+Done.
+
+It took 12 secs to assemble 17989 reads.
+
+
+>>>>>	Processing file pair filtered_fastq/S11_R1.fastq.gz - filtered_fastq/S11_R2.fastq.gz (files 11 of 30)	<<<<<
+Making contigs...
+351
+Done.
+
+It took 0 secs to assemble 351 reads.
+
+
+>>>>>	Processing file pair filtered_fastq/S12_R1.fastq.gz - filtered_fastq/S12_R2.fastq.gz (files 12 of 30)	<<<<<
+Making contigs...
+174
+Done.
+
+It took 0 secs to assemble 174 reads.
+
+
+>>>>>	Processing file pair filtered_fastq/S13_R1.fastq.gz - filtered_fastq/S13_R2.fastq.gz (files 13 of 30)	<<<<<
+Making contigs...
+3000
+4000
+1000
+1675
+Done.
+
+It took 2 secs to assemble 1675 reads.
+
+
+>>>>>	Processing file pair filtered_fastq/S14_R1.fastq.gz - filtered_fastq/S14_R2.fastq.gz (files 14 of 30)	<<<<<
+Making contigs...
+5000
+6000
+1000
+7000
+2000
+8000
+3000
+9000
+3153
+Done.
+
+It took 2 secs to assemble 3153 reads.
+
+10000
+11000
+12000
+13000
+14000
+14702
+Done.
+
+It took 8 secs to assemble 14702 reads.
+
+
+>>>>>	Processing file pair filtered_fastq/S28_R1.fastq.gz - filtered_fastq/S28_R2.fastq.gz (files 28 of 30)	<<<<<
+Making contigs...
+1000
+2000
+3000
+4000
+5000
+6000
+6931
+Done.
+
+It took 5 secs to assemble 6931 reads.
+
+
+>>>>>	Processing file pair filtered_fastq/S29_R1.fastq.gz - filtered_fastq/S29_R2.fastq.gz (files 29 of 30)	<<<<<
+Making contigs...
+596
+Done.
+
+It took 1 secs to assemble 596 reads.
+
+
+>>>>>	Processing file pair filtered_fastq/S30_R1.fastq.gz - filtered_fastq/S30_R2.fastq.gz (files 30 of 30)	<<<<<
+Making contigs...
+1000
+2000
+3000
+4000
+5000
+6000
+6303
+Done.
+
+It took 3 secs to assemble 6303 reads.
+
+
+Group count: 
+S01	1164
+S02	338
+S03	2542
+S04	715
+S05	1604
+S06	2170
+S07	756
+S08	2130
+S09	2142
+S10	17989
+S11	351
+S12	174
+S13	1675
+S14	3153
+S15	2835
+S16	3917
+S17	140
+S18	3986
+S19	2613
+S20	1462
+S21	390
+S22	340
+S23	16138
+S24	604
+S25	1512
+S26	1449
+S27	14702
+S28	6931
+S29	596
+S30	6303
+
+Total of all groups is 100821
+
+It took 31 secs to process 100821 sequences.
+
+Output File Names: 
+reads.trim.contigs.fasta
+reads.scrap.contigs.fasta
+reads.contigs_report
+reads.contigs.count_table
+
+
+mothur > summary.seqs(fasta=current,count=current)
+Using reads.contigs.count_table as input file for the count parameter.
+Using reads.trim.contigs.fasta as input file for the fasta parameter.
+
+Using 4 processors.
+
+		Start	End	NBases	Ambigs	Polymer	NumSeqs
+Minimum:	1	429	429	0	4	1
+2.5%-tile:	1	440	440	0	4	2521
+25%-tile:	1	440	440	0	4	25206
+Median: 	1	447	447	0	4	50411
+75%-tile:	1	465	465	0	6	75616
+97.5%-tile:	1	480	480	0	7	98301
+Maximum:	1	482	482	0	8	100821
+Mean:	1	454	454	0	4
+# of unique seqs:	100821
+total # of seqs:	100821
+
+It took 1 secs to summarize 100821 sequences.
+
+Output File Names:
+reads.trim.contigs.summary
+
+
+mothur > screen.seqs(fasta=current,count=current,maxambig=0,minlength=400,maxlength=550,maxhomop=8)
+Using reads.contigs.count_table as input file for the count parameter.
+Using reads.trim.contigs.fasta as input file for the fasta parameter.
+
+Using 4 processors.
+1000
+1000
+1000
+1000
+2000
+2000
+2000
+2000
+3000
+3000
+3000
+3000
+4000
+4000
+4000
+4000
+5000
+5000
+5000
+5000
+6000
+6000
+6000
+6000
+7000
+7000
+7000
+7000
+8000
+8000
+8000
+8000
+9000
+9000
+9000
+9000
+10000
+10000
+10000
+10000
+11000
+11000
+11000
+11000
+12000
+12000
+12000
+12000
+13000
+13000
+13000
+13000
+14000
+14000
+14000
+14000
+15000
+15000
+15000
+15000
+16000
+16000
+16000
+16000
+17000
+17000
+17000
+17000
+18000
+18000
+18000
+18000
+19000
+19000
+19000
+19000
+20000
+20000
+20000
+20000
+21000
+21000
+21000
+21000
+22000
+22000
+22000
+22000
+23000
+23000
+23000
+23000
+24000
+24000
+24000
+24000
+25000
+25000
+25000
+25518
+25194
+25208
+24901
+
+It took 1 secs to screen 100821 sequences, removed 0.
+
+[NOTE]: no sequences were bad, removing reads.trim.contigs.bad.accnos
+
+
+Output File Names:
+reads.trim.contigs.good.fasta
+
+
+It took 1 secs to screen 100821 sequences.
+
+mothur > summary.seqs(fasta=current,count=current)
+Using reads.contigs.count_table as input file for the count parameter.
+Using reads.trim.contigs.good.fasta as input file for the fasta parameter.
+
+Using 4 processors.
+
+		Start	End	NBases	Ambigs	Polymer	NumSeqs
+Minimum:	1	429	429	0	4	1
+2.5%-tile:	1	440	440	0	4	2521
+25%-tile:	1	440	440	0	4	25206
+Median: 	1	447	447	0	4	50411
+75%-tile:	1	465	465	0	6	75616
+97.5%-tile:	1	480	480	0	7	98301
+Maximum:	1	482	482	0	8	100821
+Mean:	1	454	454	0	4
+# of unique seqs:	100821
+total # of seqs:	100821
+
+It took 1 secs to summarize 100821 sequences.
+
+Output File Names:
+reads.trim.contigs.good.summary
+
+
+mothur > unique.seqs(fasta=current,count=current)
+Using reads.contigs.count_table as input file for the count parameter.
+Using reads.trim.contigs.good.fasta as input file for the fasta parameter.
+1000	758
+2000	1332
+3000	1809
+4000	2235
+5000	2675
+6000	3059
+7000	3417
+8000	3749
+9000	4089
+10000	4443
+11000	4773
+12000	5141
+13000	5475
+14000	5793
+15000	6114
+16000	6445
+17000	6798
+18000	7159
+19000	7506
+20000	7853
+21000	8182
+22000	8537
+23000	8916
+24000	9325
+25000	9708
+26000	10073
+27000	10447
+28000	10781
+29000	11115
+30000	11421
+31000	11707
+32000	12036
+33000	12373
+34000	12727
+35000	13032
+36000	13313
+37000	13579
+38000	13861
+39000	14163
+40000	14487
+41000	14828
+42000	15101
+43000	15443
+44000	15731
+45000	16028
+46000	16331
+47000	16655
+48000	16967
+49000	17265
+50000	17536
+51000	17847
+52000	18151
+53000	18418
+54000	18715
+55000	18984
+56000	19242
+57000	19527
+58000	19790
+59000	20063
+60000	20333
+61000	20598
+62000	20845
+63000	21105
+64000	21406
+65000	21707
+66000	21984
+67000	22277
+68000	22543
+69000	22813
+70000	23097
+71000	23379
+72000	23652
+73000	23951
+74000	24282
+75000	24585
+76000	25008
+77000	25349
+78000	25737
+79000	26121
+80000	26495
+81000	26888
+82000	27227
+83000	27571
+84000	27935
+85000	28269
+86000	28631
+87000	28947
+88000	29313
+89000	29680
+90000	30022
+91000	30389
+92000	30771
+93000	31107
+94000	31452
+95000	31784
+96000	32091
+97000	32385
+98000	32728
+99000	33090
+100000	33445
+100821	33689
+
+Output File Names: 
+reads.trim.contigs.good.unique.fasta
+reads.trim.contigs.good.count_table
+
+
+mothur > summary.seqs(fasta=current,count=current)
+Using reads.trim.contigs.good.count_table as input file for the count parameter.
+Using reads.trim.contigs.good.unique.fasta as input file for the fasta parameter.
+
+Using 4 processors.
+
+		Start	End	NBases	Ambigs	Polymer	NumSeqs
+Minimum:	1	429	429	0	4	1
+2.5%-tile:	1	440	440	0	4	2521
+25%-tile:	1	440	440	0	4	25206
+Median: 	1	447	447	0	4	50411
+75%-tile:	1	465	465	0	6	75616
+97.5%-tile:	1	480	480	0	7	98301
+Maximum:	1	482	482	0	8	100821
+Mean:	1	454	454	0	4
+# of unique seqs:	33689
+total # of seqs:	100821
+
+It took 0 secs to summarize 100821 sequences.
+
+Output File Names:
+reads.trim.contigs.good.unique.summary
+
+
+mothur > pcr.seqs(fasta=silva.bacteria.fasta,start=6000,end=26000,keepdots=F)
+
+Using 4 processors.
+1000
+1000
+1000
+1000
+2000
+2000
+2000
+2000
+3000
+3000
+3000
+3000
+3740
+3738
+3740
+3738
+[NOTE]: no sequences were bad, removing silva.bacteria.bad.accnos
+
+It took 4 secs to screen 14956 sequences.
+
+Output File Names: 
+silva.bacteria.pcr.fasta
+
+
+
+mothur > rename.file(input=silva.bacteria.pcr.fasta,new=silva.v3v4.fasta)
+
+Current files saved by mothur:
+fasta=silva.bacteria.pcr.fasta
+contigsreport=reads.contigs_report
+count=reads.trim.contigs.good.count_table
+processors=4
+summary=reads.trim.contigs.good.unique.summary
+
+mothur > summary.seqs(fasta=silva.v3v4.fasta)
+
+Using 4 processors.
+
+		Start	End	NBases	Ambigs	Polymer	NumSeqs
+Minimum:	92	19515	482	0	3	1
+2.5%-tile:	92	19518	503	0	4	374
+25%-tile:	92	19518	506	0	4	3740
+Median: 	92	19518	525	0	5	7479
+75%-tile:	92	19518	528	0	5	11218
+97.5%-tile:	92	19518	530	1	6	14583
+Maximum:	92	19534	570	5	9	14956
+Mean:	92	19518	518	0	4
+# of Seqs:	14956
+
+It took 1 secs to summarize 14956 sequences.
+
+Output File Names:
+silva.v3v4.summary
+
+
+mothur > align.seqs(fasta=reads.trim.contigs.good.unique.fasta,reference=silva.v3v4.fasta,flip=t)
+
+Using 4 processors.
+
+Reading in the silva.v3v4.fasta template sequences...	DONE.
+It took 3 to read  14956 sequences.
+
+Aligning sequences from reads.trim.contigs.good.unique.fasta ...
+1000
+1000
+1000
+1000
+2000
+2000
+2000
+2000
+3000
+3000
+3000
+3000
+4000
+4000
+4000
+4000
+5000
+5000
+5000
+5000
+6000
+6000
+6000
+6000
+7000
+7000
+7000
+7000
+8000
+8000
+8000
+8000
+8410
+8450
+8420
+8409
+It took 33 secs to align 33689 sequences.
+
+[WARNING]: 13 of your sequences generated alignments that eliminated too many bases, a list is provided in reads.trim.contigs.good.unique.flip.accnos.
+[NOTE]: 13 of your sequences were reversed to produce a better alignment.
+
+It took 33 seconds to align 33689 sequences.
+
+Output File Names: 
+reads.trim.contigs.good.unique.align
+reads.trim.contigs.good.unique.align_report
+reads.trim.contigs.good.unique.flip.accnos
+
+
+mothur > summary.seqs(fasta=current,count=current)
+Using reads.trim.contigs.good.count_table as input file for the count parameter.
+Using reads.trim.contigs.good.unique.align as input file for the fasta parameter.
+
+Using 4 processors.
+
+		Start	End	NBases	Ambigs	Polymer	NumSeqs
+Minimum:	240	17966	429	0	4	1
+2.5%-tile:	241	19317	440	0	4	2521
+25%-tile:	389	19317	440	0	4	25206
+Median: 	389	19317	447	0	4	50411
+75%-tile:	389	19317	465	0	6	75616
+97.5%-tile:	389	19441	480	0	7	98301
+Maximum:	403	19441	482	0	8	100821
+Mean:	376	19336	454	0	4
+# of unique seqs:	33689
+total # of seqs:	100821
+
+It took 3 secs to summarize 100821 sequences.
+
+Output File Names:
+reads.trim.contigs.good.unique.summary
+
+
+mothur > screen.seqs(fasta=current,count=current,optimize=start-end,criteria=95)
+Using reads.trim.contigs.good.count_table as input file for the count parameter.
+Using reads.trim.contigs.good.unique.align as input file for the fasta parameter.
+
+Using 4 processors.
+Optimizing start to 389.
+Optimizing end to 19317.
+1000
+1000
+1000
+1000
+2000
+2000
+2000
+2000
+3000
+3000
+3000
+3000
+4000
+4000
+4000
+4000
+5000
+5000
+5000
+5000
+6000
+6000
+6000
+6000
+7000
+7000
+7000
+7000
+8000
+8000
+8000
+8000
+8422
+8423
+8422
+8422
+
+It took 4 secs to screen 33689 sequences, removed 311.
+
+/******************************************/
+Running command: remove.seqs(accnos=reads.trim.contigs.good.unique.bad.accnos.temp, count=reads.trim.contigs.good.count_table)
+Removed 335 sequences from reads.trim.contigs.good.count_table.
+
+Output File Names:
+reads.trim.contigs.good.pick.count_table
+
+/******************************************/
+
+Output File Names:
+reads.trim.contigs.good.unique.good.align
+reads.trim.contigs.good.unique.bad.accnos
+reads.trim.contigs.good.good.count_table
+
+
+It took 7 secs to screen 33689 sequences.
+
+mothur > summary.seqs(fasta=current,count=current)
+Using reads.trim.contigs.good.good.count_table as input file for the count parameter.
+Using reads.trim.contigs.good.unique.good.align as input file for the fasta parameter.
+
+Using 4 processors.
+
+		Start	End	NBases	Ambigs	Polymer	NumSeqs
+Minimum:	240	19317	438	0	4	1
+2.5%-tile:	241	19317	440	0	4	2513
+25%-tile:	389	19317	440	0	4	25122
+Median: 	389	19317	447	0	4	50244
+75%-tile:	389	19317	465	0	6	75365
+97.5%-tile:	389	19441	480	0	7	97974
+Maximum:	389	19441	482	0	8	100486
+Mean:	376	19336	454	0	4
+# of unique seqs:	33378
+total # of seqs:	100486
+
+It took 3 secs to summarize 100486 sequences.
+
+Output File Names:
+reads.trim.contigs.good.unique.good.summary
+
+
+mothur > filter.seqs(fasta=current,vertical=T,trump=.)
+Using reads.trim.contigs.good.unique.good.align as input file for the fasta parameter.
+
+Using 4 processors.
+Creating Filter...
+1000
+1000
+1000
+1000
+2000
+2000
+2000
+2000
+3000
+3000
+3000
+3000
+4000
+4000
+4000
+4000
+5000
+5000
+5000
+5000
+6000
+6000
+6000
+6000
+7000
+7000
+7000
+7000
+8000
+8000
+8000
+8000
+8344
+8345
+8344
+8345
+It took 7 secs to create filter for 33378 sequences.
+
+
+Running Filter...
+1000
+1000
+1000
+1000
+2000
+2000
+2000
+2000
+3000
+3000
+3000
+3000
+4000
+4000
+4000
+4000
+5000
+5000
+5000
+5000
+6000
+6000
+6000
+6000
+7000
+7000
+7000
+7000
+8000
+8000
+8000
+8000
+8345
+8345
+8344
+8344
+It took 4 secs to filter 33378 sequences.
+
+
+
+Length of filtered alignment: 472
+Number of columns removed: 19529
+Length of the original alignment: 20001
+Number of sequences used to construct filter: 33378
+
+Output File Names: 
+reads.filter
+reads.trim.contigs.good.unique.good.filter.fasta
+
+
+mothur > unique.seqs(fasta=current,count=current)
+Using reads.trim.contigs.good.good.count_table as input file for the count parameter.
+Using reads.trim.contigs.good.unique.good.filter.fasta as input file for the fasta parameter.
+1000	1000
+2000	1994
+3000	2993
+4000	3984
+5000	4976
+6000	5969
+7000	6958
+8000	7936
+9000	8917
+10000	9896
+11000	10876
+12000	11854
+13000	12836
+14000	13813
+15000	14794
+16000	15772
+17000	16747
+18000	17726
+19000	18707
+20000	19672
+21000	20635
+22000	21601
+23000	22575
+24000	23552
+25000	24523
+26000	25502
+27000	26472
+28000	27437
+29000	28396
+30000	29369
+31000	30339
+32000	31307
+33000	32265
+33378	32629
+
+Output File Names: 
+reads.trim.contigs.good.unique.good.filter.unique.fasta
+reads.trim.contigs.good.unique.good.filter.count_table
+
+
+mothur > pre.cluster(fasta=current,count=current,diffs=4)
+Using reads.trim.contigs.good.unique.good.filter.count_table as input file for the count parameter.
+Using reads.trim.contigs.good.unique.good.filter.unique.fasta as input file for the fasta parameter.
+
+Using 4 processors.
+
+/******************************************/
+Splitting by sample: 
+
+Using 4 processors.
+
+Selecting sequences for groups S01-S02-S03-S04-S05-S06-S07
+
+
+Selecting sequences for groups S15-S16-S17-S18-S19-S20-S21-S22
+
+
+Selecting sequences for groups S08-S09-S10-S11-S12-S13-S14
+
+
+Selecting sequences for groups S23-S24-S25-S26-S27-S28-S29-S30
+
+Selected 728 sequences from S01.
+Selected 132 sequences from S02.
+Selected 1012 sequences from S03.
+Selected 501 sequences from S04.
+Selected 746 sequences from S05.
+Selected 757 sequences from S06.
+Selected 347 sequences from S07.
+Selected 1381 sequences from S15.
+Selected 2542 sequences from S16.
+Selected 121 sequences from S17.
+Selected 1245 sequences from S18.
+Selected 815 sequences from S19.
+Selected 1008 sequences from S20.
+Selected 234 sequences from S21.
+Selected 258 sequences from S22.
+Selected 1170 sequences from S08.
+Selected 1089 sequences from S09.
+Selected 5294 sequences from S10.
+Selected 258 sequences from S11.
+Selected 154 sequences from S12.
+Selected 635 sequences from S13.
+Selected 1163 sequences from S14.
+Selected 5258 sequences from S23.
+Selected 490 sequences from S24.
+Selected 901 sequences from S25.
+Selected 678 sequences from S26.
+Selected 4402 sequences from S27.
+Selected 1957 sequences from S28.
+Selected 391 sequences from S29.
+Selected 3305 sequences from S30.
+
+It took 1 seconds to split the dataset by sample.
+/******************************************/
+
+Processing group S08:
+
+Processing group S15:
+
+Processing group S23:
+
+Processing group S01:
+S01	0	427	301
+S08	0	922	248
+S01	728	111	617
+Total number of sequences before pre.cluster was 728.
+pre.cluster removed 617 sequences.
+
+It took 0 secs to cluster 728 sequences.
+
+Processing group S02:
+S08	1000	116	1054
+S08	1170	116	1054
+Total number of sequences before pre.cluster was 1170.
+pre.cluster removed 1054 sequences.
+
+It took 0 secs to cluster 1170 sequences.
+
+Processing group S09:
+S02	0	30	102
+S02	132	13	119
+Total number of sequences before pre.cluster was 132.
+pre.cluster removed 119 sequences.
+
+It took 0 secs to cluster 132 sequences.
+
+Processing group S03:
+S15	0	700	681
+S15	1000	216	1165
+S15	1381	216	1165
+Total number of sequences before pre.cluster was 1381.
+pre.cluster removed 1165 sequences.
+
+It took 0 secs to cluster 1381 sequences.
+
+Processing group S16:
+S03	0	740	272
+S09	0	679	410
+S03	1000	72	940
+S03	1012	72	940
+Total number of sequences before pre.cluster was 1012.
+pre.cluster removed 940 sequences.
+
+It took 0 secs to cluster 1012 sequences.
+
+Processing group S04:
+S09	1000	85	1004
+S09	1089	85	1004
+Total number of sequences before pre.cluster was 1089.
+pre.cluster removed 1004 sequences.
+
+It took 0 secs to cluster 1089 sequences.
+
+Processing group S10:
+S04	0	384	117
+S04	501	77	424
+Total number of sequences before pre.cluster was 501.
+pre.cluster removed 424 sequences.
+
+It took 0 secs to cluster 501 sequences.
+
+Processing group S05:
+S05	0	514	232
+S05	746	48	698
+Total number of sequences before pre.cluster was 746.
+pre.cluster removed 698 sequences.
+
+It took 0 secs to cluster 746 sequences.
+
+Processing group S06:
+S16	0	1404	1138
+S06	0	585	172
+S16	1000	435	2107
+S16	2000	435	2107
+S16	2542	435	2107
+S06	757	72	685
+Total number of sequences before pre.cluster was 757.
+pre.cluster removed 685 sequences.
+
+It took 0 secs to cluster 757 sequences.
+
+Processing group S07:
+Total number of sequences before pre.cluster was 2542.
+pre.cluster removed 2107 sequences.
+
+It took 0 secs to cluster 2542 sequences.
+
+Processing group S17:
+S17	0	96	25
+S17	121	28	93
+Total number of sequences before pre.cluster was 121.
+pre.cluster removed 93 sequences.
+
+It took 0 secs to cluster 121 sequences.
+
+Processing group S18:
+S07	0	257	90
+S07	347	42	305
+Total number of sequences before pre.cluster was 347.
+pre.cluster removed 305 sequences.
+
+It took 0 secs to cluster 347 sequences.
+S23	0	3604	1654
+S18	0	612	633
+S23	1000	413	4845
+S18	1000	49	1196
+S18	1245	49	1196
+S23	2000	413	4845
+Total number of sequences before pre.cluster was 1245.
+pre.cluster removed 1196 sequences.
+
+It took 0 secs to cluster 1245 sequences.
+
+Processing group S19:
+S23	3000	413	4845
+S23	4000	413	4845
+S23	5000	413	4845
+S23	5258	413	4845
+Total number of sequences before pre.cluster was 5258.
+pre.cluster removed 4845 sequences.
+
+It took 0 secs to cluster 5258 sequences.
+
+Processing group S24:
+S24	0	437	53
+S24	490	164	326
+Total number of sequences before pre.cluster was 490.
+pre.cluster removed 326 sequences.
+
+It took 0 secs to cluster 490 sequences.
+
+Processing group S25:
+S19	0	464	351
+S19	815	74	741
+Total number of sequences before pre.cluster was 815.
+pre.cluster removed 741 sequences.
+
+It took 0 secs to cluster 815 sequences.
+
+Processing group S20:
+S10	0	667	4627
+S10	1000	215	5079
+S10	2000	215	5079
+S10	3000	215	5079
+S10	4000	215	5079
+S10	5000	215	5079
+S10	5294	215	5079
+S25	0	800	101
+Total number of sequences before pre.cluster was 5294.
+pre.cluster removed 5079 sequences.
+
+S25	901	91	810
+Total number of sequences before pre.cluster was 901.
+pre.cluster removed 810 sequences.
+
+It took 0 secs to cluster 901 sequences.
+
+Processing group S26:
+It took 0 secs to cluster 5294 sequences.
+
+Processing group S11:
+S20	0	667	341
+S11	0	202	56
+S11	258	27	231
+Total number of sequences before pre.cluster was 258.
+pre.cluster removed 231 sequences.
+
+It took 0 secs to cluster 258 sequences.
+
+Processing group S12:
+S20	1000	168	840
+S20	1008	168	840
+Total number of sequences before pre.cluster was 1008.
+pre.cluster removed 840 sequences.
+
+It took 0 secs to cluster 1008 sequences.
+
+Processing group S21:
+S12	0	124	30
+S12	154	37	117
+Total number of sequences before pre.cluster was 154.
+pre.cluster removed 117 sequences.
+
+It took 0 secs to cluster 154 sequences.
+
+Processing group S13:
+S21	0	162	72
+S21	234	27	207
+Total number of sequences before pre.cluster was 234.
+pre.cluster removed 207 sequences.
+
+It took 0 secs to cluster 234 sequences.
+
+Processing group S22:
+S26	0	646	32
+S26	678	73	605
+Total number of sequences before pre.cluster was 678.
+pre.cluster removed 605 sequences.
+
+It took 0 secs to cluster 678 sequences.
+
+Processing group S27:
+S22	0	198	60
+S22	258	25	233
+Total number of sequences before pre.cluster was 258.
+pre.cluster removed 233 sequences.
+
+It took 0 secs to cluster 258 sequences.
+S13	0	220	415
+S13	635	32	603
+Total number of sequences before pre.cluster was 635.
+pre.cluster removed 603 sequences.
+
+It took 0 secs to cluster 635 sequences.
+
+Processing group S14:
+S14	0	550	613
+S14	1000	74	1089
+S14	1163	74	1089
+Total number of sequences before pre.cluster was 1163.
+pre.cluster removed 1089 sequences.
+
+It took 0 secs to cluster 1163 sequences.
+S27	0	2368	2034
+S27	1000	270	4132
+S27	2000	270	4132
+S27	3000	270	4132
+S27	4000	270	4132
+S27	4402	270	4132
+Total number of sequences before pre.cluster was 4402.
+pre.cluster removed 4132 sequences.
+
+It took 0 secs to cluster 4402 sequences.
+
+Processing group S28:
+S28	0	1461	496
+S28	1000	157	1800
+S28	1957	157	1800
+Total number of sequences before pre.cluster was 1957.
+pre.cluster removed 1800 sequences.
+
+It took 0 secs to cluster 1957 sequences.
+
+Processing group S29:
+S29	0	201	190
+S29	391	50	341
+Total number of sequences before pre.cluster was 391.
+pre.cluster removed 341 sequences.
+
+It took 0 secs to cluster 391 sequences.
+
+Processing group S30:
+S30	0	1725	1580
+S30	1000	599	2706
+S30	2000	599	2706
+S30	3000	599	2706
+S30	3305	599	2706
+Total number of sequences before pre.cluster was 3305.
+pre.cluster removed 2706 sequences.
+
+It took 0 secs to cluster 3305 sequences.
+
+Deconvoluting count table results...
+1000
+2000
+3000
+3860
+It took 0 secs to merge 3860 sequences group data.
+/******************************************/
+Running get.seqs: 
+Selected 3754 sequences from reads.trim.contigs.good.unique.good.filter.unique.fasta.
+/******************************************/
+It took 1 secs to run pre.cluster.
+
+Using 4 processors.
+
+Output File Names: 
+reads.trim.contigs.good.unique.good.filter.unique.precluster.fasta
+reads.trim.contigs.good.unique.good.filter.unique.precluster.count_table
+reads.trim.contigs.good.unique.good.filter.unique.precluster.S01.map
+reads.trim.contigs.good.unique.good.filter.unique.precluster.S02.map
+reads.trim.contigs.good.unique.good.filter.unique.precluster.S03.map
+reads.trim.contigs.good.unique.good.filter.unique.precluster.S04.map
+reads.trim.contigs.good.unique.good.filter.unique.precluster.S05.map
+reads.trim.contigs.good.unique.good.filter.unique.precluster.S06.map
+reads.trim.contigs.good.unique.good.filter.unique.precluster.S07.map
+reads.trim.contigs.good.unique.good.filter.unique.precluster.S08.map
+reads.trim.contigs.good.unique.good.filter.unique.precluster.S09.map
+reads.trim.contigs.good.unique.good.filter.unique.precluster.S10.map
+reads.trim.contigs.good.unique.good.filter.unique.precluster.S11.map
+reads.trim.contigs.good.unique.good.filter.unique.precluster.S12.map
+reads.trim.contigs.good.unique.good.filter.unique.precluster.S13.map
+reads.trim.contigs.good.unique.good.filter.unique.precluster.S14.map
+reads.trim.contigs.good.unique.good.filter.unique.precluster.S15.map
+reads.trim.contigs.good.unique.good.filter.unique.precluster.S16.map
+reads.trim.contigs.good.unique.good.filter.unique.precluster.S17.map
+reads.trim.contigs.good.unique.good.filter.unique.precluster.S18.map
+reads.trim.contigs.good.unique.good.filter.unique.precluster.S19.map
+reads.trim.contigs.good.unique.good.filter.unique.precluster.S20.map
+reads.trim.contigs.good.unique.good.filter.unique.precluster.S21.map
+reads.trim.contigs.good.unique.good.filter.unique.precluster.S22.map
+reads.trim.contigs.good.unique.good.filter.unique.precluster.S23.map
+reads.trim.contigs.good.unique.good.filter.unique.precluster.S24.map
+reads.trim.contigs.good.unique.good.filter.unique.precluster.S25.map
+reads.trim.contigs.good.unique.good.filter.unique.precluster.S26.map
+reads.trim.contigs.good.unique.good.filter.unique.precluster.S27.map
+reads.trim.contigs.good.unique.good.filter.unique.precluster.S28.map
+reads.trim.contigs.good.unique.good.filter.unique.precluster.S29.map
+reads.trim.contigs.good.unique.good.filter.unique.precluster.S30.map
+
+vsearch v2.29.1_macos_aarch64, 8.0GB RAM, 8 cores
+https://github.com/torognes/vsearch
+
+Reading file reads.trim.contigs.good.unique.good.filter.unique.precluster.temp 100%
+50712 nt in 111 seqs, min 439, max 465, avg 457
+Masking 100%
+Sorting by abundance 100%
+Counting k-mers 100%
+Detecting chimeras 100%
+Found 2 (1.8%) chimeras, 105 (94.6%) non-chimeras,
+and 4 (3.6%) borderline sequences in 111 unique sequences.
+Taking abundance information into account, this corresponds to
+2 (0.2%) chimeras, 1158 (99.5%) non-chimeras,
+and 4 (0.3%) borderline sequences in 1164 total sequences.
+vsearch v2.29.1_macos_aarch64, 8.0GB RAM, 8 cores
+https://github.com/torognes/vsearch
+
+Reading file reads.trim.contigs.good.unique.good.filter.unique.precluster.temp1.temp 100%
+52083 nt in 116 seqs, min 440, max 465, avg 449
+Masking 100%
+Sorting by abundance 100%
+Counting k-mers 100%
+Detecting chimeras 100%
+Found 0 (0.0%) chimeras, 116 (100.0%) non-chimeras,
+and 0 (0.0%) borderline sequences in 116 unique sequences.
+Taking abundance information into account, this corresponds to
+0 (0.0%) chimeras, 2122 (100.0%) non-chimeras,
+and 0 (0.0%) borderline sequences in 2122 total sequences.
+vsearch v2.29.1_macos_aarch64, 8.0GB RAM, 8 cores
+https://github.com/torognes/vsearch
+
+Reading file reads.trim.contigs.good.unique.good.filter.unique.precluster.temp2.temp 100%
+100329 nt in 216 seqs, min 445, max 465, avg 464
+Masking 100%
+Sorting by abundance 100%
+Counting k-mers 100%
+Detecting chimeras 100%
+Found 0 (0.0%) chimeras, 216 (100.0%) non-chimeras,
+and 0 (0.0%) borderline sequences in 216 unique sequences.
+Taking abundance information into account, this corresponds to
+0 (0.0%) chimeras, 2835 (100.0%) non-chimeras,
+and 0 (0.0%) borderline sequences in 2835 total sequences.
+vsearch v2.29.1_macos_aarch64, 8.0GB RAM, 8 cores
+https://github.com/torognes/vsearch
+
+Reading file reads.trim.contigs.good.unique.good.filter.unique.precluster.temp3.temp 100%
+187187 nt in 413 seqs, min 438, max 465, avg 453
+Masking 100%
+Sorting by abundance 100%
+Counting k-mers 100%
+Detecting chimeras 100%
+Found 0 (0.0%) chimeras, 379 (91.8%) non-chimeras,
+and 34 (8.2%) borderline sequences in 413 unique sequences.
+Taking abundance information into account, this corresponds to
+0 (0.0%) chimeras, 15857 (98.7%) non-chimeras,
+and 209 (1.3%) borderline sequences in 16066 total sequences.
+vsearch v2.29.1_macos_aarch64, 8.0GB RAM, 8 cores
+https://github.com/torognes/vsearch
+
+Reading file reads.trim.contigs.good.unique.good.filter.unique.precluster.temp 100%
+5895 nt in 13 seqs, min 443, max 465, avg 453
+Masking 100%
+Sorting by abundance 100%
+Counting k-mers 100%
+Detecting chimeras 100%
+Found 0 (0.0%) chimeras, 13 (100.0%) non-chimeras,
+and 0 (0.0%) borderline sequences in 13 unique sequences.
+Taking abundance information into account, this corresponds to
+0 (0.0%) chimeras, 336 (100.0%) non-chimeras,
+and 0 (0.0%) borderline sequences in 336 total sequences.
+vsearch v2.29.1_macos_aarch64, 8.0GB RAM, 8 cores
+https://github.com/torognes/vsearch
+
+Reading file reads.trim.contigs.good.unique.good.filter.unique.precluster.temp1.temp 100%
+38439 nt in 85 seqs, min 439, max 465, avg 452
+Masking 100%
+Sorting by abundance 100%
+Counting k-mers 100%
+Detecting chimeras 100%
+Found 0 (0.0%) chimeras, 77 (90.6%) non-chimeras,
+and 8 (9.4%) borderline sequences in 85 unique sequences.
+Taking abundance information into account, this corresponds to
+0 (0.0%) chimeras, 2126 (99.6%) non-chimeras,
+and 8 (0.4%) borderline sequences in 2134 total sequences.
+vsearch v2.29.1_macos_aarch64, 8.0GB RAM, 8 cores
+https://github.com/torognes/vsearch
+
+Reading file reads.trim.contigs.good.unique.good.filter.unique.precluster.temp2.temp 100%
+201442 nt in 435 seqs, min 440, max 465, avg 463
+Masking 100%
+Sorting by abundance 100%
+Counting k-mers 100%
+Detecting chimeras 100%
+Found 0 (0.0%) chimeras, 434 (99.8%) non-chimeras,
+and 1 (0.2%) borderline sequences in 435 unique sequences.
+Taking abundance information into account, this corresponds to
+0 (0.0%) chimeras, 3911 (99.8%) non-chimeras,
+and 6 (0.2%) borderline sequences in 3917 total sequences.
+vsearch v2.29.1_macos_aarch64, 8.0GB RAM, 8 cores
+https://github.com/torognes/vsearch
+
+Reading file reads.trim.contigs.good.unique.good.filter.unique.precluster.temp3.temp 100%
+73847 nt in 164 seqs, min 439, max 465, avg 450
+Masking 100%
+Sorting by abundance 100%
+Counting k-mers 100%
+Detecting chimeras 100%
+Found 0 (0.0%) chimeras, 161 (98.2%) non-chimeras,
+and 3 (1.8%) borderline sequences in 164 unique sequences.
+Taking abundance information into account, this corresponds to
+0 (0.0%) chimeras, 598 (99.0%) non-chimeras,
+and 6 (1.0%) borderline sequences in 604 total sequences.
+vsearch v2.29.1_macos_aarch64, 8.0GB RAM, 8 cores
+https://github.com/torognes/vsearch
+
+Reading file reads.trim.contigs.good.unique.good.filter.unique.precluster.temp 100%
+32122 nt in 72 seqs, min 439, max 465, avg 446
+Masking 100%
+Sorting by abundance 100%
+Counting k-mers 100%
+Detecting chimeras 100%
+Found 0 (0.0%) chimeras, 72 (100.0%) non-chimeras,
+and 0 (0.0%) borderline sequences in 72 unique sequences.
+Taking abundance information into account, this corresponds to
+0 (0.0%) chimeras, 2535 (100.0%) non-chimeras,
+and 0 (0.0%) borderline sequences in 2535 total sequences.
+vsearch v2.29.1_macos_aarch64, 8.0GB RAM, 8 cores
+https://github.com/torognes/vsearch
+
+Reading file reads.trim.contigs.good.unique.good.filter.unique.precluster.temp1.temp 100%
+99172 nt in 215 seqs, min 440, max 465, avg 461
+Masking 100%
+Sorting by abundance 100%
+Counting k-mers 100%
+Detecting chimeras 100%
+Found 0 (0.0%) chimeras, 215 (100.0%) non-chimeras,
+and 0 (0.0%) borderline sequences in 215 unique sequences.
+Taking abundance information into account, this corresponds to
+0 (0.0%) chimeras, 17917 (100.0%) non-chimeras,
+and 0 (0.0%) borderline sequences in 17917 total sequences.
+vsearch v2.29.1_macos_aarch64, 8.0GB RAM, 8 cores
+https://github.com/torognes/vsearch
+
+Reading file reads.trim.contigs.good.unique.good.filter.unique.precluster.temp2.temp 100%
+12468 nt in 28 seqs, min 440, max 465, avg 445
+Masking 100%
+Sorting by abundance 100%
+Counting k-mers 100%
+Detecting chimeras 100%
+Found 0 (0.0%) chimeras, 28 (100.0%) non-chimeras,
+and 0 (0.0%) borderline sequences in 28 unique sequences.
+Taking abundance information into account, this corresponds to
+0 (0.0%) chimeras, 140 (100.0%) non-chimeras,
+and 0 (0.0%) borderline sequences in 140 total sequences.
+vsearch v2.29.1_macos_aarch64, 8.0GB RAM, 8 cores
+https://github.com/torognes/vsearch
+
+Reading file reads.trim.contigs.good.unique.good.filter.unique.precluster.temp3.temp 100%
+41387 nt in 91 seqs, min 440, max 465, avg 455
+Masking 100%
+Sorting by abundance 100%
+Counting k-mers 100%
+Detecting chimeras 100%
+Found 0 (0.0%) chimeras, 90 (98.9%) non-chimeras,
+and 1 (1.1%) borderline sequences in 91 unique sequences.
+Taking abundance information into account, this corresponds to
+0 (0.0%) chimeras, 1509 (99.9%) non-chimeras,
+and 1 (0.1%) borderline sequences in 1510 total sequences.
+vsearch v2.29.1_macos_aarch64, 8.0GB RAM, 8 cores
+https://github.com/torognes/vsearch
+
+Reading file reads.trim.contigs.good.unique.good.filter.unique.precluster.temp 100%
+34834 nt in 77 seqs, min 439, max 465, avg 452
+Masking 100%
+Sorting by abundance 100%
+Counting k-mers 100%
+Detecting chimeras 100%
+Found 0 (0.0%) chimeras, 74 (96.1%) non-chimeras,
+and 3 (3.9%) borderline sequences in 77 unique sequences.
+Taking abundance information into account, this corresponds to
+0 (0.0%) chimeras, 707 (99.3%) non-chimeras,
+and 5 (0.7%) borderline sequences in 712 total sequences.
+vsearch v2.29.1_macos_aarch64, 8.0GB RAM, 8 cores
+https://github.com/torognes/vsearch
+
+Reading file reads.trim.contigs.good.unique.good.filter.unique.precluster.temp1.temp 100%
+11988 nt in 27 seqs, min 440, max 447, avg 444
+Masking 100%
+Sorting by abundance 100%
+Counting k-mers 100%
+Detecting chimeras 100%
+Found 0 (0.0%) chimeras, 25 (92.6%) non-chimeras,
+and 2 (7.4%) borderline sequences in 27 unique sequences.
+Taking abundance information into account, this corresponds to
+0 (0.0%) chimeras, 349 (99.4%) non-chimeras,
+and 2 (0.6%) borderline sequences in 351 total sequences.
+vsearch v2.29.1_macos_aarch64, 8.0GB RAM, 8 cores
+https://github.com/torognes/vsearch
+
+Reading file reads.trim.contigs.good.unique.good.filter.unique.precluster.temp2.temp 100%
+21701 nt in 49 seqs, min 439, max 465, avg 443
+Masking 100%
+Sorting by abundance 100%
+Counting k-mers 100%
+Detecting chimeras 100%
+Found 0 (0.0%) chimeras, 45 (91.8%) non-chimeras,
+and 4 (8.2%) borderline sequences in 49 unique sequences.
+Taking abundance information into account, this corresponds to
+0 (0.0%) chimeras, 3966 (99.8%) non-chimeras,
+and 9 (0.2%) borderline sequences in 3975 total sequences.
+vsearch v2.29.1_macos_aarch64, 8.0GB RAM, 8 cores
+https://github.com/torognes/vsearch
+
+Reading file reads.trim.contigs.good.unique.good.filter.unique.precluster.temp3.temp 100%
+33244 nt in 73 seqs, min 440, max 465, avg 455
+Masking 100%
+Sorting by abundance 100%
+Counting k-mers 100%
+Detecting chimeras 100%
+Found 0 (0.0%) chimeras, 73 (100.0%) non-chimeras,
+and 0 (0.0%) borderline sequences in 73 unique sequences.
+Taking abundance information into account, this corresponds to
+0 (0.0%) chimeras, 1445 (100.0%) non-chimeras,
+and 0 (0.0%) borderline sequences in 1445 total sequences.
+vsearch v2.29.1_macos_aarch64, 8.0GB RAM, 8 cores
+https://github.com/torognes/vsearch
+
+Reading file reads.trim.contigs.good.unique.good.filter.unique.precluster.temp 100%
+21393 nt in 48 seqs, min 440, max 465, avg 446
+Masking 100%
+Sorting by abundance 100%
+Counting k-mers 100%
+Detecting chimeras 100%
+Found 0 (0.0%) chimeras, 47 (97.9%) non-chimeras,
+and 1 (2.1%) borderline sequences in 48 unique sequences.
+Taking abundance information into account, this corresponds to
+0 (0.0%) chimeras, 1602 (99.9%) non-chimeras,
+and 1 (0.1%) borderline sequences in 1603 total sequences.
+vsearch v2.29.1_macos_aarch64, 8.0GB RAM, 8 cores
+https://github.com/torognes/vsearch
+
+Reading file reads.trim.contigs.good.unique.good.filter.unique.precluster.temp1.temp 100%
+16665 nt in 37 seqs, min 440, max 465, avg 450
+Masking 100%
+Sorting by abundance 100%
+Counting k-mers 100%
+Detecting chimeras 100%
+Found 0 (0.0%) chimeras, 37 (100.0%) non-chimeras,
+and 0 (0.0%) borderline sequences in 37 unique sequences.
+Taking abundance information into account, this corresponds to
+0 (0.0%) chimeras, 174 (100.0%) non-chimeras,
+and 0 (0.0%) borderline sequences in 174 total sequences.
+vsearch v2.29.1_macos_aarch64, 8.0GB RAM, 8 cores
+https://github.com/torognes/vsearch
+
+Reading file reads.trim.contigs.good.unique.good.filter.unique.precluster.temp2.temp 100%
+33228 nt in 74 seqs, min 439, max 465, avg 449
+Masking 100%
+Sorting by abundance 100%
+Counting k-mers 100%
+Detecting chimeras 100%
+Found 0 (0.0%) chimeras, 74 (100.0%) non-chimeras,
+and 0 (0.0%) borderline sequences in 74 unique sequences.
+Taking abundance information into account, this corresponds to
+0 (0.0%) chimeras, 2601 (100.0%) non-chimeras,
+and 0 (0.0%) borderline sequences in 2601 total sequences.
+vsearch v2.29.1_macos_aarch64, 8.0GB RAM, 8 cores
+https://github.com/torognes/vsearch
+
+Reading file reads.trim.contigs.good.unique.good.filter.unique.precluster.temp3.temp 100%
+120696 nt in 270 seqs, min 438, max 465, avg 447
+Masking 100%
+Sorting by abundance 100%
+Counting k-mers 100%
+Detecting chimeras 100%
+Found 1 (0.4%) chimeras, 269 (99.6%) non-chimeras,
+and 0 (0.0%) borderline sequences in 270 unique sequences.
+Taking abundance information into account, this corresponds to
+1 (0.0%) chimeras, 14639 (100.0%) non-chimeras,
+and 0 (0.0%) borderline sequences in 14640 total sequences.
+vsearch v2.29.1_macos_aarch64, 8.0GB RAM, 8 cores
+https://github.com/torognes/vsearch
+
+Reading file reads.trim.contigs.good.unique.good.filter.unique.precluster.temp 100%
+32385 nt in 72 seqs, min 439, max 465, avg 450
+Masking 100%
+Sorting by abundance 100%
+Counting k-mers 100%
+Detecting chimeras 100%
+Found 1 (1.4%) chimeras, 71 (98.6%) non-chimeras,
+and 0 (0.0%) borderline sequences in 72 unique sequences.
+Taking abundance information into account, this corresponds to
+1 (0.0%) chimeras, 2163 (100.0%) non-chimeras,
+and 0 (0.0%) borderline sequences in 2164 total sequences.
+vsearch v2.29.1_macos_aarch64, 8.0GB RAM, 8 cores
+https://github.com/torognes/vsearch
+
+Reading file reads.trim.contigs.good.unique.good.filter.unique.precluster.temp1.temp 100%
+14280 nt in 32 seqs, min 439, max 465, avg 446
+Masking 100%
+Sorting by abundance 100%
+Counting k-mers 100%
+Detecting chimeras 100%
+Found 0 (0.0%) chimeras, 32 (100.0%) non-chimeras,
+and 0 (0.0%) borderline sequences in 32 unique sequences.
+Taking abundance information into account, this corresponds to
+0 (0.0%) chimeras, 1669 (100.0%) non-chimeras,
+and 0 (0.0%) borderline sequences in 1669 total sequences.
+vsearch v2.29.1_macos_aarch64, 8.0GB RAM, 8 cores
+https://github.com/torognes/vsearch
+
+Reading file reads.trim.contigs.good.unique.good.filter.unique.precluster.temp2.temp 100%
+76903 nt in 168 seqs, min 435, max 465, avg 458
+Masking 100%
+Sorting by abundance 100%
+Counting k-mers 100%
+Detecting chimeras 100%
+Found 0 (0.0%) chimeras, 163 (97.0%) non-chimeras,
+and 5 (3.0%) borderline sequences in 168 unique sequences.
+Taking abundance information into account, this corresponds to
+0 (0.0%) chimeras, 1457 (99.7%) non-chimeras,
+and 5 (0.3%) borderline sequences in 1462 total sequences.
+vsearch v2.29.1_macos_aarch64, 8.0GB RAM, 8 cores
+https://github.com/torognes/vsearch
+
+Reading file reads.trim.contigs.good.unique.good.filter.unique.precluster.temp3.temp 100%
+69724 nt in 157 seqs, min 438, max 465, avg 444
+Masking 100%
+Sorting by abundance 100%
+Counting k-mers 100%
+Detecting chimeras 100%
+Found 0 (0.0%) chimeras, 154 (98.1%) non-chimeras,
+and 3 (1.9%) borderline sequences in 157 unique sequences.
+Taking abundance information into account, this corresponds to
+0 (0.0%) chimeras, 6886 (100.0%) non-chimeras,
+and 3 (0.0%) borderline sequences in 6889 total sequences.
+vsearch v2.29.1_macos_aarch64, 8.0GB RAM, 8 cores
+https://github.com/torognes/vsearch
+
+Reading file reads.trim.contigs.good.unique.good.filter.unique.precluster.temp 100%
+18841 nt in 42 seqs, min 439, max 465, avg 449
+Masking 100%
+Sorting by abundance 100%
+Counting k-mers 100%
+Detecting chimeras 100%
+Found 0 (0.0%) chimeras, 40 (95.2%) non-chimeras,
+and 2 (4.8%) borderline sequences in 42 unique sequences.
+Taking abundance information into account, this corresponds to
+0 (0.0%) chimeras, 745 (99.7%) non-chimeras,
+and 2 (0.3%) borderline sequences in 747 total sequences.
+vsearch v2.29.1_macos_aarch64, 8.0GB RAM, 8 cores
+https://github.com/torognes/vsearch
+
+Reading file reads.trim.contigs.good.unique.good.filter.unique.precluster.temp1.temp 100%
+33082 nt in 74 seqs, min 440, max 465, avg 447
+Masking 100%
+Sorting by abundance 100%
+Counting k-mers 100%
+Detecting chimeras 100%
+Found 2 (2.7%) chimeras, 71 (95.9%) non-chimeras,
+and 1 (1.4%) borderline sequences in 74 unique sequences.
+Taking abundance information into account, this corresponds to
+2 (0.1%) chimeras, 3149 (99.9%) non-chimeras,
+and 1 (0.0%) borderline sequences in 3152 total sequences.
+vsearch v2.29.1_macos_aarch64, 8.0GB RAM, 8 cores
+https://github.com/torognes/vsearch
+
+Reading file reads.trim.contigs.good.unique.good.filter.unique.precluster.temp2.temp 100%
+12158 nt in 27 seqs, min 440, max 465, avg 450
+Masking 100%
+Sorting by abundance 100%
+Counting k-mers 100%
+Detecting chimeras 100%
+Found 0 (0.0%) chimeras, 27 (100.0%) non-chimeras,
+and 0 (0.0%) borderline sequences in 27 unique sequences.
+Taking abundance information into account, this corresponds to
+0 (0.0%) chimeras, 389 (100.0%) non-chimeras,
+and 0 (0.0%) borderline sequences in 389 total sequences.
+vsearch v2.29.1_macos_aarch64, 8.0GB RAM, 8 cores
+https://github.com/torognes/vsearch
+
+Reading file reads.trim.contigs.good.unique.good.filter.unique.precluster.temp3.temp 100%
+22413 nt in 50 seqs, min 440, max 465, avg 448
+Masking 100%
+Sorting by abundance 100%
+Counting k-mers 100%
+Detecting chimeras 100%
+Found 0 (0.0%) chimeras, 50 (100.0%) non-chimeras,
+and 0 (0.0%) borderline sequences in 50 unique sequences.
+Taking abundance information into account, this corresponds to
+0 (0.0%) chimeras, 591 (100.0%) non-chimeras,
+and 0 (0.0%) borderline sequences in 591 total sequences.
+vsearch v2.29.1_macos_aarch64, 8.0GB RAM, 8 cores
+https://github.com/torognes/vsearch
+
+Reading file reads.trim.contigs.good.unique.good.filter.unique.precluster.temp2.temp 100%
+11058 nt in 25 seqs, min 440, max 445, avg 442
+Masking 100%
+Sorting by abundance 100%
+Counting k-mers 100%
+Detecting chimeras 100%
+Found 0 (0.0%) chimeras, 25 (100.0%) non-chimeras,
+and 0 (0.0%) borderline sequences in 25 unique sequences.
+Taking abundance information into account, this corresponds to
+0 (0.0%) chimeras, 339 (100.0%) non-chimeras,
+and 0 (0.0%) borderline sequences in 339 total sequences.
+vsearch v2.29.1_macos_aarch64, 8.0GB RAM, 8 cores
+https://github.com/torognes/vsearch
+
+Reading file reads.trim.contigs.good.unique.good.filter.unique.precluster.temp3.temp 100%
+267572 nt in 599 seqs, min 438, max 465, avg 447
+Masking 100%
+Sorting by abundance 100%
+Counting k-mers 100%
+Detecting chimeras 100%
+Found 4 (0.7%) chimeras, 570 (95.2%) non-chimeras,
+and 25 (4.2%) borderline sequences in 599 unique sequences.
+Taking abundance information into account, this corresponds to
+15 (0.2%) chimeras, 6254 (99.2%) non-chimeras,
+and 34 (0.5%) borderline sequences in 6303 total sequences.
+
+mothur > chimera.vsearch(fasta=current,count=current,dereplicate=t)
+Using reads.trim.contigs.good.unique.good.filter.unique.precluster.count_table as input file for the count parameter.
+Using reads.trim.contigs.good.unique.good.filter.unique.precluster.fasta as input file for the fasta parameter.
+
+Using 4 processors.
+Using vsearch version v2.29.1.
+Checking sequences from reads.trim.contigs.good.unique.good.filter.unique.precluster.fasta ...
+
+/******************************************/
+Splitting by sample: 
+
+Using 4 processors.
+
+Selecting sequences for groups S01-S02-S03-S04-S05-S06-S07
+
+
+Selecting sequences for groups S08-S09-S10-S11-S12-S13-S14
+
+
+Selecting sequences for groups S15-S16-S17-S18-S19-S20-S21-S22
+
+
+Selecting sequences for groups S23-S24-S25-S26-S27-S28-S29-S30
+
+Selected 111 sequences from S01.
+Selected 13 sequences from S02.
+Selected 72 sequences from S03.
+Selected 77 sequences from S04.
+Selected 48 sequences from S05.
+Selected 72 sequences from S06.
+Selected 42 sequences from S07.
+Selected 116 sequences from S08.
+Selected 85 sequences from S09.
+Selected 215 sequences from S10.
+Selected 27 sequences from S11.
+Selected 37 sequences from S12.
+Selected 32 sequences from S13.
+Selected 74 sequences from S14.
+Selected 216 sequences from S15.
+Selected 435 sequences from S16.
+Selected 28 sequences from S17.
+Selected 49 sequences from S18.
+Selected 74 sequences from S19.
+Selected 168 sequences from S20.
+Selected 27 sequences from S21.
+Selected 25 sequences from S22.
+Selected 413 sequences from S23.
+Selected 164 sequences from S24.
+Selected 91 sequences from S25.
+Selected 73 sequences from S26.
+Selected 270 sequences from S27.
+Selected 157 sequences from S28.
+Selected 50 sequences from S29.
+Selected 599 sequences from S30.
+
+It took 0 seconds to split the dataset by sample.
+/******************************************/
+
+It took 0 secs to check 111 sequences from group S01.
+
+It took 0 secs to check 116 sequences from group S08.
+
+It took 1 secs to check 216 sequences from group S15.
+
+It took 1 secs to check 413 sequences from group S23.
+
+It took 1 secs to check 13 sequences from group S02.
+
+It took 2 secs to check 85 sequences from group S09.
+
+It took 1 secs to check 435 sequences from group S16.
+
+It took 2 secs to check 164 sequences from group S24.
+
+It took 2 secs to check 72 sequences from group S03.
+
+It took 1 secs to check 215 sequences from group S10.
+
+It took 1 secs to check 28 sequences from group S17.
+
+It took 0 secs to check 91 sequences from group S25.
+
+It took 0 secs to check 77 sequences from group S04.
+
+It took 0 secs to check 27 sequences from group S11.
+
+It took 0 secs to check 49 sequences from group S18.
+
+It took 1 secs to check 73 sequences from group S26.
+
+It took 1 secs to check 48 sequences from group S05.
+
+It took 1 secs to check 37 sequences from group S12.
+
+It took 1 secs to check 74 sequences from group S19.
+
+It took 0 secs to check 270 sequences from group S27.
+
+It took 0 secs to check 72 sequences from group S06.
+
+It took 0 secs to check 32 sequences from group S13.
+
+It took 1 secs to check 168 sequences from group S20.
+
+It took 1 secs to check 157 sequences from group S28.
+
+It took 1 secs to check 42 sequences from group S07.
+
+It took 1 secs to check 74 sequences from group S14.
+
+It took 0 secs to check 27 sequences from group S21.
+
+It took 0 secs to check 50 sequences from group S29.
+
+It took 0 secs to check 25 sequences from group S22.
+
+It took 1 secs to check 599 sequences from group S30.
+It took 6 secs to check 3860 sequences.
+
+
+Removing chimeras from your input files:
+/******************************************/
+Running command: remove.seqs(fasta=reads.trim.contigs.good.unique.good.filter.unique.precluster.fasta, accnos=reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.accnos)
+Removed 8 sequences from reads.trim.contigs.good.unique.good.filter.unique.precluster.fasta.
+
+Output File Names:
+reads.trim.contigs.good.unique.good.filter.unique.precluster.pick.fasta
+
+/******************************************/
+
+Output File Names:
+reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.count_table
+reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.chimeras
+reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.accnos
+reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.fasta
+
+
+mothur > summary.seqs(fasta=current,count=current)
+Using reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.count_table as input file for the count parameter.
+Using reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.fasta as input file for the fasta parameter.
+
+Using 4 processors.
+
+		Start	End	NBases	Ambigs	Polymer	NumSeqs
+Minimum:	1	472	435	0	4	1
+2.5%-tile:	1	472	440	0	4	2512
+25%-tile:	1	472	440	0	4	25117
+Median: 	1	472	447	0	5	50233
+75%-tile:	1	472	465	0	6	75349
+97.5%-tile:	1	472	465	0	7	97954
+Maximum:	1	472	465	0	8	100465
+Mean:	1	472	451	0	5
+# of unique seqs:	3746
+total # of seqs:	100465
+
+It took 0 secs to summarize 100465 sequences.
+
+Output File Names:
+reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.summary
+
+
+mothur > classify.seqs(fasta=current,count=current,reference=trainset9_032012.pds.fasta,taxonomy=trainset9_032012.pds.tax)
+Using reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.count_table as input file for the count parameter.
+Using reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.fasta as input file for the fasta parameter.
+
+Using 4 processors.
+Generating search database...    DONE.
+It took 5 seconds generate search database.
+
+Reading in the trainset9_032012.pds.tax taxonomy...	DONE.
+Calculating template taxonomy tree...     DONE.
+Calculating template probabilities...     DONE.
+It took 10 seconds get probabilities.
+Classifying sequences from reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.fasta ...
+100
+100
+100
+100
+200
+200
+200
+200
+300
+300
+300
+300
+400
+400
+400
+400
+500
+500
+500
+500
+600
+600
+600
+600
+700
+700
+700
+700
+800
+800
+800
+800
+900
+900
+900
+900
+937
+936
+936
+937
+
+It took 26 secs to classify 3746 sequences.
+
+
+It took 0 secs to create the summary file for 3746 sequences.
+
+
+Output File Names: 
+reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.pds.wang.taxonomy
+reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.pds.wang.tax.summary
+
+
+mothur > remove.lineage(fasta=current,count=current,taxonomy=current,taxon=Chloroplast-Mitochondria-unknown-Archaea-Eukaryota)
+Using reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.count_table as input file for the count parameter.
+Using reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.fasta as input file for the fasta parameter.
+Using reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.pds.wang.taxonomy as input file for the taxonomy parameter.
+
+*** No contaminants to remove ***
+
+Output File Names:
+reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.pds.wang.pick.taxonomy
+
+
+mothur > summary.tax(taxonomy=current,count=current)
+Using reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.count_table as input file for the count parameter.
+Using reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.pds.wang.pick.taxonomy as input file for the taxonomy parameter.
+
+It took 0 secs to create the summary file for 100465 sequences.
+
+
+Output File Names: 
+reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.pds.wang.pick.tax.summary
+
+
+mothur > rename.file(fasta=current,count=current,taxonomy=current,prefix=final)
+Using reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.count_table as input file for the count parameter.
+Using reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.fasta as input file for the fasta parameter.
+Using reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.pds.wang.pick.taxonomy as input file for the taxonomy parameter.
+
+Current files saved by mothur:
+accnos=reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.accnos
+fasta=final.fasta
+taxonomy=final.taxonomy
+contigsreport=reads.contigs_report
+count=final.count_table
+processors=4
+summary=reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.summary
+
+mothur > dist.seqs(fasta=final.fasta,cutoff=0.03)
+
+Using 4 processors.
+
+Sequence	Time	Num_Dists_Below_Cutoff
+0	0	0
+100	1	577
+200	1	2328
+300	1	5413
+1900	1	5202
+400	1	9304
+500	1	15092
+2700	1	21222
+600	1	21879
+3300	1	23380
+700	2	30515
+2000	2	33414
+800	2	41299
+900	3	53127
+2800	3	53822
+2100	3	60353
+1000	3	63237
+3400	3	69624
+1100	4	76227
+2200	4	89131
+1200	4	90095
+2900	4	91195
+1300	5	107237
+3500	5	119016
+2300	5	117209
+1400	6	122272
+3000	6	128564
+1500	6	141526
+2400	6	145141
+3600	7	165258
+1600	7	163680
+3100	7	167394
+2500	8	175435
+1700	8	182759
+3700	9	213197
+1800	9	203644
+3200	9	208712
+2600	9	205751
+3745	10	230933
+2647	10	222201
+1872	10	221735
+3243	10	229942
+
+It took 10 secs to find distances for 3746 sequences. 904811 distances below cutoff 0.03.
+
+
+Output File Names: 
+final.dist
+
+
+mothur > cluster(column=final.dist,count=final.count_table)
+
+Using 4 processors.
+
+You did not set a cutoff, using 0.03.
+
+Clustering final.dist
+
+0.03
+
+
+iter	time	label	num_otus	cutoff	tp	tn	fp	fn	sensitivity	specificity	ppv	npv	fdr	accuracy	mcc	f1score
+0	0	0.03	3746	0.03	0	6.10957e+06	0	904811	0	1	0	0.871006	1	0.871006	0	0	
+1	1	0.03	42	0.03	894827	6.10131e+06	8267	9984	0.988966	0.998647	0.990846	0.998366	0.990846	0.997398	0.988412	0.989905	
+2	0	0.03	34	0.03	896513	6.09985e+06	9727	8298	0.990829	0.998408	0.989267	0.998641	0.989267	0.99743	0.988572	0.990047	
+3	1	0.03	34	0.03	896513	6.09985e+06	9727	8298	0.990829	0.998408	0.989267	0.998641	0.989267	0.99743	0.988572	0.990047	
+
+
+It took 3 seconds to cluster
+
+Output File Names: 
+final.opti_mcc.0.03.list
+final.opti_mcc.0.03.steps
+final.opti_mcc.0.03.sensspec
+
+
+mothur > make.shared(list=final.opti_mcc.0.03.list,count=final.count_table,label=0.03)
+0.03
+
+Output File Names:
+final.opti_mcc.0.03.shared
+
+
+mothur > classify.otu(list=final.opti_mcc.0.03.list,count=final.count_table,taxonomy=final.taxonomy,label=0.03)
+0.03
+
+Output File Names: 
+final.opti_mcc.0.03.0.03.cons.taxonomy
+final.opti_mcc.0.03.0.03.cons.tax.summary
+
+
+mothur > make.shared(count=final.count_table)
+ASV
+
+Output File Names:
+final.asv.list
+final.asv.shared
+
+
+mothur > classify.otu(list=final.asv.list,count=final.count_table,taxonomy=final.taxonomy,label=ASV)
+ASV
+
+Output File Names: 
+final.asv.ASV.cons.taxonomy
+final.asv.ASV.cons.tax.summary
+
+
+mothur > phylotype(taxonomy=final.taxonomy)
+1
+2
+3
+4
+5
+6
+
+Output File Names: 
+final.tx.sabund
+final.tx.rabund
+final.tx.list
+
+
+mothur > make.shared(list=final.tx.list,count=final.count_table,label=1)
+1
+
+Output File Names:
+final.tx.shared
+
+
+mothur > classify.otu(list=final.tx.list,count=final.count_table,taxonomy=final.taxonomy,label=1)
+1
+
+Output File Names: 
+final.tx.1.cons.taxonomy
+final.tx.1.cons.tax.summary
+final.tx.2.cons.taxonomy
+final.tx.2.cons.tax.summary
+final.tx.3.cons.taxonomy
+final.tx.3.cons.tax.summary
+final.tx.4.cons.taxonomy
+final.tx.4.cons.tax.summary
+final.tx.5.cons.taxonomy
+final.tx.5.cons.tax.summary
+final.tx.6.cons.taxonomy
+final.tx.6.cons.tax.summary
+
+
+mothur > count.groups(shared=final.opti_mcc.0.03.shared)
+S01 contains 1162.
+S02 contains 336.
+S03 contains 2535.
+S04 contains 712.
+S05 contains 1603.
+S06 contains 2163.
+S07 contains 747.
+S08 contains 2122.
+S09 contains 2134.
+S10 contains 17917.
+S11 contains 351.
+S12 contains 174.
+S13 contains 1669.
+S14 contains 3150.
+S15 contains 2835.
+S16 contains 3917.
+S17 contains 140.
+S18 contains 3975.
+S19 contains 2601.
+S20 contains 1462.
+S21 contains 389.
+S22 contains 339.
+S23 contains 16066.
+S24 contains 604.
+S25 contains 1510.
+S26 contains 1445.
+S27 contains 14639.
+S28 contains 6889.
+S29 contains 591.
+S30 contains 6288.
+
+Size of smallest group: 140.
+
+Total seqs: 100465.
+
+Output File Names: 
+final.opti_mcc.0.03.count.summary
+
+
+mothur > sub.sample(shared=final.opti_mcc.0.03.shared)
+0.03 
+Sampling 140 from each group.
+
+Output File Names: 
+final.opti_mcc.0.03.0.03.subsample.shared
+
+
+mothur > rarefaction.single(shared=final.opti_mcc.0.03.shared,calc=sobs,freq=100)
+
+Using 4 processors.
+
+Processing group S01
+
+0.03
+
+Processing group S02
+
+0.03
+
+Processing group S03
+
+0.03
+
+Processing group S04
+
+0.03
+
+Processing group S05
+
+0.03
+
+Processing group S06
+
+0.03
+
+Processing group S07
+
+0.03
+
+Processing group S08
+
+0.03
+
+Processing group S09
+
+0.03
+
+Processing group S10
+
+0.03
+
+Processing group S11
+
+0.03
+
+Processing group S12
+
+0.03
+
+Processing group S13
+
+0.03
+
+Processing group S14
+
+0.03
+
+Processing group S15
+
+0.03
+
+Processing group S16
+
+0.03
+
+Processing group S17
+
+0.03
+
+Processing group S18
+
+0.03
+
+Processing group S19
+
+0.03
+
+Processing group S20
+
+0.03
+
+Processing group S21
+
+0.03
+
+Processing group S22
+
+0.03
+
+Processing group S23
+
+0.03
+
+Processing group S24
+
+0.03
+
+Processing group S25
+
+0.03
+
+Processing group S26
+
+0.03
+
+Processing group S27
+
+0.03
+
+Processing group S28
+
+0.03
+
+Processing group S29
+
+0.03
+
+Processing group S30
+
+0.03
+
+It took 3 secs to run rarefaction.single.
+
+Output File Names: 
+final.opti_mcc.0.03.groups.rarefaction
+
+
+mothur > summary.single(shared=final.opti_mcc.0.03.shared,calc=nseqs-coverage-sobs-invsimpson,subsample=t)
+
+Setting subsample size to 140.
+
+Processing group S01
+
+0.03
+
+Processing group S02
+
+0.03
+
+Processing group S03
+
+0.03
+
+Processing group S04
+
+0.03
+
+Processing group S05
+
+0.03
+
+Processing group S06
+
+0.03
+
+Processing group S07
+
+0.03
+
+Processing group S08
+
+0.03
+
+Processing group S09
+
+0.03
+
+Processing group S10
+
+0.03
+
+Processing group S11
+
+0.03
+
+Processing group S12
+
+0.03
+
+Processing group S13
+
+0.03
+
+Processing group S14
+
+0.03
+
+Processing group S15
+
+0.03
+
+Processing group S16
+
+0.03
+
+Processing group S17
+
+0.03
+
+Processing group S18
+
+0.03
+
+Processing group S19
+
+0.03
+
+Processing group S20
+
+0.03
+
+Processing group S21
+
+0.03
+
+Processing group S22
+
+0.03
+
+Processing group S23
+
+0.03
+
+Processing group S24
+
+0.03
+
+Processing group S25
+
+0.03
+
+Processing group S26
+
+0.03
+
+Processing group S27
+
+0.03
+
+Processing group S28
+
+0.03
+
+Processing group S29
+
+0.03
+
+Processing group S30
+
+0.03
+
+Output File Names: 
+final.opti_mcc.0.03.groups.ave-std.summary
+
+
+mothur > dist.shared(shared=final.opti_mcc.0.03.shared,calc=braycurtis-jclass,subsample=t)
+
+Using 4 processors.
+0.03 
+
+Setting sample size to 140.
+
+100
+100
+100
+100
+200
+200
+200
+200
+250
+250
+250
+250
+
+It took 0 seconds to run dist.shared.
+
+Output File Names: 
+final.opti_mcc.0.03.braycurtis.0.03.lt.ave.dist
+final.opti_mcc.0.03.braycurtis.0.03.lt.std.dist
+final.opti_mcc.0.03.jclass.0.03.lt.ave.dist
+final.opti_mcc.0.03.jclass.0.03.lt.std.dist
+
+
+mothur > pcoa(phylip=final.opti_mcc.0.03.braycurtis.0.03.lt.ave.dist)
+
+Processing...
+Rsq 1 axis: 0.312565
+Rsq 2 axis: 0.380303
+Rsq 3 axis: 0.660809
+
+Output File Names: 
+final.opti_mcc.0.03.braycurtis.0.03.lt.ave.pcoa.axes
+final.opti_mcc.0.03.braycurtis.0.03.lt.ave.pcoa.loadings
+
+
+mothur > quit()
+
+
+It took 168 seconds to run 40 commands from workshop.batch batch file.
+
+Logfile : mothur.1794758306.logfile
+
+
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<^>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<^>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<^>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+Detected 1 [WARNING] messages, please review.
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<^>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<^>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<^>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

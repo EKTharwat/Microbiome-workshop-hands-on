@@ -1,0 +1,41 @@
+{
+  "version": "v1.48.6",
+  "resources": [
+    {
+      "name": "Mothur.linux_arm64.noReadline.zip",
+      "url": "https://github.com/mothur/mothur/releases/download/v1.48.6/Mothur.linux_arm64.noReadline.zip",
+      "sha256": "6b2c559c29a81a82fc6c5cc3cbc9a05dcc72c2ffe78f004e6b1499c9fe5fde20"
+    },
+    {
+      "name": "Mothur.linux_x86_64.noReadline.zip",
+      "url": "https://github.com/mothur/mothur/releases/download/v1.48.6/Mothur.linux_x86_64.noReadline.zip",
+      "sha256": "f24dfe61e04772f1cafa216c1e89ad94f2b0a7a9c3006ba7d93a6b1144a3f9c9"
+    },
+    {
+      "name": "Mothur.OSX_arm64.zip",
+      "url": "https://github.com/mothur/mothur/releases/download/v1.48.6/Mothur.OSX_arm64.zip",
+      "sha256": "e413bb13b83eaf070d1c5e7dabb2621903241674b48eaf54347fb98f70455c4c"
+    },
+    {
+      "name": "Mothur.OSX_x86_64.zip",
+      "url": "https://github.com/mothur/mothur/releases/download/v1.48.6/Mothur.OSX_x86_64.zip",
+      "sha256": "6fc9c0ece8232e2b1a491d7609973b03ee40d27c15a99126bfe1fa9b74fe1094"
+    },
+    {
+      "name": "Mothur.win.zip",
+      "url": "https://github.com/mothur/mothur/releases/download/v1.48.6/Mothur.win.zip",
+      "sha256": "96dc5c6a55d154e6bd61b7ffebb86069cc548fd8b14ceeb2cce9716bd0218bbd"
+    },
+    {
+      "name": "silva.bacteria.zip",
+      "url": "https://mothur.s3.us-east-2.amazonaws.com/wiki/silva.bacteria.zip",
+      "sha256": "cd614303eaade6212a86bbb667be6be4c05f8c1c4f323c6d47035c4c8370039d"
+    },
+    {
+      "name": "trainset9_032012.pds.zip",
+      "url": "https://mothur.s3.us-east-2.amazonaws.com/wiki/trainset9_032012.pds.zip",
+      "sha256": "0d3d6de6944c6fb68fc38dd49da043ba6325844bf17bc6017e93bf52d52f271e"
+    }
+  ],
+  "workshop_reads_sha256": "5789da93ddf5817bb4f30477e352462f3fbf5fb2a84dcdd9a90084c69bc2b1fc"
+}

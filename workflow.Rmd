@@ -1,0 +1,2057 @@
+---
+title: "Microbiome workshop: step-by-step analysis"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    theme: flatly
+---
+
+## Prepare the workshop
+
+Set the working directory to the workshop folder. The path is found automatically: if R is already in the workshop folder (as it is when you knit) nothing changes; otherwise the folder is taken from workflow.Rmd open in RStudio, or a file window asks you to select workflow.Rmd. The stopifnot() line stops with an error if the folder is not the right one.
+
+```{r step-000}
+if (!file.exists("workflow.Rmd")) {
+  open_file <- if (requireNamespace("rstudioapi", quietly = TRUE) && rstudioapi::isAvailable())
+    rstudioapi::getSourceEditorContext()$path else ""
+  if (!nzchar(open_file) || basename(open_file) != "workflow.Rmd") open_file <- file.choose()
+  setwd(dirname(normalizePath(open_file)))
+}
+stopifnot(file.exists("workflow.Rmd"), dir.exists("scripts"), dir.exists("vendor"))
+getwd()
+```
+
+Run this one command in RStudio. It installs packages, detects your operating system, selects the bundled mothur version, and prepares the anonymized inputs.
+
+Check packages and prepare mothur and the data.
+
+```{r step-001}
+source("scripts/prepare_packages.R")
+```
+
+## Run mothur commands one by one
+
+Each command runs in the active mothur session. Run each complete mothur block: it sends one command and streams new output to the Console until that command finishes. A diagnostic get.current command shows the files available to mothur.
+
+Choose where to save the mothur output.
+
+```{r step-002}
+mothur_log <- file.path(run_dir, "mothur-console.log")
+```
+
+Start one persistent mothur session from R.
+
+```{r step-003}
+{
+  mothur_process <- processx::process$new(mothur, stdin = "|", stdout = mothur_log, stderr = "2>&1", wd = run_dir, cleanup = TRUE)
+  Sys.sleep(0.3)
+  if (!mothur_process$is_alive()) stop("Mothur could not start; rerun setup to prepare a fresh executable")
+}
+```
+
+Start tracking output already shown in the Console.
+
+```{r step-004}
+mothur_cursor <- 0L
+```
+
+### Assemble and screen reads
+
+Run set.current and watch its output in the RStudio Console. Copy and run this complete block.
+
+```{r step-005}
+{
+  if (!mothur_process$is_alive()) stop("The mothur session has closed. Run setup and the three session-start steps again.")
+  mothur_command_start <- length(readLines(mothur_log, warn = FALSE))
+  mothur_target <- sum(grepl("Current files saved by mothur:", readLines(mothur_log, warn = FALSE), fixed = TRUE)) + 1L
+  cat("mothur > set.current(processors=4)\n")
+  flush.console()
+  mothur_process$write_input("set.current(processors=4)\nget.current()\n")
+  repeat {
+    mothur_output <- readLines(mothur_log, warn = FALSE)
+    if (length(mothur_output) > mothur_cursor) {
+      cat(paste(mothur_output[seq.int(mothur_cursor + 1L, length(mothur_output))], collapse = "\n"), "\n")
+      flush.console()
+      mothur_cursor <- length(mothur_output)
+    }
+    if (sum(grepl("Current files saved by mothur:", mothur_output, fixed = TRUE)) >= mothur_target) break
+    if (!mothur_process$is_alive()) stop("Mothur stopped; check the output above")
+    Sys.sleep(0.2)
+  }
+  if (any(grepl("[ERROR]", mothur_output[seq_along(mothur_output) > mothur_command_start], fixed = TRUE))) stop("Mothur reported an error; check the output above")
+}
+```
+
+Run set.seed and watch its output in the RStudio Console. Copy and run this complete block.
+
+```{r step-010}
+{
+  if (!mothur_process$is_alive()) stop("The mothur session has closed. Run setup and the three session-start steps again.")
+  mothur_command_start <- length(readLines(mothur_log, warn = FALSE))
+  mothur_target <- sum(grepl("Current files saved by mothur:", readLines(mothur_log, warn = FALSE), fixed = TRUE)) + 1L
+  cat("mothur > set.seed(seed=20261114)\n")
+  flush.console()
+  mothur_process$write_input("set.seed(seed=20261114)\nget.current()\n")
+  repeat {
+    mothur_output <- readLines(mothur_log, warn = FALSE)
+    if (length(mothur_output) > mothur_cursor) {
+      cat(paste(mothur_output[seq.int(mothur_cursor + 1L, length(mothur_output))], collapse = "\n"), "\n")
+      flush.console()
+      mothur_cursor <- length(mothur_output)
+    }
+    if (sum(grepl("Current files saved by mothur:", mothur_output, fixed = TRUE)) >= mothur_target) break
+    if (!mothur_process$is_alive()) stop("Mothur stopped; check the output above")
+    Sys.sleep(0.2)
+  }
+  if (any(grepl("[ERROR]", mothur_output[seq_along(mothur_output) > mothur_command_start], fixed = TRUE))) stop("Mothur reported an error; check the output above")
+}
+```
+
+Run make.contigs and watch its output in the RStudio Console. Copy and run this complete block.
+
+```{r step-015}
+{
+  if (!mothur_process$is_alive()) stop("The mothur session has closed. Run setup and the three session-start steps again.")
+  mothur_command_start <- length(readLines(mothur_log, warn = FALSE))
+  mothur_target <- sum(grepl("Current files saved by mothur:", readLines(mothur_log, warn = FALSE), fixed = TRUE)) + 1L
+  cat("mothur > make.contigs(file=reads.files)\n")
+  flush.console()
+  if (!all(file.exists(file.path(run_dir, c("reads.files"))))) stop("Required input file is missing. Complete the preceding workflow steps before this command.")
+  mothur_process$write_input("make.contigs(file=reads.files)\nget.current()\n")
+  repeat {
+    mothur_output <- readLines(mothur_log, warn = FALSE)
+    if (length(mothur_output) > mothur_cursor) {
+      cat(paste(mothur_output[seq.int(mothur_cursor + 1L, length(mothur_output))], collapse = "\n"), "\n")
+      flush.console()
+      mothur_cursor <- length(mothur_output)
+    }
+    if (sum(grepl("Current files saved by mothur:", mothur_output, fixed = TRUE)) >= mothur_target) break
+    if (!mothur_process$is_alive()) stop("Mothur stopped; check the output above")
+    Sys.sleep(0.2)
+  }
+  if (any(grepl("[ERROR]", mothur_output[seq_along(mothur_output) > mothur_command_start], fixed = TRUE))) stop("Mothur reported an error; check the output above")
+}
+```
+
+Run summary.seqs and watch its output in the RStudio Console. Copy and run this complete block.
+
+```{r step-020}
+{
+  if (!mothur_process$is_alive()) stop("The mothur session has closed. Run setup and the three session-start steps again.")
+  mothur_command_start <- length(readLines(mothur_log, warn = FALSE))
+  mothur_target <- sum(grepl("Current files saved by mothur:", readLines(mothur_log, warn = FALSE), fixed = TRUE)) + 1L
+  cat("mothur > summary.seqs(fasta=reads.trim.contigs.fasta,count=reads.contigs.count_table)\n")
+  flush.console()
+  if (!all(file.exists(file.path(run_dir, c("reads.trim.contigs.fasta", "reads.contigs.count_table"))))) stop("Required input file is missing. Complete the preceding workflow steps before this command.")
+  mothur_process$write_input("summary.seqs(fasta=reads.trim.contigs.fasta,count=reads.contigs.count_table)\nget.current()\n")
+  repeat {
+    mothur_output <- readLines(mothur_log, warn = FALSE)
+    if (length(mothur_output) > mothur_cursor) {
+      cat(paste(mothur_output[seq.int(mothur_cursor + 1L, length(mothur_output))], collapse = "\n"), "\n")
+      flush.console()
+      mothur_cursor <- length(mothur_output)
+    }
+    if (sum(grepl("Current files saved by mothur:", mothur_output, fixed = TRUE)) >= mothur_target) break
+    if (!mothur_process$is_alive()) stop("Mothur stopped; check the output above")
+    Sys.sleep(0.2)
+  }
+  if (any(grepl("[ERROR]", mothur_output[seq_along(mothur_output) > mothur_command_start], fixed = TRUE))) stop("Mothur reported an error; check the output above")
+}
+```
+
+Run screening once for this stage. The initial screen checks sequence quality; the later screen checks alignment coordinates. Copy and run this complete block.
+
+```{r step-025}
+{
+  if (!mothur_process$is_alive()) stop("The mothur session has closed. Run setup and the three session-start steps again.")
+  mothur_command_start <- length(readLines(mothur_log, warn = FALSE))
+  mothur_target <- sum(grepl("Current files saved by mothur:", readLines(mothur_log, warn = FALSE), fixed = TRUE)) + 1L
+  cat("mothur > screen.seqs(fasta=reads.trim.contigs.fasta,count=reads.contigs.count_table,maxambig=0,minlength=400,maxlength=550,maxhomop=8)\n")
+  flush.console()
+  if (file.exists(file.path(run_dir, "reads.trim.contigs.good.fasta"))) stop("Initial screening is already complete. Continue to unique.seqs; do not screen again.")
+  if (!all(file.exists(file.path(run_dir, c("reads.trim.contigs.fasta", "reads.contigs.count_table"))))) stop("Required input file is missing. Complete the preceding workflow steps before this command.")
+  mothur_process$write_input("screen.seqs(fasta=reads.trim.contigs.fasta,count=reads.contigs.count_table,maxambig=0,minlength=400,maxlength=550,maxhomop=8)\nget.current()\n")
+  repeat {
+    mothur_output <- readLines(mothur_log, warn = FALSE)
+    if (length(mothur_output) > mothur_cursor) {
+      cat(paste(mothur_output[seq.int(mothur_cursor + 1L, length(mothur_output))], collapse = "\n"), "\n")
+      flush.console()
+      mothur_cursor <- length(mothur_output)
+    }
+    if (sum(grepl("Current files saved by mothur:", mothur_output, fixed = TRUE)) >= mothur_target) break
+    if (!mothur_process$is_alive()) stop("Mothur stopped; check the output above")
+    Sys.sleep(0.2)
+  }
+  if (any(grepl("[ERROR]", mothur_output[seq_along(mothur_output) > mothur_command_start], fixed = TRUE))) stop("Mothur reported an error; check the output above")
+}
+```
+
+Run summary.seqs and watch its output in the RStudio Console. Copy and run this complete block.
+
+```{r step-030}
+{
+  if (!mothur_process$is_alive()) stop("The mothur session has closed. Run setup and the three session-start steps again.")
+  mothur_command_start <- length(readLines(mothur_log, warn = FALSE))
+  mothur_target <- sum(grepl("Current files saved by mothur:", readLines(mothur_log, warn = FALSE), fixed = TRUE)) + 1L
+  cat("mothur > summary.seqs(fasta=reads.trim.contigs.good.fasta,count=reads.contigs.count_table)\n")
+  flush.console()
+  if (!all(file.exists(file.path(run_dir, c("reads.trim.contigs.good.fasta", "reads.contigs.count_table"))))) stop("Required input file is missing. Complete the preceding workflow steps before this command.")
+  mothur_process$write_input("summary.seqs(fasta=reads.trim.contigs.good.fasta,count=reads.contigs.count_table)\nget.current()\n")
+  repeat {
+    mothur_output <- readLines(mothur_log, warn = FALSE)
+    if (length(mothur_output) > mothur_cursor) {
+      cat(paste(mothur_output[seq.int(mothur_cursor + 1L, length(mothur_output))], collapse = "\n"), "\n")
+      flush.console()
+      mothur_cursor <- length(mothur_output)
+    }
+    if (sum(grepl("Current files saved by mothur:", mothur_output, fixed = TRUE)) >= mothur_target) break
+    if (!mothur_process$is_alive()) stop("Mothur stopped; check the output above")
+    Sys.sleep(0.2)
+  }
+  if (any(grepl("[ERROR]", mothur_output[seq_along(mothur_output) > mothur_command_start], fixed = TRUE))) stop("Mothur reported an error; check the output above")
+}
+```
+
+Run unique.seqs and watch its output in the RStudio Console. Copy and run this complete block.
+
+```{r step-035}
+{
+  if (!mothur_process$is_alive()) stop("The mothur session has closed. Run setup and the three session-start steps again.")
+  mothur_command_start <- length(readLines(mothur_log, warn = FALSE))
+  mothur_target <- sum(grepl("Current files saved by mothur:", readLines(mothur_log, warn = FALSE), fixed = TRUE)) + 1L
+  cat("mothur > unique.seqs(fasta=reads.trim.contigs.good.fasta,count=reads.contigs.count_table)\n")
+  flush.console()
+  if (!all(file.exists(file.path(run_dir, c("reads.trim.contigs.good.fasta", "reads.contigs.count_table"))))) stop("Required input file is missing. Complete the preceding workflow steps before this command.")
+  mothur_process$write_input("unique.seqs(fasta=reads.trim.contigs.good.fasta,count=reads.contigs.count_table)\nget.current()\n")
+  repeat {
+    mothur_output <- readLines(mothur_log, warn = FALSE)
+    if (length(mothur_output) > mothur_cursor) {
+      cat(paste(mothur_output[seq.int(mothur_cursor + 1L, length(mothur_output))], collapse = "\n"), "\n")
+      flush.console()
+      mothur_cursor <- length(mothur_output)
+    }
+    if (sum(grepl("Current files saved by mothur:", mothur_output, fixed = TRUE)) >= mothur_target) break
+    if (!mothur_process$is_alive()) stop("Mothur stopped; check the output above")
+    Sys.sleep(0.2)
+  }
+  if (any(grepl("[ERROR]", mothur_output[seq_along(mothur_output) > mothur_command_start], fixed = TRUE))) stop("Mothur reported an error; check the output above")
+}
+```
+
+### Trim the reference and align
+
+Run summary.seqs and watch its output in the RStudio Console. Copy and run this complete block.
+
+```{r step-040}
+{
+  if (!mothur_process$is_alive()) stop("The mothur session has closed. Run setup and the three session-start steps again.")
+  mothur_command_start <- length(readLines(mothur_log, warn = FALSE))
+  mothur_target <- sum(grepl("Current files saved by mothur:", readLines(mothur_log, warn = FALSE), fixed = TRUE)) + 1L
+  cat("mothur > summary.seqs(fasta=reads.trim.contigs.good.unique.fasta,count=reads.trim.contigs.good.count_table)\n")
+  flush.console()
+  if (!all(file.exists(file.path(run_dir, c("reads.trim.contigs.good.unique.fasta", "reads.trim.contigs.good.count_table"))))) stop("Required input file is missing. Complete the preceding workflow steps before this command.")
+  mothur_process$write_input("summary.seqs(fasta=reads.trim.contigs.good.unique.fasta,count=reads.trim.contigs.good.count_table)\nget.current()\n")
+  repeat {
+    mothur_output <- readLines(mothur_log, warn = FALSE)
+    if (length(mothur_output) > mothur_cursor) {
+      cat(paste(mothur_output[seq.int(mothur_cursor + 1L, length(mothur_output))], collapse = "\n"), "\n")
+      flush.console()
+      mothur_cursor <- length(mothur_output)
+    }
+    if (sum(grepl("Current files saved by mothur:", mothur_output, fixed = TRUE)) >= mothur_target) break
+    if (!mothur_process$is_alive()) stop("Mothur stopped; check the output above")
+    Sys.sleep(0.2)
+  }
+  if (any(grepl("[ERROR]", mothur_output[seq_along(mothur_output) > mothur_command_start], fixed = TRUE))) stop("Mothur reported an error; check the output above")
+}
+```
+
+Run pcr.seqs and watch its output in the RStudio Console. Copy and run this complete block.
+
+```{r step-045}
+{
+  if (!mothur_process$is_alive()) stop("The mothur session has closed. Run setup and the three session-start steps again.")
+  mothur_command_start <- length(readLines(mothur_log, warn = FALSE))
+  mothur_target <- sum(grepl("Current files saved by mothur:", readLines(mothur_log, warn = FALSE), fixed = TRUE)) + 1L
+  cat("mothur > pcr.seqs(fasta=silva.bacteria.fasta,start=6000,end=26000,keepdots=F)\n")
+  flush.console()
+  if (!all(file.exists(file.path(run_dir, c("silva.bacteria.fasta"))))) stop("Required input file is missing. Complete the preceding workflow steps before this command.")
+  mothur_process$write_input("pcr.seqs(fasta=silva.bacteria.fasta,start=6000,end=26000,keepdots=F)\nget.current()\n")
+  repeat {
+    mothur_output <- readLines(mothur_log, warn = FALSE)
+    if (length(mothur_output) > mothur_cursor) {
+      cat(paste(mothur_output[seq.int(mothur_cursor + 1L, length(mothur_output))], collapse = "\n"), "\n")
+      flush.console()
+      mothur_cursor <- length(mothur_output)
+    }
+    if (sum(grepl("Current files saved by mothur:", mothur_output, fixed = TRUE)) >= mothur_target) break
+    if (!mothur_process$is_alive()) stop("Mothur stopped; check the output above")
+    Sys.sleep(0.2)
+  }
+  if (any(grepl("[ERROR]", mothur_output[seq_along(mothur_output) > mothur_command_start], fixed = TRUE))) stop("Mothur reported an error; check the output above")
+}
+```
+
+Run rename.file and watch its output in the RStudio Console. Copy and run this complete block.
+
+```{r step-050}
+{
+  if (!mothur_process$is_alive()) stop("The mothur session has closed. Run setup and the three session-start steps again.")
+  mothur_command_start <- length(readLines(mothur_log, warn = FALSE))
+  mothur_target <- sum(grepl("Current files saved by mothur:", readLines(mothur_log, warn = FALSE), fixed = TRUE)) + 1L
+  cat("mothur > rename.file(input=silva.bacteria.pcr.fasta,new=silva.v3v4.fasta)\n")
+  flush.console()
+  if (!all(file.exists(file.path(run_dir, c("silva.bacteria.pcr.fasta"))))) stop("Required input file is missing. Complete the preceding workflow steps before this command.")
+  mothur_process$write_input("rename.file(input=silva.bacteria.pcr.fasta,new=silva.v3v4.fasta)\nget.current()\n")
+  repeat {
+    mothur_output <- readLines(mothur_log, warn = FALSE)
+    if (length(mothur_output) > mothur_cursor) {
+      cat(paste(mothur_output[seq.int(mothur_cursor + 1L, length(mothur_output))], collapse = "\n"), "\n")
+      flush.console()
+      mothur_cursor <- length(mothur_output)
+    }
+    if (sum(grepl("Current files saved by mothur:", mothur_output, fixed = TRUE)) >= mothur_target) break
+    if (!mothur_process$is_alive()) stop("Mothur stopped; check the output above")
+    Sys.sleep(0.2)
+  }
+  if (any(grepl("[ERROR]", mothur_output[seq_along(mothur_output) > mothur_command_start], fixed = TRUE))) stop("Mothur reported an error; check the output above")
+}
+```
+
+Run summary.seqs and watch its output in the RStudio Console. Copy and run this complete block.
+
+```{r step-055}
+{
+  if (!mothur_process$is_alive()) stop("The mothur session has closed. Run setup and the three session-start steps again.")
+  mothur_command_start <- length(readLines(mothur_log, warn = FALSE))
+  mothur_target <- sum(grepl("Current files saved by mothur:", readLines(mothur_log, warn = FALSE), fixed = TRUE)) + 1L
+  cat("mothur > summary.seqs(fasta=silva.v3v4.fasta)\n")
+  flush.console()
+  if (!all(file.exists(file.path(run_dir, c("silva.v3v4.fasta"))))) stop("Required input file is missing. Complete the preceding workflow steps before this command.")
+  mothur_process$write_input("summary.seqs(fasta=silva.v3v4.fasta)\nget.current()\n")
+  repeat {
+    mothur_output <- readLines(mothur_log, warn = FALSE)
+    if (length(mothur_output) > mothur_cursor) {
+      cat(paste(mothur_output[seq.int(mothur_cursor + 1L, length(mothur_output))], collapse = "\n"), "\n")
+      flush.console()
+      mothur_cursor <- length(mothur_output)
+    }
+    if (sum(grepl("Current files saved by mothur:", mothur_output, fixed = TRUE)) >= mothur_target) break
+    if (!mothur_process$is_alive()) stop("Mothur stopped; check the output above")
+    Sys.sleep(0.2)
+  }
+  if (any(grepl("[ERROR]", mothur_output[seq_along(mothur_output) > mothur_command_start], fixed = TRUE))) stop("Mothur reported an error; check the output above")
+}
+```
+
+Run align.seqs and watch its output in the RStudio Console. Copy and run this complete block.
+
+```{r step-060}
+{
+  if (!mothur_process$is_alive()) stop("The mothur session has closed. Run setup and the three session-start steps again.")
+  mothur_command_start <- length(readLines(mothur_log, warn = FALSE))
+  mothur_target <- sum(grepl("Current files saved by mothur:", readLines(mothur_log, warn = FALSE), fixed = TRUE)) + 1L
+  cat("mothur > align.seqs(fasta=reads.trim.contigs.good.unique.fasta,reference=silva.v3v4.fasta,flip=t)\n")
+  flush.console()
+  if (!all(file.exists(file.path(run_dir, c("reads.trim.contigs.good.unique.fasta", "silva.v3v4.fasta"))))) stop("Required input file is missing. Complete the preceding workflow steps before this command.")
+  mothur_process$write_input("align.seqs(fasta=reads.trim.contigs.good.unique.fasta,reference=silva.v3v4.fasta,flip=t)\nget.current()\n")
+  repeat {
+    mothur_output <- readLines(mothur_log, warn = FALSE)
+    if (length(mothur_output) > mothur_cursor) {
+      cat(paste(mothur_output[seq.int(mothur_cursor + 1L, length(mothur_output))], collapse = "\n"), "\n")
+      flush.console()
+      mothur_cursor <- length(mothur_output)
+    }
+    if (sum(grepl("Current files saved by mothur:", mothur_output, fixed = TRUE)) >= mothur_target) break
+    if (!mothur_process$is_alive()) stop("Mothur stopped; check the output above")
+    Sys.sleep(0.2)
+  }
+  if (any(grepl("[ERROR]", mothur_output[seq_along(mothur_output) > mothur_command_start], fixed = TRUE))) stop("Mothur reported an error; check the output above")
+}
+```
+
+Run summary.seqs and watch its output in the RStudio Console. Copy and run this complete block.
+
+```{r step-065}
+{
+  if (!mothur_process$is_alive()) stop("The mothur session has closed. Run setup and the three session-start steps again.")
+  mothur_command_start <- length(readLines(mothur_log, warn = FALSE))
+  mothur_target <- sum(grepl("Current files saved by mothur:", readLines(mothur_log, warn = FALSE), fixed = TRUE)) + 1L
+  cat("mothur > summary.seqs(fasta=reads.trim.contigs.good.unique.align,count=reads.trim.contigs.good.count_table)\n")
+  flush.console()
+  if (!all(file.exists(file.path(run_dir, c("reads.trim.contigs.good.unique.align", "reads.trim.contigs.good.count_table"))))) stop("Required input file is missing. Complete the preceding workflow steps before this command.")
+  mothur_process$write_input("summary.seqs(fasta=reads.trim.contigs.good.unique.align,count=reads.trim.contigs.good.count_table)\nget.current()\n")
+  repeat {
+    mothur_output <- readLines(mothur_log, warn = FALSE)
+    if (length(mothur_output) > mothur_cursor) {
+      cat(paste(mothur_output[seq.int(mothur_cursor + 1L, length(mothur_output))], collapse = "\n"), "\n")
+      flush.console()
+      mothur_cursor <- length(mothur_output)
+    }
+    if (sum(grepl("Current files saved by mothur:", mothur_output, fixed = TRUE)) >= mothur_target) break
+    if (!mothur_process$is_alive()) stop("Mothur stopped; check the output above")
+    Sys.sleep(0.2)
+  }
+  if (any(grepl("[ERROR]", mothur_output[seq_along(mothur_output) > mothur_command_start], fixed = TRUE))) stop("Mothur reported an error; check the output above")
+}
+```
+
+Run screening once for this stage. The initial screen checks sequence quality; the later screen checks alignment coordinates. Copy and run this complete block.
+
+```{r step-070}
+{
+  if (!mothur_process$is_alive()) stop("The mothur session has closed. Run setup and the three session-start steps again.")
+  mothur_command_start <- length(readLines(mothur_log, warn = FALSE))
+  mothur_target <- sum(grepl("Current files saved by mothur:", readLines(mothur_log, warn = FALSE), fixed = TRUE)) + 1L
+  cat("mothur > screen.seqs(fasta=reads.trim.contigs.good.unique.align,count=reads.trim.contigs.good.count_table,optimize=start-end,criteria=95)\n")
+  flush.console()
+  if (length(list.files(run_dir, pattern = "^reads.*\\.unique\\.good\\.align$"))) stop("Alignment-coordinate screening is already complete. Continue to the following summary and filter steps.")
+  if (!all(file.exists(file.path(run_dir, c("reads.trim.contigs.good.unique.align", "reads.trim.contigs.good.count_table"))))) stop("Required input file is missing. Complete the preceding workflow steps before this command.")
+  mothur_process$write_input("screen.seqs(fasta=reads.trim.contigs.good.unique.align,count=reads.trim.contigs.good.count_table,optimize=start-end,criteria=95)\nget.current()\n")
+  repeat {
+    mothur_output <- readLines(mothur_log, warn = FALSE)
+    if (length(mothur_output) > mothur_cursor) {
+      cat(paste(mothur_output[seq.int(mothur_cursor + 1L, length(mothur_output))], collapse = "\n"), "\n")
+      flush.console()
+      mothur_cursor <- length(mothur_output)
+    }
+    if (sum(grepl("Current files saved by mothur:", mothur_output, fixed = TRUE)) >= mothur_target) break
+    if (!mothur_process$is_alive()) stop("Mothur stopped; check the output above")
+    Sys.sleep(0.2)
+  }
+  if (any(grepl("[ERROR]", mothur_output[seq_along(mothur_output) > mothur_command_start], fixed = TRUE))) stop("Mothur reported an error; check the output above")
+}
+```
+
+Run summary.seqs and watch its output in the RStudio Console. Copy and run this complete block.
+
+```{r step-075}
+{
+  if (!mothur_process$is_alive()) stop("The mothur session has closed. Run setup and the three session-start steps again.")
+  mothur_command_start <- length(readLines(mothur_log, warn = FALSE))
+  mothur_target <- sum(grepl("Current files saved by mothur:", readLines(mothur_log, warn = FALSE), fixed = TRUE)) + 1L
+  cat("mothur > summary.seqs(fasta=reads.trim.contigs.good.unique.good.align,count=reads.trim.contigs.good.good.count_table)\n")
+  flush.console()
+  if (!all(file.exists(file.path(run_dir, c("reads.trim.contigs.good.unique.good.align", "reads.trim.contigs.good.good.count_table"))))) stop("Required input file is missing. Complete the preceding workflow steps before this command.")
+  mothur_process$write_input("summary.seqs(fasta=reads.trim.contigs.good.unique.good.align,count=reads.trim.contigs.good.good.count_table)\nget.current()\n")
+  repeat {
+    mothur_output <- readLines(mothur_log, warn = FALSE)
+    if (length(mothur_output) > mothur_cursor) {
+      cat(paste(mothur_output[seq.int(mothur_cursor + 1L, length(mothur_output))], collapse = "\n"), "\n")
+      flush.console()
+      mothur_cursor <- length(mothur_output)
+    }
+    if (sum(grepl("Current files saved by mothur:", mothur_output, fixed = TRUE)) >= mothur_target) break
+    if (!mothur_process$is_alive()) stop("Mothur stopped; check the output above")
+    Sys.sleep(0.2)
+  }
+  if (any(grepl("[ERROR]", mothur_output[seq_along(mothur_output) > mothur_command_start], fixed = TRUE))) stop("Mothur reported an error; check the output above")
+}
+```
+
+### Screen aligned coordinates, filter and classify
+
+Run filter.seqs and watch its output in the RStudio Console. Copy and run this complete block.
+
+```{r step-080}
+{
+  if (!mothur_process$is_alive()) stop("The mothur session has closed. Run setup and the three session-start steps again.")
+  mothur_command_start <- length(readLines(mothur_log, warn = FALSE))
+  mothur_target <- sum(grepl("Current files saved by mothur:", readLines(mothur_log, warn = FALSE), fixed = TRUE)) + 1L
+  cat("mothur > filter.seqs(fasta=reads.trim.contigs.good.unique.good.align,vertical=T,trump=.)\n")
+  flush.console()
+  if (!all(file.exists(file.path(run_dir, c("reads.trim.contigs.good.unique.good.align"))))) stop("Required input file is missing. Complete the preceding workflow steps before this command.")
+  mothur_process$write_input("filter.seqs(fasta=reads.trim.contigs.good.unique.good.align,vertical=T,trump=.)\nget.current()\n")
+  repeat {
+    mothur_output <- readLines(mothur_log, warn = FALSE)
+    if (length(mothur_output) > mothur_cursor) {
+      cat(paste(mothur_output[seq.int(mothur_cursor + 1L, length(mothur_output))], collapse = "\n"), "\n")
+      flush.console()
+      mothur_cursor <- length(mothur_output)
+    }
+    if (sum(grepl("Current files saved by mothur:", mothur_output, fixed = TRUE)) >= mothur_target) break
+    if (!mothur_process$is_alive()) stop("Mothur stopped; check the output above")
+    Sys.sleep(0.2)
+  }
+  if (any(grepl("[ERROR]", mothur_output[seq_along(mothur_output) > mothur_command_start], fixed = TRUE))) stop("Mothur reported an error; check the output above")
+}
+```
+
+Run unique.seqs and watch its output in the RStudio Console. Copy and run this complete block.
+
+```{r step-085}
+{
+  if (!mothur_process$is_alive()) stop("The mothur session has closed. Run setup and the three session-start steps again.")
+  mothur_command_start <- length(readLines(mothur_log, warn = FALSE))
+  mothur_target <- sum(grepl("Current files saved by mothur:", readLines(mothur_log, warn = FALSE), fixed = TRUE)) + 1L
+  cat("mothur > unique.seqs(fasta=reads.trim.contigs.good.unique.good.filter.fasta,count=reads.trim.contigs.good.good.count_table)\n")
+  flush.console()
+  if (!all(file.exists(file.path(run_dir, c("reads.trim.contigs.good.unique.good.filter.fasta", "reads.trim.contigs.good.good.count_table"))))) stop("Required input file is missing. Complete the preceding workflow steps before this command.")
+  mothur_process$write_input("unique.seqs(fasta=reads.trim.contigs.good.unique.good.filter.fasta,count=reads.trim.contigs.good.good.count_table)\nget.current()\n")
+  repeat {
+    mothur_output <- readLines(mothur_log, warn = FALSE)
+    if (length(mothur_output) > mothur_cursor) {
+      cat(paste(mothur_output[seq.int(mothur_cursor + 1L, length(mothur_output))], collapse = "\n"), "\n")
+      flush.console()
+      mothur_cursor <- length(mothur_output)
+    }
+    if (sum(grepl("Current files saved by mothur:", mothur_output, fixed = TRUE)) >= mothur_target) break
+    if (!mothur_process$is_alive()) stop("Mothur stopped; check the output above")
+    Sys.sleep(0.2)
+  }
+  if (any(grepl("[ERROR]", mothur_output[seq_along(mothur_output) > mothur_command_start], fixed = TRUE))) stop("Mothur reported an error; check the output above")
+}
+```
+
+Run pre.cluster and watch its output in the RStudio Console. Copy and run this complete block.
+
+```{r step-090}
+{
+  if (!mothur_process$is_alive()) stop("The mothur session has closed. Run setup and the three session-start steps again.")
+  mothur_command_start <- length(readLines(mothur_log, warn = FALSE))
+  mothur_target <- sum(grepl("Current files saved by mothur:", readLines(mothur_log, warn = FALSE), fixed = TRUE)) + 1L
+  cat("mothur > pre.cluster(fasta=reads.trim.contigs.good.unique.good.filter.unique.fasta,count=reads.trim.contigs.good.unique.good.filter.count_table,diffs=4)\n")
+  flush.console()
+  if (!all(file.exists(file.path(run_dir, c("reads.trim.contigs.good.unique.good.filter.unique.fasta", "reads.trim.contigs.good.unique.good.filter.count_table"))))) stop("Required input file is missing. Complete the preceding workflow steps before this command.")
+  mothur_process$write_input("pre.cluster(fasta=reads.trim.contigs.good.unique.good.filter.unique.fasta,count=reads.trim.contigs.good.unique.good.filter.count_table,diffs=4)\nget.current()\n")
+  repeat {
+    mothur_output <- readLines(mothur_log, warn = FALSE)
+    if (length(mothur_output) > mothur_cursor) {
+      cat(paste(mothur_output[seq.int(mothur_cursor + 1L, length(mothur_output))], collapse = "\n"), "\n")
+      flush.console()
+      mothur_cursor <- length(mothur_output)
+    }
+    if (sum(grepl("Current files saved by mothur:", mothur_output, fixed = TRUE)) >= mothur_target) break
+    if (!mothur_process$is_alive()) stop("Mothur stopped; check the output above")
+    Sys.sleep(0.2)
+  }
+  if (any(grepl("[ERROR]", mothur_output[seq_along(mothur_output) > mothur_command_start], fixed = TRUE))) stop("Mothur reported an error; check the output above")
+}
+```
+
+Run chimera.vsearch and watch its output in the RStudio Console. Copy and run this complete block.
+
+```{r step-095}
+{
+  if (!mothur_process$is_alive()) stop("The mothur session has closed. Run setup and the three session-start steps again.")
+  mothur_command_start <- length(readLines(mothur_log, warn = FALSE))
+  mothur_target <- sum(grepl("Current files saved by mothur:", readLines(mothur_log, warn = FALSE), fixed = TRUE)) + 1L
+  cat("mothur > chimera.vsearch(fasta=reads.trim.contigs.good.unique.good.filter.unique.precluster.fasta,count=reads.trim.contigs.good.unique.good.filter.unique.precluster.count_table,dereplicate=t)\n")
+  flush.console()
+  if (!all(file.exists(file.path(run_dir, c("reads.trim.contigs.good.unique.good.filter.unique.precluster.fasta", "reads.trim.contigs.good.unique.good.filter.unique.precluster.count_table"))))) stop("Required input file is missing. Complete the preceding workflow steps before this command.")
+  mothur_process$write_input("chimera.vsearch(fasta=reads.trim.contigs.good.unique.good.filter.unique.precluster.fasta,count=reads.trim.contigs.good.unique.good.filter.unique.precluster.count_table,dereplicate=t)\nget.current()\n")
+  repeat {
+    mothur_output <- readLines(mothur_log, warn = FALSE)
+    if (length(mothur_output) > mothur_cursor) {
+      cat(paste(mothur_output[seq.int(mothur_cursor + 1L, length(mothur_output))], collapse = "\n"), "\n")
+      flush.console()
+      mothur_cursor <- length(mothur_output)
+    }
+    if (sum(grepl("Current files saved by mothur:", mothur_output, fixed = TRUE)) >= mothur_target) break
+    if (!mothur_process$is_alive()) stop("Mothur stopped; check the output above")
+    Sys.sleep(0.2)
+  }
+  if (any(grepl("[ERROR]", mothur_output[seq_along(mothur_output) > mothur_command_start], fixed = TRUE))) stop("Mothur reported an error; check the output above")
+}
+```
+
+Run summary.seqs and watch its output in the RStudio Console. Copy and run this complete block.
+
+```{r step-100}
+{
+  if (!mothur_process$is_alive()) stop("The mothur session has closed. Run setup and the three session-start steps again.")
+  mothur_command_start <- length(readLines(mothur_log, warn = FALSE))
+  mothur_target <- sum(grepl("Current files saved by mothur:", readLines(mothur_log, warn = FALSE), fixed = TRUE)) + 1L
+  cat("mothur > summary.seqs(fasta=reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.fasta,count=reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.count_table)\n")
+  flush.console()
+  if (!all(file.exists(file.path(run_dir, c("reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.fasta", "reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.count_table"))))) stop("Required input file is missing. Complete the preceding workflow steps before this command.")
+  mothur_process$write_input("summary.seqs(fasta=reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.fasta,count=reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.count_table)\nget.current()\n")
+  repeat {
+    mothur_output <- readLines(mothur_log, warn = FALSE)
+    if (length(mothur_output) > mothur_cursor) {
+      cat(paste(mothur_output[seq.int(mothur_cursor + 1L, length(mothur_output))], collapse = "\n"), "\n")
+      flush.console()
+      mothur_cursor <- length(mothur_output)
+    }
+    if (sum(grepl("Current files saved by mothur:", mothur_output, fixed = TRUE)) >= mothur_target) break
+    if (!mothur_process$is_alive()) stop("Mothur stopped; check the output above")
+    Sys.sleep(0.2)
+  }
+  if (any(grepl("[ERROR]", mothur_output[seq_along(mothur_output) > mothur_command_start], fixed = TRUE))) stop("Mothur reported an error; check the output above")
+}
+```
+
+Run classify.seqs and watch its output in the RStudio Console. Copy and run this complete block.
+
+```{r step-105}
+{
+  if (!mothur_process$is_alive()) stop("The mothur session has closed. Run setup and the three session-start steps again.")
+  mothur_command_start <- length(readLines(mothur_log, warn = FALSE))
+  mothur_target <- sum(grepl("Current files saved by mothur:", readLines(mothur_log, warn = FALSE), fixed = TRUE)) + 1L
+  cat("mothur > classify.seqs(fasta=reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.fasta,count=reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.count_table,reference=trainset9_032012.pds.fasta,taxonomy=trainset9_032012.pds.tax)\n")
+  flush.console()
+  if (!all(file.exists(file.path(run_dir, c("reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.fasta", "reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.count_table", "trainset9_032012.pds.fasta", "trainset9_032012.pds.tax"))))) stop("Required input file is missing. Complete the preceding workflow steps before this command.")
+  mothur_process$write_input("classify.seqs(fasta=reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.fasta,count=reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.count_table,reference=trainset9_032012.pds.fasta,taxonomy=trainset9_032012.pds.tax)\nget.current()\n")
+  repeat {
+    mothur_output <- readLines(mothur_log, warn = FALSE)
+    if (length(mothur_output) > mothur_cursor) {
+      cat(paste(mothur_output[seq.int(mothur_cursor + 1L, length(mothur_output))], collapse = "\n"), "\n")
+      flush.console()
+      mothur_cursor <- length(mothur_output)
+    }
+    if (sum(grepl("Current files saved by mothur:", mothur_output, fixed = TRUE)) >= mothur_target) break
+    if (!mothur_process$is_alive()) stop("Mothur stopped; check the output above")
+    Sys.sleep(0.2)
+  }
+  if (any(grepl("[ERROR]", mothur_output[seq_along(mothur_output) > mothur_command_start], fixed = TRUE))) stop("Mothur reported an error; check the output above")
+}
+```
+
+Run remove.lineage and watch its output in the RStudio Console. Copy and run this complete block.
+
+```{r step-110}
+{
+  if (!mothur_process$is_alive()) stop("The mothur session has closed. Run setup and the three session-start steps again.")
+  mothur_command_start <- length(readLines(mothur_log, warn = FALSE))
+  mothur_target <- sum(grepl("Current files saved by mothur:", readLines(mothur_log, warn = FALSE), fixed = TRUE)) + 1L
+  cat("mothur > remove.lineage(fasta=reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.fasta,count=reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.count_table,taxonomy=reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.pds.wang.taxonomy,taxon=Chloroplast-Mitochondria-unknown-Archaea-Eukaryota)\n")
+  flush.console()
+  if (!all(file.exists(file.path(run_dir, c("reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.fasta", "reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.count_table", "reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.pds.wang.taxonomy"))))) stop("Required input file is missing. Complete the preceding workflow steps before this command.")
+  mothur_process$write_input("remove.lineage(fasta=reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.fasta,count=reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.count_table,taxonomy=reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.pds.wang.taxonomy,taxon=Chloroplast-Mitochondria-unknown-Archaea-Eukaryota)\nget.current()\n")
+  repeat {
+    mothur_output <- readLines(mothur_log, warn = FALSE)
+    if (length(mothur_output) > mothur_cursor) {
+      cat(paste(mothur_output[seq.int(mothur_cursor + 1L, length(mothur_output))], collapse = "\n"), "\n")
+      flush.console()
+      mothur_cursor <- length(mothur_output)
+    }
+    if (sum(grepl("Current files saved by mothur:", mothur_output, fixed = TRUE)) >= mothur_target) break
+    if (!mothur_process$is_alive()) stop("Mothur stopped; check the output above")
+    Sys.sleep(0.2)
+  }
+  if (any(grepl("[ERROR]", mothur_output[seq_along(mothur_output) > mothur_command_start], fixed = TRUE))) stop("Mothur reported an error; check the output above")
+}
+```
+
+Run summary.tax and watch its output in the RStudio Console. Copy and run this complete block.
+
+```{r step-115}
+{
+  if (!mothur_process$is_alive()) stop("The mothur session has closed. Run setup and the three session-start steps again.")
+  mothur_command_start <- length(readLines(mothur_log, warn = FALSE))
+  mothur_target <- sum(grepl("Current files saved by mothur:", readLines(mothur_log, warn = FALSE), fixed = TRUE)) + 1L
+  cat("mothur > summary.tax(taxonomy=reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.pds.wang.pick.taxonomy,count=reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.count_table)\n")
+  flush.console()
+  if (!all(file.exists(file.path(run_dir, c("reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.pds.wang.pick.taxonomy", "reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.count_table"))))) stop("Required input file is missing. Complete the preceding workflow steps before this command.")
+  mothur_process$write_input("summary.tax(taxonomy=reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.pds.wang.pick.taxonomy,count=reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.count_table)\nget.current()\n")
+  repeat {
+    mothur_output <- readLines(mothur_log, warn = FALSE)
+    if (length(mothur_output) > mothur_cursor) {
+      cat(paste(mothur_output[seq.int(mothur_cursor + 1L, length(mothur_output))], collapse = "\n"), "\n")
+      flush.console()
+      mothur_cursor <- length(mothur_output)
+    }
+    if (sum(grepl("Current files saved by mothur:", mothur_output, fixed = TRUE)) >= mothur_target) break
+    if (!mothur_process$is_alive()) stop("Mothur stopped; check the output above")
+    Sys.sleep(0.2)
+  }
+  if (any(grepl("[ERROR]", mothur_output[seq_along(mothur_output) > mothur_command_start], fixed = TRUE))) stop("Mothur reported an error; check the output above")
+}
+```
+
+Run rename.file and watch its output in the RStudio Console. Copy and run this complete block.
+
+```{r step-120}
+{
+  if (!mothur_process$is_alive()) stop("The mothur session has closed. Run setup and the three session-start steps again.")
+  mothur_command_start <- length(readLines(mothur_log, warn = FALSE))
+  mothur_target <- sum(grepl("Current files saved by mothur:", readLines(mothur_log, warn = FALSE), fixed = TRUE)) + 1L
+  cat("mothur > rename.file(fasta=reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.fasta,count=reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.count_table,taxonomy=reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.pds.wang.pick.taxonomy,prefix=final)\n")
+  flush.console()
+  if (!all(file.exists(file.path(run_dir, c("reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.fasta", "reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.count_table", "reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.pds.wang.pick.taxonomy"))))) stop("Required input file is missing. Complete the preceding workflow steps before this command.")
+  mothur_process$write_input("rename.file(fasta=reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.fasta,count=reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.count_table,taxonomy=reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.pds.wang.pick.taxonomy,prefix=final)\nget.current()\n")
+  repeat {
+    mothur_output <- readLines(mothur_log, warn = FALSE)
+    if (length(mothur_output) > mothur_cursor) {
+      cat(paste(mothur_output[seq.int(mothur_cursor + 1L, length(mothur_output))], collapse = "\n"), "\n")
+      flush.console()
+      mothur_cursor <- length(mothur_output)
+    }
+    if (sum(grepl("Current files saved by mothur:", mothur_output, fixed = TRUE)) >= mothur_target) break
+    if (!mothur_process$is_alive()) stop("Mothur stopped; check the output above")
+    Sys.sleep(0.2)
+  }
+  if (any(grepl("[ERROR]", mothur_output[seq_along(mothur_output) > mothur_command_start], fixed = TRUE))) stop("Mothur reported an error; check the output above")
+}
+```
+
+### Create feature and diversity tables
+
+Run dist.seqs and watch its output in the RStudio Console. Copy and run this complete block.
+
+```{r step-125}
+{
+  if (!mothur_process$is_alive()) stop("The mothur session has closed. Run setup and the three session-start steps again.")
+  mothur_command_start <- length(readLines(mothur_log, warn = FALSE))
+  mothur_target <- sum(grepl("Current files saved by mothur:", readLines(mothur_log, warn = FALSE), fixed = TRUE)) + 1L
+  cat("mothur > dist.seqs(fasta=final.fasta,cutoff=0.03)\n")
+  flush.console()
+  if (!all(file.exists(file.path(run_dir, c("final.fasta"))))) stop("Required input file is missing. Complete the preceding workflow steps before this command.")
+  mothur_process$write_input("dist.seqs(fasta=final.fasta,cutoff=0.03)\nget.current()\n")
+  repeat {
+    mothur_output <- readLines(mothur_log, warn = FALSE)
+    if (length(mothur_output) > mothur_cursor) {
+      cat(paste(mothur_output[seq.int(mothur_cursor + 1L, length(mothur_output))], collapse = "\n"), "\n")
+      flush.console()
+      mothur_cursor <- length(mothur_output)
+    }
+    if (sum(grepl("Current files saved by mothur:", mothur_output, fixed = TRUE)) >= mothur_target) break
+    if (!mothur_process$is_alive()) stop("Mothur stopped; check the output above")
+    Sys.sleep(0.2)
+  }
+  if (any(grepl("[ERROR]", mothur_output[seq_along(mothur_output) > mothur_command_start], fixed = TRUE))) stop("Mothur reported an error; check the output above")
+}
+```
+
+Run cluster and watch its output in the RStudio Console. Copy and run this complete block.
+
+```{r step-130}
+{
+  if (!mothur_process$is_alive()) stop("The mothur session has closed. Run setup and the three session-start steps again.")
+  mothur_command_start <- length(readLines(mothur_log, warn = FALSE))
+  mothur_target <- sum(grepl("Current files saved by mothur:", readLines(mothur_log, warn = FALSE), fixed = TRUE)) + 1L
+  cat("mothur > cluster(column=final.dist,count=final.count_table)\n")
+  flush.console()
+  if (!all(file.exists(file.path(run_dir, c("final.dist", "final.count_table"))))) stop("Required input file is missing. Complete the preceding workflow steps before this command.")
+  mothur_process$write_input("cluster(column=final.dist,count=final.count_table)\nget.current()\n")
+  repeat {
+    mothur_output <- readLines(mothur_log, warn = FALSE)
+    if (length(mothur_output) > mothur_cursor) {
+      cat(paste(mothur_output[seq.int(mothur_cursor + 1L, length(mothur_output))], collapse = "\n"), "\n")
+      flush.console()
+      mothur_cursor <- length(mothur_output)
+    }
+    if (sum(grepl("Current files saved by mothur:", mothur_output, fixed = TRUE)) >= mothur_target) break
+    if (!mothur_process$is_alive()) stop("Mothur stopped; check the output above")
+    Sys.sleep(0.2)
+  }
+  if (any(grepl("[ERROR]", mothur_output[seq_along(mothur_output) > mothur_command_start], fixed = TRUE))) stop("Mothur reported an error; check the output above")
+}
+```
+
+Run make.shared and watch its output in the RStudio Console. Copy and run this complete block.
+
+```{r step-135}
+{
+  if (!mothur_process$is_alive()) stop("The mothur session has closed. Run setup and the three session-start steps again.")
+  mothur_command_start <- length(readLines(mothur_log, warn = FALSE))
+  mothur_target <- sum(grepl("Current files saved by mothur:", readLines(mothur_log, warn = FALSE), fixed = TRUE)) + 1L
+  cat("mothur > make.shared(list=final.opti_mcc.0.03.list,count=final.count_table,label=0.03)\n")
+  flush.console()
+  if (!all(file.exists(file.path(run_dir, c("final.opti_mcc.0.03.list", "final.count_table"))))) stop("Required input file is missing. Complete the preceding workflow steps before this command.")
+  mothur_process$write_input("make.shared(list=final.opti_mcc.0.03.list,count=final.count_table,label=0.03)\nget.current()\n")
+  repeat {
+    mothur_output <- readLines(mothur_log, warn = FALSE)
+    if (length(mothur_output) > mothur_cursor) {
+      cat(paste(mothur_output[seq.int(mothur_cursor + 1L, length(mothur_output))], collapse = "\n"), "\n")
+      flush.console()
+      mothur_cursor <- length(mothur_output)
+    }
+    if (sum(grepl("Current files saved by mothur:", mothur_output, fixed = TRUE)) >= mothur_target) break
+    if (!mothur_process$is_alive()) stop("Mothur stopped; check the output above")
+    Sys.sleep(0.2)
+  }
+  if (any(grepl("[ERROR]", mothur_output[seq_along(mothur_output) > mothur_command_start], fixed = TRUE))) stop("Mothur reported an error; check the output above")
+}
+```
+
+Run classify.otu and watch its output in the RStudio Console. Copy and run this complete block.
+
+```{r step-140}
+{
+  if (!mothur_process$is_alive()) stop("The mothur session has closed. Run setup and the three session-start steps again.")
+  mothur_command_start <- length(readLines(mothur_log, warn = FALSE))
+  mothur_target <- sum(grepl("Current files saved by mothur:", readLines(mothur_log, warn = FALSE), fixed = TRUE)) + 1L
+  cat("mothur > classify.otu(list=final.opti_mcc.0.03.list,count=final.count_table,taxonomy=final.taxonomy,label=0.03)\n")
+  flush.console()
+  if (!all(file.exists(file.path(run_dir, c("final.opti_mcc.0.03.list", "final.count_table", "final.taxonomy"))))) stop("Required input file is missing. Complete the preceding workflow steps before this command.")
+  mothur_process$write_input("classify.otu(list=final.opti_mcc.0.03.list,count=final.count_table,taxonomy=final.taxonomy,label=0.03)\nget.current()\n")
+  repeat {
+    mothur_output <- readLines(mothur_log, warn = FALSE)
+    if (length(mothur_output) > mothur_cursor) {
+      cat(paste(mothur_output[seq.int(mothur_cursor + 1L, length(mothur_output))], collapse = "\n"), "\n")
+      flush.console()
+      mothur_cursor <- length(mothur_output)
+    }
+    if (sum(grepl("Current files saved by mothur:", mothur_output, fixed = TRUE)) >= mothur_target) break
+    if (!mothur_process$is_alive()) stop("Mothur stopped; check the output above")
+    Sys.sleep(0.2)
+  }
+  if (any(grepl("[ERROR]", mothur_output[seq_along(mothur_output) > mothur_command_start], fixed = TRUE))) stop("Mothur reported an error; check the output above")
+}
+```
+
+Run make.shared and watch its output in the RStudio Console. Copy and run this complete block.
+
+```{r step-145}
+{
+  if (!mothur_process$is_alive()) stop("The mothur session has closed. Run setup and the three session-start steps again.")
+  mothur_command_start <- length(readLines(mothur_log, warn = FALSE))
+  mothur_target <- sum(grepl("Current files saved by mothur:", readLines(mothur_log, warn = FALSE), fixed = TRUE)) + 1L
+  cat("mothur > make.shared(count=final.count_table)\n")
+  flush.console()
+  if (!all(file.exists(file.path(run_dir, c("final.count_table"))))) stop("Required input file is missing. Complete the preceding workflow steps before this command.")
+  mothur_process$write_input("make.shared(count=final.count_table)\nget.current()\n")
+  repeat {
+    mothur_output <- readLines(mothur_log, warn = FALSE)
+    if (length(mothur_output) > mothur_cursor) {
+      cat(paste(mothur_output[seq.int(mothur_cursor + 1L, length(mothur_output))], collapse = "\n"), "\n")
+      flush.console()
+      mothur_cursor <- length(mothur_output)
+    }
+    if (sum(grepl("Current files saved by mothur:", mothur_output, fixed = TRUE)) >= mothur_target) break
+    if (!mothur_process$is_alive()) stop("Mothur stopped; check the output above")
+    Sys.sleep(0.2)
+  }
+  if (any(grepl("[ERROR]", mothur_output[seq_along(mothur_output) > mothur_command_start], fixed = TRUE))) stop("Mothur reported an error; check the output above")
+}
+```
+
+Run classify.otu and watch its output in the RStudio Console. Copy and run this complete block.
+
+```{r step-150}
+{
+  if (!mothur_process$is_alive()) stop("The mothur session has closed. Run setup and the three session-start steps again.")
+  mothur_command_start <- length(readLines(mothur_log, warn = FALSE))
+  mothur_target <- sum(grepl("Current files saved by mothur:", readLines(mothur_log, warn = FALSE), fixed = TRUE)) + 1L
+  cat("mothur > classify.otu(list=final.asv.list,count=final.count_table,taxonomy=final.taxonomy,label=ASV)\n")
+  flush.console()
+  if (!all(file.exists(file.path(run_dir, c("final.asv.list", "final.count_table", "final.taxonomy"))))) stop("Required input file is missing. Complete the preceding workflow steps before this command.")
+  mothur_process$write_input("classify.otu(list=final.asv.list,count=final.count_table,taxonomy=final.taxonomy,label=ASV)\nget.current()\n")
+  repeat {
+    mothur_output <- readLines(mothur_log, warn = FALSE)
+    if (length(mothur_output) > mothur_cursor) {
+      cat(paste(mothur_output[seq.int(mothur_cursor + 1L, length(mothur_output))], collapse = "\n"), "\n")
+      flush.console()
+      mothur_cursor <- length(mothur_output)
+    }
+    if (sum(grepl("Current files saved by mothur:", mothur_output, fixed = TRUE)) >= mothur_target) break
+    if (!mothur_process$is_alive()) stop("Mothur stopped; check the output above")
+    Sys.sleep(0.2)
+  }
+  if (any(grepl("[ERROR]", mothur_output[seq_along(mothur_output) > mothur_command_start], fixed = TRUE))) stop("Mothur reported an error; check the output above")
+}
+```
+
+Run phylotype and watch its output in the RStudio Console. Copy and run this complete block.
+
+```{r step-155}
+{
+  if (!mothur_process$is_alive()) stop("The mothur session has closed. Run setup and the three session-start steps again.")
+  mothur_command_start <- length(readLines(mothur_log, warn = FALSE))
+  mothur_target <- sum(grepl("Current files saved by mothur:", readLines(mothur_log, warn = FALSE), fixed = TRUE)) + 1L
+  cat("mothur > phylotype(taxonomy=final.taxonomy)\n")
+  flush.console()
+  if (!all(file.exists(file.path(run_dir, c("final.taxonomy"))))) stop("Required input file is missing. Complete the preceding workflow steps before this command.")
+  mothur_process$write_input("phylotype(taxonomy=final.taxonomy)\nget.current()\n")
+  repeat {
+    mothur_output <- readLines(mothur_log, warn = FALSE)
+    if (length(mothur_output) > mothur_cursor) {
+      cat(paste(mothur_output[seq.int(mothur_cursor + 1L, length(mothur_output))], collapse = "\n"), "\n")
+      flush.console()
+      mothur_cursor <- length(mothur_output)
+    }
+    if (sum(grepl("Current files saved by mothur:", mothur_output, fixed = TRUE)) >= mothur_target) break
+    if (!mothur_process$is_alive()) stop("Mothur stopped; check the output above")
+    Sys.sleep(0.2)
+  }
+  if (any(grepl("[ERROR]", mothur_output[seq_along(mothur_output) > mothur_command_start], fixed = TRUE))) stop("Mothur reported an error; check the output above")
+}
+```
+
+Run make.shared and watch its output in the RStudio Console. Copy and run this complete block.
+
+```{r step-160}
+{
+  if (!mothur_process$is_alive()) stop("The mothur session has closed. Run setup and the three session-start steps again.")
+  mothur_command_start <- length(readLines(mothur_log, warn = FALSE))
+  mothur_target <- sum(grepl("Current files saved by mothur:", readLines(mothur_log, warn = FALSE), fixed = TRUE)) + 1L
+  cat("mothur > make.shared(list=final.tx.list,count=final.count_table,label=1)\n")
+  flush.console()
+  if (!all(file.exists(file.path(run_dir, c("final.tx.list", "final.count_table"))))) stop("Required input file is missing. Complete the preceding workflow steps before this command.")
+  mothur_process$write_input("make.shared(list=final.tx.list,count=final.count_table,label=1)\nget.current()\n")
+  repeat {
+    mothur_output <- readLines(mothur_log, warn = FALSE)
+    if (length(mothur_output) > mothur_cursor) {
+      cat(paste(mothur_output[seq.int(mothur_cursor + 1L, length(mothur_output))], collapse = "\n"), "\n")
+      flush.console()
+      mothur_cursor <- length(mothur_output)
+    }
+    if (sum(grepl("Current files saved by mothur:", mothur_output, fixed = TRUE)) >= mothur_target) break
+    if (!mothur_process$is_alive()) stop("Mothur stopped; check the output above")
+    Sys.sleep(0.2)
+  }
+  if (any(grepl("[ERROR]", mothur_output[seq_along(mothur_output) > mothur_command_start], fixed = TRUE))) stop("Mothur reported an error; check the output above")
+}
+```
+
+Run classify.otu and watch its output in the RStudio Console. Copy and run this complete block.
+
+```{r step-165}
+{
+  if (!mothur_process$is_alive()) stop("The mothur session has closed. Run setup and the three session-start steps again.")
+  mothur_command_start <- length(readLines(mothur_log, warn = FALSE))
+  mothur_target <- sum(grepl("Current files saved by mothur:", readLines(mothur_log, warn = FALSE), fixed = TRUE)) + 1L
+  cat("mothur > classify.otu(list=final.tx.list,count=final.count_table,taxonomy=final.taxonomy,label=1)\n")
+  flush.console()
+  if (!all(file.exists(file.path(run_dir, c("final.tx.list", "final.count_table", "final.taxonomy"))))) stop("Required input file is missing. Complete the preceding workflow steps before this command.")
+  mothur_process$write_input("classify.otu(list=final.tx.list,count=final.count_table,taxonomy=final.taxonomy,label=1)\nget.current()\n")
+  repeat {
+    mothur_output <- readLines(mothur_log, warn = FALSE)
+    if (length(mothur_output) > mothur_cursor) {
+      cat(paste(mothur_output[seq.int(mothur_cursor + 1L, length(mothur_output))], collapse = "\n"), "\n")
+      flush.console()
+      mothur_cursor <- length(mothur_output)
+    }
+    if (sum(grepl("Current files saved by mothur:", mothur_output, fixed = TRUE)) >= mothur_target) break
+    if (!mothur_process$is_alive()) stop("Mothur stopped; check the output above")
+    Sys.sleep(0.2)
+  }
+  if (any(grepl("[ERROR]", mothur_output[seq_along(mothur_output) > mothur_command_start], fixed = TRUE))) stop("Mothur reported an error; check the output above")
+}
+```
+
+Run count.groups and watch its output in the RStudio Console. Copy and run this complete block.
+
+```{r step-170}
+{
+  if (!mothur_process$is_alive()) stop("The mothur session has closed. Run setup and the three session-start steps again.")
+  mothur_command_start <- length(readLines(mothur_log, warn = FALSE))
+  mothur_target <- sum(grepl("Current files saved by mothur:", readLines(mothur_log, warn = FALSE), fixed = TRUE)) + 1L
+  cat("mothur > count.groups(shared=final.opti_mcc.0.03.shared)\n")
+  flush.console()
+  if (!all(file.exists(file.path(run_dir, c("final.opti_mcc.0.03.shared"))))) stop("Required input file is missing. Complete the preceding workflow steps before this command.")
+  mothur_process$write_input("count.groups(shared=final.opti_mcc.0.03.shared)\nget.current()\n")
+  repeat {
+    mothur_output <- readLines(mothur_log, warn = FALSE)
+    if (length(mothur_output) > mothur_cursor) {
+      cat(paste(mothur_output[seq.int(mothur_cursor + 1L, length(mothur_output))], collapse = "\n"), "\n")
+      flush.console()
+      mothur_cursor <- length(mothur_output)
+    }
+    if (sum(grepl("Current files saved by mothur:", mothur_output, fixed = TRUE)) >= mothur_target) break
+    if (!mothur_process$is_alive()) stop("Mothur stopped; check the output above")
+    Sys.sleep(0.2)
+  }
+  if (any(grepl("[ERROR]", mothur_output[seq_along(mothur_output) > mothur_command_start], fixed = TRUE))) stop("Mothur reported an error; check the output above")
+}
+```
+
+Run sub.sample and watch its output in the RStudio Console. Copy and run this complete block.
+
+```{r step-175}
+{
+  if (!mothur_process$is_alive()) stop("The mothur session has closed. Run setup and the three session-start steps again.")
+  mothur_command_start <- length(readLines(mothur_log, warn = FALSE))
+  mothur_target <- sum(grepl("Current files saved by mothur:", readLines(mothur_log, warn = FALSE), fixed = TRUE)) + 1L
+  cat("mothur > sub.sample(shared=final.opti_mcc.0.03.shared)\n")
+  flush.console()
+  if (!all(file.exists(file.path(run_dir, c("final.opti_mcc.0.03.shared"))))) stop("Required input file is missing. Complete the preceding workflow steps before this command.")
+  mothur_process$write_input("sub.sample(shared=final.opti_mcc.0.03.shared)\nget.current()\n")
+  repeat {
+    mothur_output <- readLines(mothur_log, warn = FALSE)
+    if (length(mothur_output) > mothur_cursor) {
+      cat(paste(mothur_output[seq.int(mothur_cursor + 1L, length(mothur_output))], collapse = "\n"), "\n")
+      flush.console()
+      mothur_cursor <- length(mothur_output)
+    }
+    if (sum(grepl("Current files saved by mothur:", mothur_output, fixed = TRUE)) >= mothur_target) break
+    if (!mothur_process$is_alive()) stop("Mothur stopped; check the output above")
+    Sys.sleep(0.2)
+  }
+  if (any(grepl("[ERROR]", mothur_output[seq_along(mothur_output) > mothur_command_start], fixed = TRUE))) stop("Mothur reported an error; check the output above")
+}
+```
+
+Run rarefaction.single and watch its output in the RStudio Console. Copy and run this complete block.
+
+```{r step-180}
+{
+  if (!mothur_process$is_alive()) stop("The mothur session has closed. Run setup and the three session-start steps again.")
+  mothur_command_start <- length(readLines(mothur_log, warn = FALSE))
+  mothur_target <- sum(grepl("Current files saved by mothur:", readLines(mothur_log, warn = FALSE), fixed = TRUE)) + 1L
+  cat("mothur > rarefaction.single(shared=final.opti_mcc.0.03.shared,calc=sobs,freq=100)\n")
+  flush.console()
+  if (!all(file.exists(file.path(run_dir, c("final.opti_mcc.0.03.shared"))))) stop("Required input file is missing. Complete the preceding workflow steps before this command.")
+  mothur_process$write_input("rarefaction.single(shared=final.opti_mcc.0.03.shared,calc=sobs,freq=100)\nget.current()\n")
+  repeat {
+    mothur_output <- readLines(mothur_log, warn = FALSE)
+    if (length(mothur_output) > mothur_cursor) {
+      cat(paste(mothur_output[seq.int(mothur_cursor + 1L, length(mothur_output))], collapse = "\n"), "\n")
+      flush.console()
+      mothur_cursor <- length(mothur_output)
+    }
+    if (sum(grepl("Current files saved by mothur:", mothur_output, fixed = TRUE)) >= mothur_target) break
+    if (!mothur_process$is_alive()) stop("Mothur stopped; check the output above")
+    Sys.sleep(0.2)
+  }
+  if (any(grepl("[ERROR]", mothur_output[seq_along(mothur_output) > mothur_command_start], fixed = TRUE))) stop("Mothur reported an error; check the output above")
+}
+```
+
+Run summary.single and watch its output in the RStudio Console. Copy and run this complete block.
+
+```{r step-185}
+{
+  if (!mothur_process$is_alive()) stop("The mothur session has closed. Run setup and the three session-start steps again.")
+  mothur_command_start <- length(readLines(mothur_log, warn = FALSE))
+  mothur_target <- sum(grepl("Current files saved by mothur:", readLines(mothur_log, warn = FALSE), fixed = TRUE)) + 1L
+  cat("mothur > summary.single(shared=final.opti_mcc.0.03.shared,calc=nseqs-coverage-sobs-invsimpson,subsample=t)\n")
+  flush.console()
+  if (!all(file.exists(file.path(run_dir, c("final.opti_mcc.0.03.shared"))))) stop("Required input file is missing. Complete the preceding workflow steps before this command.")
+  mothur_process$write_input("summary.single(shared=final.opti_mcc.0.03.shared,calc=nseqs-coverage-sobs-invsimpson,subsample=t)\nget.current()\n")
+  repeat {
+    mothur_output <- readLines(mothur_log, warn = FALSE)
+    if (length(mothur_output) > mothur_cursor) {
+      cat(paste(mothur_output[seq.int(mothur_cursor + 1L, length(mothur_output))], collapse = "\n"), "\n")
+      flush.console()
+      mothur_cursor <- length(mothur_output)
+    }
+    if (sum(grepl("Current files saved by mothur:", mothur_output, fixed = TRUE)) >= mothur_target) break
+    if (!mothur_process$is_alive()) stop("Mothur stopped; check the output above")
+    Sys.sleep(0.2)
+  }
+  if (any(grepl("[ERROR]", mothur_output[seq_along(mothur_output) > mothur_command_start], fixed = TRUE))) stop("Mothur reported an error; check the output above")
+}
+```
+
+Run dist.shared and watch its output in the RStudio Console. Copy and run this complete block.
+
+```{r step-190}
+{
+  if (!mothur_process$is_alive()) stop("The mothur session has closed. Run setup and the three session-start steps again.")
+  mothur_command_start <- length(readLines(mothur_log, warn = FALSE))
+  mothur_target <- sum(grepl("Current files saved by mothur:", readLines(mothur_log, warn = FALSE), fixed = TRUE)) + 1L
+  cat("mothur > dist.shared(shared=final.opti_mcc.0.03.shared,calc=braycurtis-jclass,subsample=t)\n")
+  flush.console()
+  if (!all(file.exists(file.path(run_dir, c("final.opti_mcc.0.03.shared"))))) stop("Required input file is missing. Complete the preceding workflow steps before this command.")
+  mothur_process$write_input("dist.shared(shared=final.opti_mcc.0.03.shared,calc=braycurtis-jclass,subsample=t)\nget.current()\n")
+  repeat {
+    mothur_output <- readLines(mothur_log, warn = FALSE)
+    if (length(mothur_output) > mothur_cursor) {
+      cat(paste(mothur_output[seq.int(mothur_cursor + 1L, length(mothur_output))], collapse = "\n"), "\n")
+      flush.console()
+      mothur_cursor <- length(mothur_output)
+    }
+    if (sum(grepl("Current files saved by mothur:", mothur_output, fixed = TRUE)) >= mothur_target) break
+    if (!mothur_process$is_alive()) stop("Mothur stopped; check the output above")
+    Sys.sleep(0.2)
+  }
+  if (any(grepl("[ERROR]", mothur_output[seq_along(mothur_output) > mothur_command_start], fixed = TRUE))) stop("Mothur reported an error; check the output above")
+}
+```
+
+Run pcoa and watch its output in the RStudio Console. Copy and run this complete block.
+
+```{r step-195}
+{
+  if (!mothur_process$is_alive()) stop("The mothur session has closed. Run setup and the three session-start steps again.")
+  mothur_command_start <- length(readLines(mothur_log, warn = FALSE))
+  mothur_target <- sum(grepl("Current files saved by mothur:", readLines(mothur_log, warn = FALSE), fixed = TRUE)) + 1L
+  cat("mothur > pcoa(phylip=final.opti_mcc.0.03.braycurtis.0.03.lt.ave.dist)\n")
+  flush.console()
+  if (!all(file.exists(file.path(run_dir, c("final.opti_mcc.0.03.braycurtis.0.03.lt.ave.dist"))))) stop("Required input file is missing. Complete the preceding workflow steps before this command.")
+  mothur_process$write_input("pcoa(phylip=final.opti_mcc.0.03.braycurtis.0.03.lt.ave.dist)\nget.current()\n")
+  repeat {
+    mothur_output <- readLines(mothur_log, warn = FALSE)
+    if (length(mothur_output) > mothur_cursor) {
+      cat(paste(mothur_output[seq.int(mothur_cursor + 1L, length(mothur_output))], collapse = "\n"), "\n")
+      flush.console()
+      mothur_cursor <- length(mothur_output)
+    }
+    if (sum(grepl("Current files saved by mothur:", mothur_output, fixed = TRUE)) >= mothur_target) break
+    if (!mothur_process$is_alive()) stop("Mothur stopped; check the output above")
+    Sys.sleep(0.2)
+  }
+  if (any(grepl("[ERROR]", mothur_output[seq_along(mothur_output) > mothur_command_start], fixed = TRUE))) stop("Mothur reported an error; check the output above")
+}
+```
+
+Close the live mothur session.
+
+```{r step-200}
+mothur_process$write_input("quit()\n")
+```
+
+Wait for mothur to exit.
+
+```{r step-201}
+mothur_process$wait()
+```
+
+Confirm mothur exited successfully.
+
+```{r step-202}
+stopifnot(identical(mothur_process$get_exit_status(), 0L))
+```
+
+Read the completed mothur output.
+
+```{r step-203}
+mothur_output <- readLines(mothur_log, warn = FALSE)
+```
+
+Print any final mothur output in the Console.
+
+```{r step-204}
+if (length(mothur_output) > mothur_cursor) cat(paste(mothur_output[seq.int(mothur_cursor + 1L, length(mothur_output))], collapse = "\n"))
+```
+
+Stop if mothur reported an error.
+
+```{r step-205}
+if (any(grepl("[ERROR]", mothur_output, fixed = TRUE))) message("The log contains earlier errors; successful retries were checked individually.")
+```
+
+## Import the results
+
+Build a phyloseq object from the completed mothur tables and anonymous metadata.
+
+Check that every package is installed, then load them all. This is the only chunk that loads packages.
+
+```{r step-206, message=FALSE, warning=FALSE}
+packages <- c("phyloseq", "vegan", "ggplot2", "patchwork", "ANCOMBC", "metafor", "MetaQC", "jsonlite", "digest", "processx")
+missing_packages <- packages[!vapply(packages, requireNamespace, logical(1), quietly = TRUE)]
+if (length(missing_packages)) stop("Not installed: ", paste(missing_packages, collapse = ", "), ". Run source(\"scripts/prepare_packages.R\") again.")
+library(phyloseq)
+library(vegan)
+library(ggplot2)
+library(patchwork)
+library(ANCOMBC)
+library(metafor)
+suppressPackageStartupMessages(library(MetaQC))
+```
+
+Read sample metadata.
+
+```{r step-210}
+metadata <- read.delim("metadata/workshop_samples.tsv", check.names = FALSE)
+```
+
+Read the OTU count table.
+
+```{r step-211}
+counts_table <- read.delim(file.path(run_dir, "final.opti_mcc.0.03.shared"), check.names = FALSE)
+```
+
+Check the sample names.
+
+```{r step-212}
+stopifnot(!anyDuplicated(metadata$sample_name), setequal(counts_table$Group, metadata$sample_name))
+```
+
+Put metadata in count-table order.
+
+```{r step-213}
+metadata <- metadata[match(counts_table$Group, metadata$sample_name), , drop = FALSE]
+```
+
+Use sample names as row names.
+
+```{r step-214}
+rownames(metadata) <- metadata$sample_name
+```
+
+Set the order of the two neutral conditions.
+
+```{r step-215}
+metadata$condition <- factor(metadata$condition, levels = c("C1", "C2"))
+```
+
+Extract the numeric counts.
+
+```{r step-216}
+count_matrix <- as.matrix(counts_table[, -(1:3), drop = FALSE])
+```
+
+Store counts as numbers.
+
+```{r step-217}
+storage.mode(count_matrix) <- "numeric"
+```
+
+Label count rows.
+
+```{r step-218}
+rownames(count_matrix) <- counts_table$Group
+```
+
+Check that each sample has reads.
+
+```{r step-219}
+stopifnot(all(rowSums(count_matrix) > 0))
+```
+
+Read the OTU taxonomic classifications.
+
+```{r step-220}
+taxonomy <- read.delim(file.path(run_dir, "final.opti_mcc.0.03.0.03.cons.taxonomy"), check.names = FALSE)
+```
+
+Put taxonomy in feature order.
+
+```{r step-221}
+taxonomy <- taxonomy[match(colnames(count_matrix), taxonomy$OTU), , drop = FALSE]
+```
+
+Remove confidence scores from taxonomy.
+
+```{r step-222}
+taxonomy_clean <- gsub("\\([0-9.]+\\)", "", taxonomy$Taxonomy)
+```
+
+Remove quotation marks from taxonomy.
+
+```{r step-223}
+taxonomy_clean <- gsub("\"", "", taxonomy_clean, fixed = TRUE)
+```
+
+Split the taxonomy into ranks.
+
+```{r step-224}
+tax_matrix <- as.matrix(read.table(text = taxonomy_clean, sep = ";", fill = TRUE, quote = "", comment.char = "", stringsAsFactors = FALSE))
+```
+
+Name the taxonomy rows.
+
+```{r step-225}
+rownames(tax_matrix) <- taxonomy$OTU
+```
+
+Name the taxonomy ranks.
+
+```{r step-226}
+colnames(tax_matrix) <- c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species")[seq_len(ncol(tax_matrix))]
+```
+
+Create the phyloseq object.
+
+```{r step-227}
+ps <- phyloseq(otu_table(t(count_matrix), taxa_are_rows = TRUE), sample_data(metadata), tax_table(tax_matrix))
+```
+
+Print the object.
+
+```{r step-228}
+ps
+```
+
+Create the results folder.
+
+```{r step-229}
+results_dir <- "report_outputs"
+```
+
+Create the folder if necessary.
+
+```{r step-230}
+dir.create(results_dir, recursive = TRUE, showWarnings = FALSE)
+```
+
+Save the phyloseq object.
+
+```{r step-231}
+saveRDS(ps, file.path(results_dir, "phyloseq_object.rds"))
+```
+
+
+## All five studies side by side
+
+All five studies are analysed together. Every figure shows the studies next to each other with the two conditions inside each study. Each study has three samples per condition, so the results are exploratory.
+
+### Settings, colours and one table per study
+
+**The idea.** The five studies are first checked with MetaQC; every later figure shows the studies that pass next to each other, with the two conditions inside each study. The colours and the plain black-framed panels follow the figures of the reference paper (Marzouk *et al.*, *npj Parkinson\'s Disease* 2025): salmon for the first condition, teal for the second, and olive for taxa that are not significant.
+
+All packages were loaded once, in a single cell earlier on this page, so no `library()` call is needed here.
+
+List the five studies and set the colours used in every figure. Salmon and teal are the two group colours of the reference paper. Olive marks taxa that are not significant in the cladogram.
+
+```{r step-232}
+studies <- c("G1", "G2", "G3", "G4", "G5")
+condition_colours <- c(C1 = "#E8847A", C2 = "#4DB3B8")
+not_significant_colour <- "#C9C462"
+```
+
+Set one plot theme for all figures: white panels with a black frame and the legend underneath.
+
+```{r step-233}
+theme_set(theme_bw(base_size = 12) +
+  theme(panel.border = element_rect(colour = "black", linewidth = 0.8),
+        panel.grid.minor = element_blank(),
+        strip.background = element_rect(fill = "white", colour = "black"),
+        strip.text = element_text(face = "bold"),
+        plot.title = element_text(face = "bold"),
+        legend.position = "bottom"))
+```
+
+Create the output folder for this chapter.
+
+```{r step-234}
+out_dir <- file.path(results_dir, "by_study")
+dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
+```
+
+Make a readable name for every OTU: its number followed by its genus.
+
+```{r step-235}
+taxon_label <- setNames(paste(rownames(tax_matrix), tax_matrix[, "Genus"]), rownames(tax_matrix))
+head(taxon_label)
+```
+
+Split the counts and metadata into one piece per study, with the three C1 samples first and the three C2 samples last. Each piece holds the metadata (`m`), the counts (`mat`) and the relative abundances (`relative`) of one study. Every later step loops over these pieces, so one command analyses all studies. After MetaQC the list keeps only the included studies.
+
+```{r step-236}
+study_data <- lapply(setNames(studies, studies), function(s) {
+  m <- metadata[metadata$study == s, , drop = FALSE]
+  m <- m[order(m$condition), , drop = FALSE]
+  stopifnot(nrow(m) == 6, all(table(m$condition) == 3))
+  mat <- count_matrix[rownames(m), , drop = FALSE]
+  list(m = m, mat = mat, relative = mat / rowSums(mat))
+})
+```
+
+Set the random seed so that every run gives the same numbers.
+
+```{r step-237}
+set.seed(20261114)
+```
+
+### Quality control: reads per sample
+
+**Why quality control comes first.** Before comparing conditions, check that every sample has enough reads to be trusted. A sample with very few reads shows fewer OTUs simply because less was sequenced, not because the community is poorer. Look for two things: samples far below the others within a study, and studies that differ strongly from each other in depth. Both affect richness (Observed, Chao1) and presence/absence distances (Jclass) most, and they are one reason why the studies are later pooled with a random-effects model, which allows studies to differ.
+
+Count the reads of every sample.
+
+```{r step-238}
+qc <- do.call(rbind, lapply(studies, function(s) {
+  d <- study_data[[s]]
+  data.frame(study = s, sample_name = rownames(d$m), condition = d$m$condition, reads = rowSums(d$mat))
+}))
+write.csv(qc, file.path(out_dir, "qc_by_study.csv"), row.names = FALSE)
+```
+
+Draw the reads per sample, one panel per study.
+
+```{r step-239, fig.width=14, fig.height=4.2}
+qc_plot <- ggplot(qc, aes(sample_name, reads, fill = condition)) +
+  geom_col(colour = "black", linewidth = 0.3) +
+  facet_wrap(~study, nrow = 1, scales = "free") +
+  scale_fill_manual(values = condition_colours) +
+  labs(title = "Reads per sample after mothur", x = "Sample", y = "Reads", fill = "Condition") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+ggsave(file.path(out_dir, "qc_by_study.png"), qc_plot, width = 14, height = 4.2, dpi = 180)
+print(qc_plot)
+```
+
+### MetaQC: can the studies be combined?
+
+**Why MetaQC.** A meta-analysis only makes sense if the studies measure comparable things. MetaQC (Kang *et al.*, *Nucleic Acids Research* 2012; R package by Don Kang and George Tseng) gives every study a score on six quality measures and so turns the decision to include or exclude a study into an objective rule. It was written for gene-expression studies; here the "genes" are OTUs and the "pathways" are taxonomic groups (phylum, class, order, family, genus).
+
+-   **IQC** (internal quality control): is the co-abundance structure of the study (which OTUs rise and fall together) similar to that of the other studies? This is the homogeneity check.
+-   **EQC** (external quality control): do OTUs of the same taxonomic group co-vary more than random OTUs?
+-   **CQCg / CQCp** (consistency quality control): does the study rank OTUs (g) and taxonomic groups (p) by their C1-versus-C2 difference in the same order as the other studies combined?
+-   **AQCg / AQCp** (accuracy quality control): does the study find the same significant OTUs or groups as the other studies combined?
+
+**How to read a score.** Each score is −log~10~(p-value): higher is better. With K studies a score passes when it is above −log~10~(0.05/K), which is 2.0 for five studies. MetaQC marks scores below that line with an asterisk (\*). The *Rank* column is the mean rank of a study over the six measures; lower is better.
+
+**The decision rule used here.** IQC (homogeneity) and CQC (consistency) are the two measures that decide. A study is excluded when it fails both IQC and CQCg; all other studies go on to the diversity analyses, ANCOM-BC and the meta-analysis.
+
+**Keep in mind.** MetaQC was designed for thousands of genes and larger groups. With 10 to 17 OTUs and three samples per condition, the consistency and accuracy measures (CQC, AQC) cannot reach significance in any study, so the decision rests mainly on IQC.
+
+Prepare the MetaQC input. For every study, log-ratio transform the counts (CLR) and keep the OTUs seen in at least two of its six samples. MetaQC expects continuous values, like expression levels. The centred log-ratio (CLR) turns counts into such values and removes the effect of sequencing depth. MetaQC takes a list with one element per study: `x` holds the OTUs in rows and the samples in columns, `y` the condition of each sample.
+
+```{r step-240}
+metaqc_input <- lapply(study_data, function(d) {
+  present <- d$mat[, colSums(d$mat > 0) > 0, drop = FALSE]
+  clr <- log(present + 1)
+  clr <- clr - rowMeans(clr)
+  keep <- colSums(present > 0) >= 2 & apply(clr, 2, var) > 0
+  list(x = t(clr[, keep, drop = FALSE]), y = as.character(d$m$condition))
+})
+sapply(metaqc_input, function(d) nrow(d$x))
+```
+
+Write the taxonomic groups in the GMT format that MetaQC reads for its pathway-based measures (EQC, CQCp, AQCp). Each line of a GMT file is one group: its name, a description, then its members. Every phylum, class, order, family and genus with at least two OTUs becomes one group.
+
+```{r step-241}
+metaqc_dir <- file.path(out_dir, "metaqc")
+dir.create(metaqc_dir, recursive = TRUE, showWarnings = FALSE)
+taxon_sets <- unlist(lapply(c("Phylum", "Class", "Order", "Family", "Genus"), function(rank)
+  split(rownames(tax_matrix), paste(rank, tax_matrix[, rank], sep = "_"))), recursive = FALSE)
+taxon_sets <- taxon_sets[lengths(taxon_sets) >= 2 & !duplicated(taxon_sets)]
+writeLines(vapply(names(taxon_sets), function(n) paste(c(n, "taxonomy", taxon_sets[[n]]), collapse = "\t"), character(1)),
+           file.path(metaqc_dir, "taxon_sets.gmt"))
+lengths(taxon_sets)
+```
+
+Adapt the IQC calculation to small tables. MetaQC computes IQC by comparing the OTU-by-OTU correlations of every pair of studies. To save memory with thousands of genes it repeats this 100 times on a random 10% of the shared genes. With about ten shared OTUs, 10% is a single OTU and no correlation can be computed, so this function does the same comparison once on all shared OTUs. Everything else in MetaQC is used unchanged.
+
+```{r step-242}
+iqc_all_shared <- function(.) {
+  pairs <- combn(length(.$.DListF), 2)
+  distance <- apply(pairs, 2, function(ii) {
+    shared <- intersect(rownames(.$.DListF[[ii[1]]]$x), rownames(.$.DListF[[ii[2]]]$x))
+    correlations <- sapply(1:2, function(j) as.vector(as.dist(cor(t(.$.DListF[[ii[j]]]$x[shared, , drop = FALSE])))))
+    correlations <- na.omit(correlations)
+    (1 - cor(correlations[, 1], correlations[, 2], method = "spearman")) / 2
+  })
+  m <- matrix(0, length(.$.DListF), length(.$.DListF), dimnames = list(names(.$.DListF), names(.$.DListF)))
+  m[t(pairs)] <- distance
+  m[t(pairs[2:1, ])] <- distance
+  .$.DistOfStudies <- as.dist(m)
+}
+```
+
+Run MetaQC: create the MetaQC object, plug in the IQC function and compute all six measures with 10,000 permutations. MetaQC writes helper files in the working directory, so the run happens inside the `metaqc` output folder and R returns to the workshop folder afterwards. `registerDoSEQ()` tells MetaQC to run on one core.
+
+```{r step-243}
+foreach::registerDoSEQ()
+run_metaqc <- function() {
+  old_dir <- setwd(metaqc_dir)
+  on.exit(setwd(old_dir))
+  set.seed(20261114)
+  object <- MetaQC(metaqc_input, "taxon_sets.gmt", filterGenes = FALSE, minNumGenes = 2, verbose = FALSE)
+  object$.CalcDistOfStudies <- iqc_all_shared
+  suppressWarnings(runQC(object, B = 1e4, fileForCQCp = "taxon_sets.gmt"))
+  object
+}
+metaqc <- run_metaqc()
+metaqc$Print()
+```
+
+Print how different the studies are from each other (the IQC distances). 0 means two studies have the same co-abundance structure; 0.5 means no relation. A study whose distances to the others are larger than the distances among the others gets a low IQC score.
+
+```{r step-244}
+round(metaqc$.DistOfStudies, 2)
+```
+
+Draw the six MetaQC scores of every study with the pass line.
+
+```{r step-245, fig.width=14, fig.height=4.6}
+metaqc_threshold <- -log10(0.05 / length(studies))
+metaqc_scores <- metaqc$.Scores
+metaqc_long <- data.frame(study = rep(rownames(metaqc_scores), ncol(metaqc_scores)),
+                          measure = factor(rep(colnames(metaqc_scores), each = nrow(metaqc_scores)), levels = colnames(metaqc_scores)),
+                          score = unlist(metaqc_scores))
+metaqc_long$result <- ifelse(metaqc_long$score >= metaqc_threshold, "Passes", "Does not pass")
+write.csv(cbind(study = rownames(metaqc_scores), round(metaqc_scores, 3)), file.path(out_dir, "metaqc_scores.csv"), row.names = FALSE)
+metaqc_plot <- ggplot(metaqc_long, aes(study, score, fill = result)) +
+  geom_col(colour = "black", linewidth = 0.3, width = 0.7) +
+  geom_hline(yintercept = metaqc_threshold, linetype = "dashed") +
+  geom_text(aes(label = sprintf("%.2f", pmax(score, 0))), vjust = -0.4, size = 3) +
+  facet_wrap(~measure, nrow = 1) +
+  scale_fill_manual(values = c("Passes" = condition_colours[["C2"]], "Does not pass" = not_significant_colour)) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.12))) +
+  labs(title = "MetaQC quality scores per study", subtitle = sprintf("Score = -log10(p); dashed line = -log10(0.05/%d) = %.1f", length(studies), metaqc_threshold),
+       x = "Study", y = "Score", fill = NULL)
+ggsave(file.path(out_dir, "metaqc_scores.png"), metaqc_plot, width = 14, height = 4.6, dpi = 180)
+print(metaqc_plot)
+```
+
+Apply the decision rule: exclude a study that fails both IQC and CQCg, and keep the others for every later step. From here on, `studies` and `study_data` hold only the included studies, so the alpha and beta diversity, ANCOM-BC and the meta-analysis all use the quality-controlled set.
+
+```{r step-246}
+metaqc_decision <- data.frame(study = rownames(metaqc_scores), IQC = round(metaqc_scores$IQC, 2), CQCg = round(metaqc_scores$CQCg, 2),
+                              passes_IQC = metaqc_scores$IQC >= metaqc_threshold, passes_CQCg = metaqc_scores$CQCg >= metaqc_threshold)
+metaqc_decision$included <- metaqc_decision$passes_IQC | metaqc_decision$passes_CQCg
+metaqc_decision <- metaqc_decision[order(metaqc_decision$study), ]
+write.csv(metaqc_decision, file.path(out_dir, "metaqc_decision.csv"), row.names = FALSE)
+print(metaqc_decision, row.names = FALSE)
+excluded_studies <- metaqc_decision$study[!metaqc_decision$included]
+studies <- setdiff(studies, excluded_studies)
+study_data <- study_data[studies]
+studies
+```
+
+### Alpha diversity: Observed, Chao1, Shannon and Inverse Simpson
+
+**What it measures.** Diversity *within* one sample.
+
+-   **Observed**: how many different OTUs are present (richness).
+-   **Chao1**: an estimate of the true richness. It adds to the observed count an estimate of the OTUs that were missed, based on how many OTUs were seen only once or twice. If no OTU is seen only once, Chao1 equals Observed.
+-   **Shannon**: richness and evenness together.
+-   **Inverse Simpson**: the effective number of dominant OTUs; it gives more weight to the abundant ones.
+
+**Keep in mind.** With three samples per condition, an exact two-sided test cannot give a p-value below 0.1.
+
+Calculate the four alpha-diversity indices for every sample. `estimateR()` from vegan returns Chao1 in its row `S.chao1`; `diversity()` returns Shannon and Inverse Simpson.
+
+```{r step-247}
+alpha <- do.call(rbind, lapply(studies, function(s) {
+  d <- study_data[[s]]
+  data.frame(study = s, sample_name = rownames(d$mat), condition = d$m$condition,
+             observed = rowSums(d$mat > 0),
+             chao1 = estimateR(d$mat)["S.chao1", ],
+             shannon = diversity(d$mat, "shannon"),
+             inverse_simpson = diversity(d$mat, "invsimpson"))
+}))
+write.csv(alpha, file.path(out_dir, "alpha_by_study.csv"), row.names = FALSE)
+print(alpha, row.names = FALSE, digits = 3)
+```
+
+Write the exact permutation test: compare the observed C2-minus-C1 difference with all 20 ways of splitting six samples into two groups of three.
+
+```{r step-248}
+allocations <- combn(6, 3)
+exact_test <- function(x) {
+  observed <- mean(x[4:6]) - mean(x[1:3])
+  permuted <- apply(allocations, 2, function(i) mean(x[-i]) - mean(x[i]))
+  c(difference = observed, p = mean(abs(permuted) >= abs(observed) - 1e-12))
+}
+```
+
+Test every index in every study and adjust the p-values within each study.
+
+```{r step-249}
+alpha_metrics <- c(observed = "Observed OTUs", chao1 = "Chao1 richness", shannon = "Shannon", inverse_simpson = "Inverse Simpson")
+alpha_tests <- do.call(rbind, lapply(studies, function(s) do.call(rbind, lapply(names(alpha_metrics), function(metric) {
+  r <- exact_test(alpha[alpha$study == s, metric])
+  data.frame(study = s, metric = metric, difference_C2_minus_C1 = r[["difference"]], p_value = r[["p"]])
+}))))
+alpha_tests$adjusted_p <- ave(alpha_tests$p_value, alpha_tests$study, FUN = function(p) p.adjust(p, "BH"))
+write.csv(alpha_tests, file.path(out_dir, "alpha_tests_by_study.csv"), row.names = FALSE)
+print(alpha_tests, row.names = FALSE, digits = 3)
+```
+
+Draw the four indices as violin plots: studies along the x-axis, the two conditions next to each other, and the exact p-value above each study. Each violin has a small box plot inside and the three samples as dots, as in the reference paper. With three samples the violin shape is only a smoothed sketch of where the values lie.
+
+```{r step-250, fig.width=12, fig.height=8.0}
+alpha_long <- do.call(rbind, lapply(names(alpha_metrics), function(metric)
+  data.frame(alpha[, c("study", "sample_name", "condition")], metric = alpha_metrics[[metric]], value = alpha[[metric]])))
+alpha_long$metric <- factor(alpha_long$metric, levels = alpha_metrics)
+alpha_labels <- do.call(rbind, lapply(names(alpha_metrics), function(metric) {
+  top <- aggregate(value ~ study, alpha_long[alpha_long$metric == alpha_metrics[[metric]], ], max)
+  tests <- alpha_tests[alpha_tests$metric == metric, ]
+  data.frame(study = top$study, metric = alpha_metrics[[metric]], value = top$value,
+             label = sprintf("p = %.1f", tests$p_value[match(top$study, tests$study)]))
+}))
+alpha_labels$metric <- factor(alpha_labels$metric, levels = alpha_metrics)
+alpha_plot <- ggplot(alpha_long, aes(study, value, fill = condition)) +
+  geom_violin(trim = TRUE, scale = "width", width = 0.7, colour = "black", linewidth = 0.4, position = position_dodge(0.8)) +
+  geom_boxplot(width = 0.12, colour = "black", linewidth = 0.3, outlier.shape = NA, position = position_dodge(0.8), show.legend = FALSE) +
+  geom_point(shape = 21, size = 1.6, colour = "black", position = position_dodge(0.8), show.legend = FALSE) +
+  geom_text(data = alpha_labels, aes(study, Inf, label = label), inherit.aes = FALSE, vjust = 1.6, size = 3.2) +
+  facet_wrap(~metric, nrow = 2, scales = "free_y") +
+  scale_fill_manual(values = condition_colours) +
+  scale_y_continuous(expand = expansion(mult = c(0.05, 0.14))) +
+  labs(title = "Alpha diversity by study and condition", x = "Study", y = "Index value", fill = "Condition")
+ggsave(file.path(out_dir, "alpha_by_study.png"), alpha_plot, width = 12, height = 8, dpi = 180)
+print(alpha_plot)
+```
+
+### Beta diversity: Bray--Curtis, Canberra, Jclass and ThetaYC
+
+**What it measures.** How different two samples are from each other. Four distances are used, the same calculators that mothur offers in `dist.shared`:
+
+-   **Bray--Curtis**: based on abundances; dominated by the common OTUs.
+-   **Canberra**: based on abundances, but every OTU counts equally, so rare OTUs matter as much as common ones.
+-   **Jclass** (Jaccard): uses only presence or absence. It answers "do the two samples contain the same OTUs?"
+-   **ThetaYC** (Yue & Clayton): compares the community *structure*, that is the proportions of shared and unshared OTUs.
+
+**PCoA.** Each distance matrix is turned into a map in which similar samples sit close together. The percentage on each axis is the share of the total variation that the axis shows.
+
+**PERMANOVA** asks whether the condition explains part of the distances (R²). **PERMDISP** asks whether one condition is simply more spread out than the other, which can make PERMANOVA misleading. Both tests are exact here: with six samples vegan can try every possible reordering of the samples instead of a random selection. There are only 20 ways to split six samples into two groups of three, so the smallest possible PERMANOVA p-value is 1/20 = 0.05.
+
+Write the ThetaYC distance, which vegan does not include. For two samples with relative abundances a and b: 1 − Σab / (Σa² + Σb² − Σab).
+
+```{r step-251}
+thetayc <- function(relative) {
+  cross <- relative %*% t(relative)
+  squares <- diag(cross)
+  as.dist(1 - cross / (outer(squares, squares, "+") - cross))
+}
+```
+
+List the four distances. Each entry is a small function that takes one study and returns its distance matrix.
+
+```{r step-252}
+distance_functions <- list(
+  "Bray-Curtis" = function(d) vegdist(d$relative, method = "bray"),
+  "Canberra"    = function(d) vegdist(d$relative, method = "canberra"),
+  "Jclass"      = function(d) vegdist(d$mat, method = "jaccard", binary = TRUE),
+  "ThetaYC"     = function(d) thetayc(d$relative))
+```
+
+For every distance and every study: run the PCoA, the PERMANOVA and the PERMDISP test. `cmdscale()` is the PCoA; its eigenvalues give the percentage of variation on each axis. `adonis2()` is PERMANOVA, and `betadisper()` with `permutest()` is PERMDISP. Both ask for 999 permutations, but with six samples there are only 720 possible orderings, so vegan tries every one of them and the tests are exact; `suppressMessages()` hides the note that says so. It is written `vegan::permutest()` because the metafor package has a function with the same name. `suppressWarnings()` hides a harmless note that vegan prints for distances that cannot be drawn exactly on flat axes.
+
+```{r step-253}
+beta <- lapply(names(distance_functions), function(distance_name) lapply(studies, function(s) {
+  d <- study_data[[s]]
+  distance <- distance_functions[[distance_name]](d)
+  pcoa <- cmdscale(distance, k = 2, eig = TRUE)
+  explained <- 100 * pcoa$eig[1:2] / sum(pcoa$eig[pcoa$eig > 0])
+  permanova <- suppressMessages(adonis2(distance ~ condition, data = d$m, permutations = 999))
+  permdisp <- suppressMessages(vegan::permutest(suppressWarnings(betadisper(distance, d$m$condition)), permutations = 999))
+  list(points = data.frame(distance = distance_name, study = s, sample_name = rownames(d$m), condition = d$m$condition,
+                           PCoA1 = pcoa$points[, 1], PCoA2 = pcoa$points[, 2]),
+       tests = data.frame(distance = distance_name, study = s, axis1_percent = explained[1], axis2_percent = explained[2],
+                          R2 = permanova$R2[1], F = permanova$F[1], permanova_p = permanova$`Pr(>F)`[1],
+                          permdisp_p = permdisp$tab$`Pr(>F)`[1]))
+}))
+pcoa_points <- do.call(rbind, lapply(beta, function(x) do.call(rbind, lapply(x, `[[`, "points"))))
+beta_tests <- do.call(rbind, lapply(beta, function(x) do.call(rbind, lapply(x, `[[`, "tests"))))
+write.csv(pcoa_points, file.path(out_dir, "pcoa_by_study.csv"), row.names = FALSE)
+write.csv(beta_tests, file.path(out_dir, "permanova_by_study.csv"), row.names = FALSE)
+```
+
+Print the PERMANOVA and PERMDISP results with the percentage of variation on the two PCoA axes.
+
+```{r step-254}
+print(beta_tests, row.names = FALSE, digits = 3)
+```
+
+Write a function that returns the outline of an ellipse around the samples of one condition. The ellipse is centred on the mean of the samples and follows their spread (their covariance); it covers about 68% of a normal distribution fitted to them. `stat_ellipse()` from ggplot2 needs at least four samples per group, so with three the ellipse is calculated here.
+
+```{r step-255}
+ellipse_points <- function(points, level = 0.68) {
+  xy <- as.matrix(points[, c("PCoA1", "PCoA2")])
+  spread <- eigen(cov(xy), symmetric = TRUE)
+  circle <- rbind(cos(seq(0, 2 * pi, length.out = 100)), sin(seq(0, 2 * pi, length.out = 100)))
+  outline <- t(colMeans(xy) + spread$vectors %*% (sqrt(pmax(spread$values, 0) * qchisq(level, 2)) * circle))
+  data.frame(condition = points$condition[1], PCoA1 = outline[, 1], PCoA2 = outline[, 2])
+}
+```
+
+Write a function that draws the PCoA of one distance, one panel per study, with the percentage of variation written on the x- and y-axis. An ellipse is drawn around the samples of each condition. Every panel is its own ordination, so each has its own axis labels.
+
+```{r step-256}
+pcoa_figure <- function(distance_name) {
+  panels <- lapply(studies, function(s) {
+    points <- pcoa_points[pcoa_points$distance == distance_name & pcoa_points$study == s, ]
+    tests <- beta_tests[beta_tests$distance == distance_name & beta_tests$study == s, ]
+    ellipses <- do.call(rbind, lapply(split(points, points$condition), ellipse_points))
+    ggplot(points, aes(PCoA1, PCoA2, colour = condition, fill = condition)) +
+      geom_hline(yintercept = 0, colour = "grey80") + geom_vline(xintercept = 0, colour = "grey80") +
+      geom_polygon(data = ellipses, alpha = 0.2, linewidth = 0.5) +
+      geom_point(size = 3) +
+      geom_text(aes(label = sample_name), vjust = -1, size = 3, show.legend = FALSE) +
+      scale_fill_manual(values = condition_colours) +
+      scale_colour_manual(values = condition_colours) +
+      scale_x_continuous(expand = expansion(mult = 0.2)) + scale_y_continuous(expand = expansion(mult = 0.2)) +
+      labs(title = s,
+           subtitle = sprintf("PERMANOVA R2 = %.2f, p = %.2f\nPERMDISP p = %.2f", tests$R2, tests$permanova_p, tests$permdisp_p),
+           x = sprintf("PCoA1 (%.1f%%)", tests$axis1_percent), y = sprintf("PCoA2 (%.1f%%)", tests$axis2_percent),
+           colour = "Condition", fill = "Condition") +
+      theme(plot.subtitle = element_text(size = 8.5), panel.grid = element_blank())
+  })
+  wrap_plots(panels, nrow = 1, guides = "collect") +
+    plot_annotation(title = paste(distance_name, "PCoA")) & theme(legend.position = "bottom")
+}
+```
+
+Draw and save the Bray--Curtis PCoA.
+
+```{r step-257, fig.width=17, fig.height=4.8}
+pcoa_bray <- pcoa_figure("Bray-Curtis")
+ggsave(file.path(out_dir, "pcoa_braycurtis_by_study.png"), pcoa_bray, width = 17, height = 4.8, dpi = 180)
+print(pcoa_bray)
+```
+
+Draw and save the Canberra PCoA.
+
+```{r step-258, fig.width=17, fig.height=4.8}
+pcoa_canberra <- pcoa_figure("Canberra")
+ggsave(file.path(out_dir, "pcoa_canberra_by_study.png"), pcoa_canberra, width = 17, height = 4.8, dpi = 180)
+print(pcoa_canberra)
+```
+
+Draw and save the Jclass PCoA.
+
+```{r step-259, fig.width=17, fig.height=4.8}
+pcoa_jclass <- pcoa_figure("Jclass")
+ggsave(file.path(out_dir, "pcoa_jclass_by_study.png"), pcoa_jclass, width = 17, height = 4.8, dpi = 180)
+print(pcoa_jclass)
+```
+
+Draw and save the ThetaYC PCoA.
+
+```{r step-260, fig.width=17, fig.height=4.8}
+pcoa_thetayc <- pcoa_figure("ThetaYC")
+ggsave(file.path(out_dir, "pcoa_thetayc_by_study.png"), pcoa_thetayc, width = 17, height = 4.8, dpi = 180)
+print(pcoa_thetayc)
+```
+
+Summarise PERMANOVA in one picture: the share of variation explained by condition (R²) for every distance and study, with the p-value underneath.
+
+```{r step-261, fig.width=9, fig.height=3.8}
+beta_tests$distance <- factor(beta_tests$distance, levels = rev(names(distance_functions)))
+permanova_plot <- ggplot(beta_tests, aes(study, distance, fill = R2)) +
+  geom_tile(colour = "black") +
+  geom_text(aes(label = sprintf("R2 = %.2f\np = %.2f", R2, permanova_p)), size = 3.4) +
+  scale_fill_gradient(low = "white", high = condition_colours[["C2"]], limits = c(0, 1)) +
+  labs(title = "PERMANOVA: variation explained by condition", x = "Study", y = NULL, fill = "R2") +
+  theme(panel.grid = element_blank(), legend.position = "right")
+ggsave(file.path(out_dir, "permanova_by_study.png"), permanova_plot, width = 9, height = 3.8, dpi = 180)
+print(permanova_plot)
+```
+
+### ANCOM-BC per study: effect size and standard error for every OTU
+
+**One study at a time.** ANCOM-BC is run separately in each included study, never on a merged table, so that differences between studies (sequencing depth, filtering) cannot create false differences between conditions. From every study we keep, for each OTU, the effect size (log fold change) and its standard error (SE): exactly the two numbers the meta-analysis needs.
+
+**Why ANCOM-BC instead of LEfSe.** LEfSe first needs a Kruskal--Wallis p-value below 0.05. With three samples per condition the smallest value that test can give is 0.0495, and after adjustment for multiple testing nothing passes, so LEfSe reported no OTU in any study whatever the LDA cut-off. LEfSe also gives a score without a standard error, which a meta-analysis cannot use.
+
+**What ANCOM-BC does.** Sequencing gives relative abundances: if one OTU goes up, the others must appear to go down even if they did not change. ANCOM-BC estimates and removes this bias, then reports for each OTU its *effect size*, the log fold change between conditions, together with a standard error, a p-value and an adjusted p-value (q). The function used is `ancombc2()`, the current version in the ANCOMBC package; the reference paper also used ANCOM-BC.
+
+**How to read a value.** A log fold change of 0 means no difference; +0.69 means about twice as abundant in C2; −0.69 means about half.
+
+Run ANCOM-BC in every study and collect, for every OTU, the effect size (log fold change, C2 versus C1), its standard error, the p-value and the adjusted p-value. OTUs seen in fewer than two samples of a study are left out before the model is fitted. ANCOM-BC returns no estimate (NA) for an OTU found in only one condition, and a p-value of exactly 1 for an OTU found in a single sample of each condition, because it cannot be tested. The column `usable` marks the estimates that can be trusted and carried forward.
+
+```{r step-262, message=FALSE, warning=FALSE}
+ancom <- do.call(rbind, lapply(studies, function(s) {
+  d <- study_data[[s]]
+  keep <- colSums(d$mat > 0) >= 2
+  set.seed(20261114)
+  fit <- suppressWarnings(suppressMessages(ancombc2(data = t(d$mat[, keep, drop = FALSE]), taxa_are_rows = TRUE,
+           meta_data = d$m, fix_formula = "condition", group = "condition", p_adj_method = "BH",
+           prv_cut = 0, lib_cut = 0, struc_zero = FALSE, pseudo_sens = FALSE, verbose = FALSE)))
+  r <- fit$res
+  data.frame(study = s, feature = r$taxon, lfc_C2_vs_C1 = r$lfc_conditionC2, se = r$se_conditionC2,
+             W = r$W_conditionC2, p_value = r$p_conditionC2, q_value = r$q_conditionC2)
+}))
+ancom$taxon <- unname(taxon_label[ancom$feature])
+ancom$usable <- is.finite(ancom$lfc_C2_vs_C1) & is.finite(ancom$se) & ancom$se > 0 & ancom$p_value < 1
+```
+
+Label each estimate: higher in C1, higher in C2, or not significant. The label uses the unadjusted p-value, because with three samples per condition almost nothing can pass the adjusted threshold. The adjusted value (q) is kept in the table and shown in the figures.
+
+```{r step-263}
+significance_level <- 0.05
+ancom$direction <- ifelse(!ancom$usable | ancom$p_value >= significance_level, "Not significant",
+                          ifelse(ancom$lfc_C2_vs_C1 > 0, "Higher in C2", "Higher in C1"))
+ancom$direction <- factor(ancom$direction, levels = c("Higher in C1", "Higher in C2", "Not significant"))
+direction_colours <- c("Higher in C1" = condition_colours[["C1"]], "Higher in C2" = condition_colours[["C2"]], "Not significant" = not_significant_colour)
+write.csv(ancom, file.path(out_dir, "ancombc_by_study.csv"), row.names = FALSE)
+```
+
+Print the effect size of every OTU in every study.
+
+```{r step-264}
+print(ancom[, c("study", "taxon", "lfc_C2_vs_C1", "se", "p_value", "q_value", "usable", "direction")], row.names = FALSE, digits = 3)
+```
+
+Count the estimates and how many are significant.
+
+```{r step-265}
+table(study = ancom$study, result = ancom$direction)
+c(estimates = nrow(ancom), usable = sum(ancom$usable), p_below_0.05 = sum(ancom$usable & ancom$p_value < 0.05), q_below_0.05 = sum(ancom$usable & ancom$q_value < 0.05))
+```
+
+Draw the effect size of every OTU with its 95% confidence interval, one panel per study.
+
+```{r step-266, fig.width=18, fig.height=5.6}
+ancom_drawn <- ancom[ancom$usable, ]
+ancom_plot <- ggplot(ancom_drawn, aes(lfc_C2_vs_C1, reorder(paste(study, taxon, sep = "|"), lfc_C2_vs_C1), fill = direction)) +
+  geom_vline(xintercept = 0, colour = "grey40") +
+  geom_errorbar(aes(xmin = lfc_C2_vs_C1 - 1.96 * se, xmax = lfc_C2_vs_C1 + 1.96 * se), width = 0, orientation = "y") +
+  geom_point(shape = 21, size = 3, colour = "black") +
+  facet_wrap(~study, nrow = 1, scales = "free_y") +
+  scale_y_discrete(labels = function(x) sub("^[^|]*\\|", "", x)) +
+  scale_fill_manual(values = direction_colours, drop = FALSE) +
+  labs(title = "ANCOM-BC effect sizes: C2 versus C1", x = "Log fold change (natural log), with 95% confidence interval", y = NULL, fill = NULL) +
+  theme(axis.text.y = element_text(size = 7))
+ggsave(file.path(out_dir, "ancombc_by_study.png"), ancom_plot, width = 18, height = 5.6, dpi = 180)
+print(ancom_plot)
+```
+
+### Random-effects meta-analysis (metafor, REML) for every OTU
+
+**The idea.** Each study is small, but there are several of them. ANCOM-BC gave, for each OTU in each study, an effect size (log fold change) and its standard error. A meta-analysis combines the study estimates of one OTU into one pooled effect size. It has two parts: a check of **which estimates can be pooled**, and the **random-effects model (REM)**, fitted with `metafor::rma(method = "REML")`, which does the pooling.
+
+This is a different check from MetaQC at the start of the chapter: MetaQC decided which *studies* are combined; this step decides which *estimates* of those studies can be used.
+
+**Part 1: which estimates can be pooled.** A pooled result is only as good as what goes into it, so three checks come first.
+
+-   **Is each estimate usable?** An estimate is kept only if ANCOM-BC could really test the OTU in that study: it has a log fold change, a standard error and a p-value. OTUs found in only one condition, or in a single sample of each condition, are left out.
+-   **Are there enough studies?** An OTU is pooled only if at least three studies have a usable estimate. With one or two studies there is nothing to compare.
+-   **Are the studies comparable?** MetaQC has already removed the study that was not homogeneous with the others. The remaining studies were processed with the same mothur pipeline and the same reference, so their OTUs mean the same thing. They still differ in read depth (see the first figure of this chapter) and in one filtering threshold (G5 used 97% identity). These differences are a reason to prefer a random-effects model and to check each result with one study left out.
+
+**Part 2: the random-effects model (REM).** A *fixed-effect* model assumes that all studies measure exactly the same true effect and differ only by chance. A *random-effects* model is more realistic here: it assumes that each study has its own true effect, and that these true effects scatter around an average. That average is the pooled effect size.
+
+-   Each study estimate = average effect + how far this study's true effect is from the average + sampling error.
+-   **tau²** is the variance of the true effects between studies. If tau² is 0 the random-effects model gives the same answer as the fixed-effect model.
+-   **REML.** tau² is estimated by restricted maximum likelihood (`method = "REML"`), the default in metafor. With few studies, plain maximum likelihood underestimates tau²; REML corrects for that.
+-   Each study gets the **weight** 1 / (standard error² + tau²). Precise studies count more, but a large tau² makes the weights more equal, so no single study dominates.
+-   **estimate** is the weighted average of the study effect sizes, with a 95% confidence interval. An interval that includes 0 is compatible with no difference.
+-   **I²** is the percentage of the total variation that comes from real differences between studies and not from chance; the **Q test** asks whether there is more variation than chance alone would give. These two are the quality control of the pooled result itself.
+
+Two OTUs are first worked through by hand so that you can see every step. Then one function repeats exactly the same steps for all OTUs.
+
+Before pooling: for every OTU, list which studies give a usable estimate and whether the OTU can be pooled. "usable" means ANCOM-BC could test the OTU in that study; "not testable" means the OTU was present but in too few samples; "not detected" means it was seen in fewer than two samples of that study. An OTU needs at least three usable studies.
+
+```{r step-267}
+qc_meta <- expand.grid(feature = unique(ancom$feature), study = studies, stringsAsFactors = FALSE)
+found <- match(paste(qc_meta$feature, qc_meta$study), paste(ancom$feature, ancom$study))
+qc_meta$status <- ifelse(is.na(found), "Not detected", ifelse(ancom$usable[found], "Usable", "Not testable"))
+qc_meta$taxon <- unname(taxon_label[qc_meta$feature])
+qc_summary <- as.data.frame.matrix(table(qc_meta$taxon, factor(qc_meta$status, levels = c("Usable", "Not testable", "Not detected"))))
+qc_summary$pooled <- ifelse(qc_summary$Usable >= 3, "yes", "no")
+write.csv(qc_meta, file.path(out_dir, "meta_qc.csv"), row.names = FALSE)
+print(qc_summary)
+```
+
+Before pooling: draw the same information as a map of OTUs by studies.
+
+```{r step-268, fig.width=9, fig.height=6.5}
+qc_meta$status <- factor(qc_meta$status, levels = c("Usable", "Not testable", "Not detected"))
+usable_count <- tapply(qc_meta$status == "Usable", qc_meta$taxon, sum)
+qc_meta$taxon <- factor(qc_meta$taxon, levels = names(sort(usable_count)))
+qc_meta_plot <- ggplot(qc_meta, aes(study, taxon, fill = status)) +
+  geom_tile(colour = "black") +
+  geom_hline(yintercept = sum(usable_count < 3) + 0.5, linewidth = 1.2) +
+  scale_fill_manual(values = c("Usable" = condition_colours[["C2"]], "Not testable" = not_significant_colour, "Not detected" = "white")) +
+  labs(title = "Estimates available for pooling", subtitle = "OTUs above the thick line have a usable estimate in at least three studies and are pooled",
+       x = "Study", y = NULL, fill = "ANCOM-BC estimate") +
+  theme(panel.grid = element_blank(), plot.subtitle = element_text(size = 9))
+ggsave(file.path(out_dir, "meta_qc.png"), qc_meta_plot, width = 9, height = 6.5, dpi = 180)
+print(qc_meta_plot)
+```
+
+Example 1, Otu05: take its ANCOM-BC effect sizes from the included studies.
+
+```{r step-269}
+example_1 <- ancom[ancom$feature == "Otu05" & ancom$usable, ]
+print(example_1[, c("study", "taxon", "lfc_C2_vs_C1", "se", "p_value")], row.names = FALSE, digits = 3)
+```
+
+Example 1, Otu05: fit the random-effects model and print the pooled effect size.
+
+```{r step-270}
+model_1 <- rma(yi = lfc_C2_vs_C1, sei = se, data = example_1, method = "REML")
+print(model_1)
+```
+
+Example 1, Otu05: draw the forest plot and save it. Each square is one study; the diamond is the pooled effect size.
+
+```{r step-271, fig.width=8, fig.height=4.5}
+forest_1 <- function() forest(model_1, slab = example_1$study, header = c("Study", "Log fold change [95% CI]"),
+  xlab = "Log fold change, C2 versus C1", main = taxon_label[["Otu05"]], colout = "black",
+  col = condition_colours[[ifelse(coef(model_1) > 0, "C2", "C1")]], border = "black")
+forest_1()
+png(file.path(out_dir, "meta_example_Otu05.png"), width = 1500, height = 850, res = 180)
+forest_1()
+invisible(dev.off())
+```
+
+Example 1, Otu05: quality control of the pooled result. Refit the model once per study, each time leaving that study out. If the pooled effect size stays on the same side of zero whichever study is removed, the result does not depend on one study. This matters most for G5, which was filtered at a different identity threshold.
+
+```{r step-272}
+leave_one_out <- leave1out(model_1)
+print(data.frame(left_out = example_1$study, estimate = leave_one_out$estimate, ci_lower = leave_one_out$ci.lb, ci_upper = leave_one_out$ci.ub,
+                 p_value = leave_one_out$pval, I_squared = leave_one_out$I2), row.names = FALSE, digits = 3)
+```
+
+Example 2, Otu16: take its ANCOM-BC effect sizes from the included studies.
+
+```{r step-273}
+example_2 <- ancom[ancom$feature == "Otu16" & ancom$usable, ]
+print(example_2[, c("study", "taxon", "lfc_C2_vs_C1", "se", "p_value")], row.names = FALSE, digits = 3)
+```
+
+Example 2, Otu16: fit the random-effects model and print the pooled effect size.
+
+```{r step-274}
+model_2 <- rma(yi = lfc_C2_vs_C1, sei = se, data = example_2, method = "REML")
+print(model_2)
+```
+
+Example 2, Otu16: draw the forest plot and save it.
+
+```{r step-275, fig.width=8, fig.height=4.5}
+forest_2 <- function() forest(model_2, slab = example_2$study, header = c("Study", "Log fold change [95% CI]"),
+  xlab = "Log fold change, C2 versus C1", main = taxon_label[["Otu16"]], colout = "black",
+  col = condition_colours[[ifelse(coef(model_2) > 0, "C2", "C1")]], border = "black")
+forest_2()
+png(file.path(out_dir, "meta_example_Otu16.png"), width = 1500, height = 850, res = 180)
+forest_2()
+invisible(dev.off())
+```
+
+All OTUs: write one function that does for any OTU what the two examples did by hand. The quality-control rule is built in: an OTU is pooled only if at least three studies have a usable estimate; otherwise it is recorded as not estimable (NA). The function also returns tau², I² and the p-value of the Q test, so the heterogeneity of every pooled result can be checked.
+
+```{r step-276}
+pool_otu <- function(feature) {
+  d <- ancom[ancom$feature == feature & ancom$usable, ]
+  not_estimable <- data.frame(feature = feature, studies = nrow(d), estimate = NA, se = NA, ci_lower = NA, ci_upper = NA,
+                              p_value = NA, tau_squared = NA, I_squared = NA, Q_p_value = NA)
+  if (nrow(d) < 3) return(not_estimable)
+  model <- tryCatch(rma(yi = lfc_C2_vs_C1, sei = se, data = d, method = "REML"), error = function(e) NULL)
+  if (is.null(model)) return(not_estimable)
+  data.frame(feature = feature, studies = model$k, estimate = as.numeric(coef(model)), se = model$se, ci_lower = model$ci.lb,
+             ci_upper = model$ci.ub, p_value = model$pval, tau_squared = model$tau2, I_squared = model$I2, Q_p_value = model$QEp)
+}
+```
+
+All OTUs: apply the function to every OTU, adjust the p-values for multiple testing and save the table.
+
+```{r step-277}
+meta_otu <- do.call(rbind, lapply(unique(ancom$feature), pool_otu))
+meta_otu$adjusted_p <- p.adjust(meta_otu$p_value, "BH")
+meta_otu$taxon <- unname(taxon_label[meta_otu$feature])
+meta_otu$direction <- ifelse(is.na(meta_otu$p_value) | meta_otu$p_value >= significance_level, "Not significant",
+                             ifelse(meta_otu$estimate > 0, "Higher in C2", "Higher in C1"))
+meta_otu$direction <- factor(meta_otu$direction, levels = names(direction_colours))
+meta_otu <- meta_otu[order(meta_otu$p_value), ]
+write.csv(meta_otu, file.path(out_dir, "meta_otu_ancombc.csv"), row.names = FALSE)
+print(meta_otu[, c("taxon", "studies", "estimate", "ci_lower", "ci_upper", "p_value", "adjusted_p", "tau_squared", "I_squared", "Q_p_value")], row.names = FALSE, digits = 3)
+```
+
+All OTUs: draw the pooled effect size of every OTU with its 95% confidence interval.
+
+```{r step-278, fig.width=10, fig.height=6}
+pooled <- meta_otu[!is.na(meta_otu$estimate), ]
+pooled$label <- sprintf("%s  (k = %d)%s", pooled$taxon, pooled$studies, ifelse(pooled$adjusted_p < 0.05, " *", ""))
+meta_plot <- ggplot(pooled, aes(estimate, reorder(label, estimate), fill = direction)) +
+  geom_vline(xintercept = 0, colour = "grey40") +
+  geom_errorbar(aes(xmin = ci_lower, xmax = ci_upper), width = 0, orientation = "y") +
+  geom_point(shape = 23, size = 4, colour = "black") +
+  scale_fill_manual(values = direction_colours, drop = FALSE) +
+  labs(title = "Pooled effect size per OTU", subtitle = "Random-effects meta-analysis of ANCOM-BC log fold changes; k = number of studies; * adjusted p < 0.05",
+       x = "Pooled log fold change, C2 versus C1, with 95% confidence interval", y = NULL, fill = NULL) +
+  theme(plot.subtitle = element_text(size = 9))
+ggsave(file.path(out_dir, "meta_otu_ancombc.png"), meta_plot, width = 10, height = 0.34 * nrow(pooled) + 2.4, dpi = 180)
+print(meta_plot)
+```
+
+### One cladogram for all included studies, coloured from the ANCOM-BC results
+
+**What a cladogram shows.** The taxonomy drawn as a tree: the inner ring is the kingdom, each step outwards is a lower rank (phylum, class, order, family, genus), and the outer nodes are the OTUs. Every OTU is labelled with its number and genus, and the phylum (bold) and family are written on the inner nodes.
+
+**One tree, all included studies, two conditions.** All OTUs that ANCOM-BC analysed are in one tree. Outside the tree there is one ring of tiles per included study (G1 innermost). A tile is salmon when the OTU is higher in C1 in that study and teal when it is higher in C2; it is strongly coloured when the difference is significant and pale when it is not, and it is missing when the study has no usable estimate. The tree nodes show the pooled result of the included studies: salmon or teal when the pooled effect is significant, olive when it is not. A shaded sector marks each significant OTU.
+
+Turn the taxonomy of the OTUs into tree coordinates: one row per node with its rank, its position around the circle and its parent.
+
+```{r step-279}
+features <- unique(ancom$feature)
+ranks <- cbind(tax_matrix[features, c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus"), drop = FALSE], OTU = unname(taxon_label[features]))
+ranks <- ranks[do.call(order, as.data.frame(ranks)), , drop = FALSE]
+paths <- sapply(seq_len(ncol(ranks)), function(level) apply(ranks[, seq_len(level), drop = FALSE], 1, paste, collapse = ";"))
+leaf_position <- seq_len(nrow(ranks))
+nodes <- do.call(rbind, lapply(seq_len(ncol(ranks)), function(level) {
+  first <- match(unique(paths[, level]), paths[, level])
+  data.frame(path = paths[first, level], level = level - 1, name = ranks[first, level],
+             position = as.numeric(tapply(leaf_position, factor(paths[, level], levels = unique(paths[, level])), function(p) mean(range(p)))),
+             parent = if (level == 1) NA else paths[first, level - 1])
+}))
+nodes$feature <- ifelse(nodes$level == 6, rownames(ranks)[match(nodes$path, paths[, 7])], NA)
+nodes$parent_position <- nodes$position[match(nodes$parent, nodes$path)]
+```
+
+Colour the tree nodes from the pooled ANCOM-BC effect sizes. A higher-rank node takes a colour when all the significant OTUs below it point the same way.
+
+```{r step-280}
+nodes$direction <- as.character(meta_otu$direction[match(nodes$feature, meta_otu$feature)])
+for (i in which(is.na(nodes$feature))) {
+  below <- rownames(ranks)[paths[, nodes$level[i] + 1] == nodes$path[i]]
+  hits <- setdiff(unique(as.character(meta_otu$direction[match(below, meta_otu$feature)])), "Not significant")
+  nodes$direction[i] <- if (length(hits) == 1) hits else "Not significant"
+}
+nodes$direction <- factor(nodes$direction, levels = names(direction_colours))
+```
+
+Make the ring tiles: one tile per OTU and study, coloured by the condition in which the OTU is higher.
+
+```{r step-281}
+tiles <- ancom[ancom$usable, ]
+tiles$position <- match(tiles$feature, rownames(ranks))
+tiles$ring <- 8.9 + 0.55 * match(tiles$study, studies)
+tiles$higher_in <- ifelse(tiles$lfc_C2_vs_C1 > 0, "C2", "C1")
+tiles$significant <- tiles$p_value < significance_level
+```
+
+Draw the cladogram and save it. `coord_polar()` bends the tree into a circle. Adding 2 to every rank leaves an open ring in the centre, so the inner nodes are not crowded. Tip labels are turned so that they can be read from the outside.
+
+```{r step-282, fig.width=12, fig.height=12.5}
+n <- nrow(ranks)
+tips <- nodes[!is.na(nodes$feature), ]
+angle <- 90 - 360 * (tips$position - 0.5) / n
+tips$hjust <- ifelse(angle < -90, 1, 0)
+tips$angle <- ifelse(angle < -90, angle + 180, angle)
+inner <- nodes[nodes$level %in% c(1, 4), ]
+sectors <- tips[tips$direction != "Not significant", ]
+branches <- nodes[!is.na(nodes$parent), ]
+ring_labels <- data.frame(position = 0, ring = 8.9 + 0.55 * seq_along(studies), label = studies)
+cladogram_plot <- ggplot(nodes) +
+  geom_rect(data = sectors, aes(xmin = position - 0.5, xmax = position + 0.5, ymin = 2, ymax = 8.4, fill = direction), alpha = 0.25, show.legend = FALSE) +
+  geom_segment(data = branches, aes(x = position, xend = position, y = level + 1, yend = level + 2), linewidth = 0.5) +
+  geom_segment(data = branches, aes(x = parent_position, xend = position, y = level + 1, yend = level + 1), linewidth = 0.5) +
+  geom_point(aes(position, level + 2, fill = direction, size = is.na(feature)), shape = 21, colour = "black", show.legend = c(fill = TRUE, size = FALSE)) +
+  geom_tile(data = tiles, aes(position, ring, fill = paste("Higher in", higher_in), alpha = significant), width = 0.9, height = 0.5, colour = "black", linewidth = 0.2, show.legend = FALSE) +
+  geom_text(data = ring_labels, aes(position, ring, label = label), size = 2.4, fontface = "bold") +
+  geom_label(data = inner, aes(position, level + 2, label = name, fontface = ifelse(level == 1, "bold", "plain")), size = 3,
+             vjust = -0.6, fill = "white", alpha = 0.7, linewidth = 0, label.padding = unit(0.08, "lines")) +
+  geom_text(data = tips, aes(position, 12.1, label = name, angle = angle, hjust = hjust, fontface = ifelse(direction == "Not significant", "plain", "bold")), size = 3.6) +
+  scale_fill_manual(values = direction_colours, drop = FALSE, name = NULL,
+                    labels = c("Higher in C1", "Higher in C2", "Not significant")) +
+  scale_alpha_manual(values = c(`TRUE` = 1, `FALSE` = 0.3)) +
+  scale_size_manual(values = c(`TRUE` = 3, `FALSE` = 5)) +
+  scale_x_continuous(limits = c(-0.5, n + 0.5)) + scale_y_continuous(limits = c(0, 18)) +
+  coord_polar(theta = "x", clip = "off") +
+  labs(title = "Cladogram of all included studies, coloured by condition",
+       subtitle = paste0("Tree nodes: pooled ANCOM-BC result. Rings ", paste(studies, collapse = ", "), " (inside to outside): condition in which the OTU is higher in each study (strong colour = p < 0.05)")) +
+  theme_void(base_size = 13) +
+  theme(plot.title = element_text(face = "bold", hjust = 0.5), plot.subtitle = element_text(hjust = 0.5, size = 10), legend.position = "bottom",
+        plot.background = element_rect(fill = "white", colour = NA), plot.margin = margin(10, 30, 10, 30)) +
+  guides(fill = guide_legend(override.aes = list(size = 5)))
+ggsave(file.path(out_dir, "ancombc_cladogram.png"), cladogram_plot, width = 12, height = 12.5, dpi = 180)
+print(cladogram_plot)
+```
+
+### Effect size of alpha diversity across the included studies
+
+**The idea.** The same random-effects model is applied to alpha diversity. For each index and study the effect size is the mean difference, C2 minus C1; its variance comes from the spread within each condition. The quality-control rule here is that a study needs a variance above 0 to be weighted.
+
+**Keep in mind.** One study group was filtered at 97% identity and the others at 99%. Differences between studies may therefore reflect filtering as well as biology.
+
+Calculate the C2-minus-C1 difference and its variance for every index and study.
+
+```{r step-283}
+alpha_effects <- do.call(rbind, lapply(names(alpha_metrics), function(metric) do.call(rbind, lapply(studies, function(s) {
+  x <- alpha[alpha$study == s, metric]
+  data.frame(metric = metric, study = s, effect = mean(x[4:6]) - mean(x[1:3]), variance = var(x[1:3]) / 3 + var(x[4:6]) / 3)
+}))))
+print(alpha_effects, row.names = FALSE, digits = 3)
+```
+
+Pool the included studies for every index with a random-effects model. A study in which all six samples have the same value has a variance of 0 and cannot be weighted, so it is left out.
+
+```{r step-284}
+alpha_models <- lapply(setNames(names(alpha_metrics), names(alpha_metrics)), function(metric)
+  rma(yi = effect, vi = variance, data = alpha_effects[alpha_effects$metric == metric & alpha_effects$variance > 0, ], method = "REML"))
+meta_alpha <- do.call(rbind, lapply(names(alpha_models), function(metric) { model <- alpha_models[[metric]]
+  data.frame(metric = metric, studies = model$k, estimate = as.numeric(coef(model)), ci_lower = model$ci.lb, ci_upper = model$ci.ub,
+             p_value = model$pval, tau_squared = model$tau2, I_squared = model$I2) }))
+write.csv(meta_alpha, file.path(out_dir, "meta_alpha.csv"), row.names = FALSE)
+print(meta_alpha, row.names = FALSE, digits = 3)
+```
+
+Draw the forest plots of the four indices and save them.
+
+```{r step-285, fig.width=12, fig.height=7.5}
+forest_alpha <- function() {
+  old_par <- par(mfrow = c(2, 2), mar = c(4.5, 2, 3, 2))
+  for (metric in names(alpha_models)) {
+    model <- alpha_models[[metric]]
+    forest(model, slab = alpha_effects$study[alpha_effects$metric == metric & alpha_effects$variance > 0], header = "Study",
+           xlab = "Difference, C2 minus C1", main = alpha_metrics[[metric]], colout = "black",
+           col = condition_colours[[ifelse(coef(model) > 0, "C2", "C1")]], border = "black")
+  }
+  par(old_par)
+}
+forest_alpha()
+png(file.path(out_dir, "meta_alpha_forest.png"), width = 2400, height = 1500, res = 180)
+forest_alpha()
+invisible(dev.off())
+```

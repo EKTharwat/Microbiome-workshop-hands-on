@@ -1,0 +1,12 @@
+# Run this file from the RStudio Console in the workshop project folder.
+if (!file.exists("workflow.Rmd") || !dir.exists("vendor"))
+  stop("Open the workshop folder as an RStudio project before running this script.")
+rscript <- file.path(R.home("bin"), if (.Platform$OS.type == "windows") "Rscript.exe" else "Rscript")
+message("Checking and installing required R packages in a separate R process.")
+status <- system2(rscript, "scripts/install_packages.R")
+if (status != 0) stop("Package installation did not complete. Check the messages above and try again.")
+source("scripts/render_code_only.R", local = TRUE)
+message("Starting a fresh mothur and R analysis. Please keep RStudio open.")
+status <- system2(rscript, "scripts/run_workflow.R")
+if (status != 0) stop("The workflow did not complete. Check the Console and the run's mothur-console.log.")
+message("Finished. Open workflow-results.html and workflow-code.html from the RStudio Files pane.")

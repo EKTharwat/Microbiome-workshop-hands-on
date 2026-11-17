@@ -1,0 +1,14 @@
+Phylum_Actinobacteria	taxonomy	Otu02	Otu06	Otu11	Otu19	Otu20	Otu24	Otu28	Otu29	Otu30
+Phylum_Firmicutes	taxonomy	Otu01	Otu04	Otu05	Otu07	Otu08	Otu09	Otu13	Otu14	Otu15	Otu16	Otu17	Otu22	Otu23	Otu26	Otu27	Otu31	Otu32	Otu33	Otu34
+Phylum_Proteobacteria	taxonomy	Otu03	Otu10	Otu18	Otu21	Otu25
+Class_Bacilli	taxonomy	Otu15	Otu16	Otu23	Otu32	Otu33	Otu34
+Class_Clostridia	taxonomy	Otu04	Otu05	Otu07	Otu08	Otu09	Otu13	Otu14	Otu17	Otu22	Otu26	Otu27	Otu31
+Order_Enterobacteriales	taxonomy	Otu03	Otu18	Otu21	Otu25
+Family_Lachnospiraceae	taxonomy	Otu04	Otu05	Otu09	Otu14	Otu17	Otu22	Otu26
+Family_Ruminococcaceae	taxonomy	Otu07	Otu08	Otu13	Otu27	Otu31
+Family_Streptococcaceae	taxonomy	Otu16	Otu23	Otu32	Otu33	Otu34
+Genus_Butyricicoccus	taxonomy	Otu08	Otu27
+Genus_Enterobacteriaceae_unclassified	taxonomy	Otu18	Otu25
+Genus_Klebsiella	taxonomy	Otu03	Otu21
+Genus_Lachnospiraceae_unclassified	taxonomy	Otu04	Otu14	Otu17	Otu26
+Genus_Ruminococcaceae_unclassified	taxonomy	Otu13	Otu31

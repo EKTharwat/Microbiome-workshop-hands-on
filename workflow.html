@@ -1510,7 +1510,7 @@ is already in the workshop folder (as it is when you knit, or when the
 folder is open as an RStudio project) the second line changes nothing.
 The last line stops with an error if the folder is not the right
 one.</p>
-<pre class="r"><code>workshop_folder &lt;- &quot;~/Documents/Dr_Mysara_Work/Bermingham_micrbiome_workshop/Supervisor_Upload_SideBySide&quot;
+<pre class="r"><code>workshop_folder &lt;- &quot;~/Microbiome-workshop-hands-on&quot;
 if (!file.exists(&quot;workflow.Rmd&quot;)) setwd(workshop_folder)
 stopifnot(file.exists(&quot;workflow.Rmd&quot;), dir.exists(&quot;scripts&quot;), dir.exists(&quot;vendor&quot;))</code></pre>
 <p>Run this one command in RStudio. It installs packages, detects your
@@ -1520,7 +1520,7 @@ anonymized inputs.</p>
 <pre class="r"><code>source(&quot;scripts/prepare_packages.R&quot;)</code></pre>
 <pre><code>## Checking R packages in a separate process. Please keep RStudio open.</code></pre>
 <pre><code>## Package check complete. Detecting your operating system and preparing mothur and the data.</code></pre>
-<pre><code>## Detected Darwin (arm64); mothur and the data are ready in /USER_HOME/Documents/Dr_Mysara_Work/Bermingham_micrbiome_workshop/Supervisor_Upload_SideBySide/runs/teaching-20261116-183841.</code></pre>
+<pre><code>## Detected Darwin (arm64); mothur and the data are ready in runs/teaching-20261116-183841.</code></pre>
 </div>
 <div id="run-mothur-commands-one-by-one" class="section level2">
 <h2>Run mothur commands one by one</h2>
@@ -1608,10 +1608,10 @@ run this complete block.</p>
 ## processors=4
 ## 
 ## Current default directories saved by mothur:
-##  /USER_HOME/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
+##  ~/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
 ## 
 ## 
-## Current working directory: /USER_HOME/Documents/Dr_Mysara_Work/Bermingham_micrbiome_workshop/Supervisor_Upload_SideBySide/runs/teaching-20261116-183841/
+## Current working directory: runs/teaching-20261116-183841/
 ## 
 ## Output File Names: 
 ## current_files.summary
@@ -1650,10 +1650,10 @@ run this complete block.</p>
 ## processors=4
 ## 
 ## Current default directories saved by mothur:
-##  /USER_HOME/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
+##  ~/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
 ## 
 ## 
-## Current working directory: /USER_HOME/Documents/Dr_Mysara_Work/Bermingham_micrbiome_workshop/Supervisor_Upload_SideBySide/runs/teaching-20261116-183841/
+## Current working directory: runs/teaching-20261116-183841/
 ## 
 ## Output File Names: 
 ## current_files.summary
@@ -2063,10 +2063,10 @@ and run this complete block.</p>
 ## processors=4
 ## 
 ## Current default directories saved by mothur:
-##  /USER_HOME/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
+##  ~/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
 ## 
 ## 
-## Current working directory: /USER_HOME/Documents/Dr_Mysara_Work/Bermingham_micrbiome_workshop/Supervisor_Upload_SideBySide/runs/teaching-20261116-183841/
+## Current working directory: runs/teaching-20261116-183841/
 ## 
 ## Output File Names: 
 ## current_files.summary
@@ -2126,10 +2126,10 @@ and run this complete block.</p>
 ## summary=reads.trim.contigs.summary
 ## 
 ## Current default directories saved by mothur:
-##  /USER_HOME/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
+##  ~/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
 ## 
 ## 
-## Current working directory: /USER_HOME/Documents/Dr_Mysara_Work/Bermingham_micrbiome_workshop/Supervisor_Upload_SideBySide/runs/teaching-20261116-183841/
+## Current working directory: runs/teaching-20261116-183841/
 ## 
 ## Output File Names: 
 ## current_files.summary
@@ -2287,10 +2287,10 @@ this complete block.</p>
 ## summary=reads.trim.contigs.summary
 ## 
 ## Current default directories saved by mothur:
-##  /USER_HOME/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
+##  ~/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
 ## 
 ## 
-## Current working directory: /USER_HOME/Documents/Dr_Mysara_Work/Bermingham_micrbiome_workshop/Supervisor_Upload_SideBySide/runs/teaching-20261116-183841/
+## Current working directory: runs/teaching-20261116-183841/
 ## 
 ## Output File Names: 
 ## current_files.summary
@@ -2350,10 +2350,10 @@ and run this complete block.</p>
 ## summary=reads.trim.contigs.good.summary
 ## 
 ## Current default directories saved by mothur:
-##  /USER_HOME/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
+##  ~/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
 ## 
 ## 
-## Current working directory: /USER_HOME/Documents/Dr_Mysara_Work/Bermingham_micrbiome_workshop/Supervisor_Upload_SideBySide/runs/teaching-20261116-183841/
+## Current working directory: runs/teaching-20261116-183841/
 ## 
 ## Output File Names: 
 ## current_files.summary
@@ -2499,10 +2499,10 @@ run this complete block.</p>
 ## summary=reads.trim.contigs.good.summary
 ## 
 ## Current default directories saved by mothur:
-##  /USER_HOME/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
+##  ~/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
 ## 
 ## 
-## Current working directory: /USER_HOME/Documents/Dr_Mysara_Work/Bermingham_micrbiome_workshop/Supervisor_Upload_SideBySide/runs/teaching-20261116-183841/
+## Current working directory: runs/teaching-20261116-183841/
 ## 
 ## Output File Names: 
 ## current_files.summary
@@ -2565,10 +2565,10 @@ and run this complete block.</p>
 ## summary=reads.trim.contigs.good.unique.summary
 ## 
 ## Current default directories saved by mothur:
-##  /USER_HOME/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
+##  ~/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
 ## 
 ## 
-## Current working directory: /USER_HOME/Documents/Dr_Mysara_Work/Bermingham_micrbiome_workshop/Supervisor_Upload_SideBySide/runs/teaching-20261116-183841/
+## Current working directory: runs/teaching-20261116-183841/
 ## 
 ## Output File Names: 
 ## current_files.summary
@@ -2634,10 +2634,10 @@ run this complete block.</p>
 ## summary=reads.trim.contigs.good.unique.summary
 ## 
 ## Current default directories saved by mothur:
-##  /USER_HOME/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
+##  ~/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
 ## 
 ## 
-## Current working directory: /USER_HOME/Documents/Dr_Mysara_Work/Bermingham_micrbiome_workshop/Supervisor_Upload_SideBySide/runs/teaching-20261116-183841/
+## Current working directory: runs/teaching-20261116-183841/
 ## 
 ## Output File Names: 
 ## current_files.summary
@@ -2684,10 +2684,10 @@ run this complete block.</p>
 ## summary=reads.trim.contigs.good.unique.summary
 ## 
 ## Current default directories saved by mothur:
-##  /USER_HOME/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
+##  ~/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
 ## 
 ## 
-## Current working directory: /USER_HOME/Documents/Dr_Mysara_Work/Bermingham_micrbiome_workshop/Supervisor_Upload_SideBySide/runs/teaching-20261116-183841/
+## Current working directory: runs/teaching-20261116-183841/
 ## 
 ## Output File Names: 
 ## current_files.summary
@@ -2746,10 +2746,10 @@ and run this complete block.</p>
 ## summary=silva.v3v4.summary
 ## 
 ## Current default directories saved by mothur:
-##  /USER_HOME/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
+##  ~/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
 ## 
 ## 
-## Current working directory: /USER_HOME/Documents/Dr_Mysara_Work/Bermingham_micrbiome_workshop/Supervisor_Upload_SideBySide/runs/teaching-20261116-183841/
+## Current working directory: runs/teaching-20261116-183841/
 ## 
 ## Output File Names: 
 ## current_files.summary
@@ -2844,10 +2844,10 @@ run this complete block.</p>
 ## summary=silva.v3v4.summary
 ## 
 ## Current default directories saved by mothur:
-##  /USER_HOME/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
+##  ~/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
 ## 
 ## 
-## Current working directory: /USER_HOME/Documents/Dr_Mysara_Work/Bermingham_micrbiome_workshop/Supervisor_Upload_SideBySide/runs/teaching-20261116-183841/
+## Current working directory: runs/teaching-20261116-183841/
 ## 
 ## Output File Names: 
 ## current_files.summary
@@ -2907,10 +2907,10 @@ and run this complete block.</p>
 ## summary=reads.trim.contigs.good.unique.summary
 ## 
 ## Current default directories saved by mothur:
-##  /USER_HOME/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
+##  ~/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
 ## 
 ## 
-## Current working directory: /USER_HOME/Documents/Dr_Mysara_Work/Bermingham_micrbiome_workshop/Supervisor_Upload_SideBySide/runs/teaching-20261116-183841/
+## Current working directory: runs/teaching-20261116-183841/
 ## 
 ## Output File Names: 
 ## current_files.summary
@@ -3012,10 +3012,10 @@ this complete block.</p>
 ## summary=reads.trim.contigs.good.unique.summary
 ## 
 ## Current default directories saved by mothur:
-##  /USER_HOME/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
+##  ~/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
 ## 
 ## 
-## Current working directory: /USER_HOME/Documents/Dr_Mysara_Work/Bermingham_micrbiome_workshop/Supervisor_Upload_SideBySide/runs/teaching-20261116-183841/
+## Current working directory: runs/teaching-20261116-183841/
 ## 
 ## Output File Names: 
 ## current_files.summary
@@ -3076,10 +3076,10 @@ and run this complete block.</p>
 ## summary=reads.trim.contigs.good.unique.good.summary
 ## 
 ## Current default directories saved by mothur:
-##  /USER_HOME/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
+##  ~/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
 ## 
 ## 
-## Current working directory: /USER_HOME/Documents/Dr_Mysara_Work/Bermingham_micrbiome_workshop/Supervisor_Upload_SideBySide/runs/teaching-20261116-183841/
+## Current working directory: runs/teaching-20261116-183841/
 ## 
 ## Output File Names: 
 ## current_files.summary
@@ -3215,10 +3215,10 @@ run this complete block.</p>
 ## summary=reads.trim.contigs.good.unique.good.summary
 ## 
 ## Current default directories saved by mothur:
-##  /USER_HOME/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
+##  ~/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
 ## 
 ## 
-## Current working directory: /USER_HOME/Documents/Dr_Mysara_Work/Bermingham_micrbiome_workshop/Supervisor_Upload_SideBySide/runs/teaching-20261116-183841/
+## Current working directory: runs/teaching-20261116-183841/
 ## 
 ## Output File Names: 
 ## current_files.summary
@@ -3298,10 +3298,10 @@ run this complete block.</p>
 ## summary=reads.trim.contigs.good.unique.good.summary
 ## 
 ## Current default directories saved by mothur:
-##  /USER_HOME/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
+##  ~/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
 ## 
 ## 
-## Current working directory: /USER_HOME/Documents/Dr_Mysara_Work/Bermingham_micrbiome_workshop/Supervisor_Upload_SideBySide/runs/teaching-20261116-183841/
+## Current working directory: runs/teaching-20261116-183841/
 ## 
 ## Output File Names: 
 ## current_files.summary
@@ -3710,10 +3710,10 @@ run this complete block.</p>
 ## summary=reads.trim.contigs.good.unique.good.summary
 ## 
 ## Current default directories saved by mothur:
-##  /USER_HOME/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
+##  ~/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
 ## 
 ## 
-## Current working directory: /USER_HOME/Documents/Dr_Mysara_Work/Bermingham_micrbiome_workshop/Supervisor_Upload_SideBySide/runs/teaching-20261116-183841/
+## Current working directory: runs/teaching-20261116-183841/
 ## 
 ## Output File Names: 
 ## current_files.summary
@@ -4307,10 +4307,10 @@ and run this complete block.</p>
 ## summary=reads.trim.contigs.good.unique.good.summary
 ## 
 ## Current default directories saved by mothur:
-##  /USER_HOME/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
+##  ~/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
 ## 
 ## 
-## Current working directory: /USER_HOME/Documents/Dr_Mysara_Work/Bermingham_micrbiome_workshop/Supervisor_Upload_SideBySide/runs/teaching-20261116-183841/
+## Current working directory: runs/teaching-20261116-183841/
 ## 
 ## Output File Names: 
 ## current_files.summary
@@ -4371,10 +4371,10 @@ and run this complete block.</p>
 ## summary=reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.summary
 ## 
 ## Current default directories saved by mothur:
-##  /USER_HOME/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
+##  ~/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
 ## 
 ## 
-## Current working directory: /USER_HOME/Documents/Dr_Mysara_Work/Bermingham_micrbiome_workshop/Supervisor_Upload_SideBySide/runs/teaching-20261116-183841/
+## Current working directory: runs/teaching-20261116-183841/
 ## 
 ## Output File Names: 
 ## current_files.summary
@@ -4477,10 +4477,10 @@ and run this complete block.</p>
 ## summary=reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.summary
 ## 
 ## Current default directories saved by mothur:
-##  /USER_HOME/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
+##  ~/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
 ## 
 ## 
-## Current working directory: /USER_HOME/Documents/Dr_Mysara_Work/Bermingham_micrbiome_workshop/Supervisor_Upload_SideBySide/runs/teaching-20261116-183841/
+## Current working directory: runs/teaching-20261116-183841/
 ## 
 ## Output File Names: 
 ## current_files.summary
@@ -4528,10 +4528,10 @@ and run this complete block.</p>
 ## summary=reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.summary
 ## 
 ## Current default directories saved by mothur:
-##  /USER_HOME/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
+##  ~/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
 ## 
 ## 
-## Current working directory: /USER_HOME/Documents/Dr_Mysara_Work/Bermingham_micrbiome_workshop/Supervisor_Upload_SideBySide/runs/teaching-20261116-183841/
+## Current working directory: runs/teaching-20261116-183841/
 ## 
 ## Output File Names: 
 ## current_files.summary
@@ -4580,10 +4580,10 @@ run this complete block.</p>
 ## summary=reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.summary
 ## 
 ## Current default directories saved by mothur:
-##  /USER_HOME/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
+##  ~/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
 ## 
 ## 
-## Current working directory: /USER_HOME/Documents/Dr_Mysara_Work/Bermingham_micrbiome_workshop/Supervisor_Upload_SideBySide/runs/teaching-20261116-183841/
+## Current working directory: runs/teaching-20261116-183841/
 ## 
 ## Output File Names: 
 ## current_files.summary
@@ -4634,10 +4634,10 @@ run this complete block.</p>
 ## summary=reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.summary
 ## 
 ## Current default directories saved by mothur:
-##  /USER_HOME/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
+##  ~/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
 ## 
 ## 
-## Current working directory: /USER_HOME/Documents/Dr_Mysara_Work/Bermingham_micrbiome_workshop/Supervisor_Upload_SideBySide/runs/teaching-20261116-183841/
+## Current working directory: runs/teaching-20261116-183841/
 ## 
 ## Output File Names: 
 ## current_files.summary
@@ -4736,10 +4736,10 @@ run this complete block.</p>
 ## summary=reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.summary
 ## 
 ## Current default directories saved by mothur:
-##  /USER_HOME/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
+##  ~/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
 ## 
 ## 
-## Current working directory: /USER_HOME/Documents/Dr_Mysara_Work/Bermingham_micrbiome_workshop/Supervisor_Upload_SideBySide/runs/teaching-20261116-183841/
+## Current working directory: runs/teaching-20261116-183841/
 ## 
 ## Output File Names: 
 ## current_files.summary
@@ -4807,10 +4807,10 @@ this complete block.</p>
 ## summary=reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.summary
 ## 
 ## Current default directories saved by mothur:
-##  /USER_HOME/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
+##  ~/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
 ## 
 ## 
-## Current working directory: /USER_HOME/Documents/Dr_Mysara_Work/Bermingham_micrbiome_workshop/Supervisor_Upload_SideBySide/runs/teaching-20261116-183841/
+## Current working directory: runs/teaching-20261116-183841/
 ## 
 ## Output File Names: 
 ## current_files.summary
@@ -4860,10 +4860,10 @@ run this complete block.</p>
 ## summary=reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.summary
 ## 
 ## Current default directories saved by mothur:
-##  /USER_HOME/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
+##  ~/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
 ## 
 ## 
-## Current working directory: /USER_HOME/Documents/Dr_Mysara_Work/Bermingham_micrbiome_workshop/Supervisor_Upload_SideBySide/runs/teaching-20261116-183841/
+## Current working directory: runs/teaching-20261116-183841/
 ## 
 ## Output File Names: 
 ## current_files.summary
@@ -4915,10 +4915,10 @@ and run this complete block.</p>
 ## summary=reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.summary
 ## 
 ## Current default directories saved by mothur:
-##  /USER_HOME/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
+##  ~/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
 ## 
 ## 
-## Current working directory: /USER_HOME/Documents/Dr_Mysara_Work/Bermingham_micrbiome_workshop/Supervisor_Upload_SideBySide/runs/teaching-20261116-183841/
+## Current working directory: runs/teaching-20261116-183841/
 ## 
 ## Output File Names: 
 ## current_files.summary
@@ -4970,10 +4970,10 @@ run this complete block.</p>
 ## summary=reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.summary
 ## 
 ## Current default directories saved by mothur:
-##  /USER_HOME/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
+##  ~/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
 ## 
 ## 
-## Current working directory: /USER_HOME/Documents/Dr_Mysara_Work/Bermingham_micrbiome_workshop/Supervisor_Upload_SideBySide/runs/teaching-20261116-183841/
+## Current working directory: runs/teaching-20261116-183841/
 ## 
 ## Output File Names: 
 ## current_files.summary
@@ -5025,10 +5025,10 @@ and run this complete block.</p>
 ## summary=reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.summary
 ## 
 ## Current default directories saved by mothur:
-##  /USER_HOME/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
+##  ~/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
 ## 
 ## 
-## Current working directory: /USER_HOME/Documents/Dr_Mysara_Work/Bermingham_micrbiome_workshop/Supervisor_Upload_SideBySide/runs/teaching-20261116-183841/
+## Current working directory: runs/teaching-20261116-183841/
 ## 
 ## Output File Names: 
 ## current_files.summary
@@ -5088,10 +5088,10 @@ run this complete block.</p>
 ## summary=reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.summary
 ## 
 ## Current default directories saved by mothur:
-##  /USER_HOME/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
+##  ~/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
 ## 
 ## 
-## Current working directory: /USER_HOME/Documents/Dr_Mysara_Work/Bermingham_micrbiome_workshop/Supervisor_Upload_SideBySide/runs/teaching-20261116-183841/
+## Current working directory: runs/teaching-20261116-183841/
 ## 
 ## Output File Names: 
 ## current_files.summary
@@ -5144,10 +5144,10 @@ run this complete block.</p>
 ## summary=reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.summary
 ## 
 ## Current default directories saved by mothur:
-##  /USER_HOME/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
+##  ~/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
 ## 
 ## 
-## Current working directory: /USER_HOME/Documents/Dr_Mysara_Work/Bermingham_micrbiome_workshop/Supervisor_Upload_SideBySide/runs/teaching-20261116-183841/
+## Current working directory: runs/teaching-20261116-183841/
 ## 
 ## Output File Names: 
 ## current_files.summary
@@ -5211,10 +5211,10 @@ and run this complete block.</p>
 ## summary=reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.summary
 ## 
 ## Current default directories saved by mothur:
-##  /USER_HOME/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
+##  ~/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
 ## 
 ## 
-## Current working directory: /USER_HOME/Documents/Dr_Mysara_Work/Bermingham_micrbiome_workshop/Supervisor_Upload_SideBySide/runs/teaching-20261116-183841/
+## Current working directory: runs/teaching-20261116-183841/
 ## 
 ## Output File Names: 
 ## current_files.summary
@@ -5300,10 +5300,10 @@ and run this complete block.</p>
 ## summary=reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.summary
 ## 
 ## Current default directories saved by mothur:
-##  /USER_HOME/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
+##  ~/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
 ## 
 ## 
-## Current working directory: /USER_HOME/Documents/Dr_Mysara_Work/Bermingham_micrbiome_workshop/Supervisor_Upload_SideBySide/runs/teaching-20261116-183841/
+## Current working directory: runs/teaching-20261116-183841/
 ## 
 ## Output File Names: 
 ## current_files.summary
@@ -5357,10 +5357,10 @@ run this complete block.</p>
 ## summary=reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.summary
 ## 
 ## Current default directories saved by mothur:
-##  /USER_HOME/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
+##  ~/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
 ## 
 ## 
-## Current working directory: /USER_HOME/Documents/Dr_Mysara_Work/Bermingham_micrbiome_workshop/Supervisor_Upload_SideBySide/runs/teaching-20261116-183841/
+## Current working directory: runs/teaching-20261116-183841/
 ## 
 ## Output File Names: 
 ## current_files.summary
@@ -5536,10 +5536,10 @@ Copy and run this complete block.</p>
 ## summary=reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.summary
 ## 
 ## Current default directories saved by mothur:
-##  /USER_HOME/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
+##  ~/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
 ## 
 ## 
-## Current working directory: /USER_HOME/Documents/Dr_Mysara_Work/Bermingham_micrbiome_workshop/Supervisor_Upload_SideBySide/runs/teaching-20261116-183841/
+## Current working directory: runs/teaching-20261116-183841/
 ## 
 ## Output File Names: 
 ## current_files.summary
@@ -5713,10 +5713,10 @@ and run this complete block.</p>
 ## summary=reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.summary
 ## 
 ## Current default directories saved by mothur:
-##  /USER_HOME/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
+##  ~/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
 ## 
 ## 
-## Current working directory: /USER_HOME/Documents/Dr_Mysara_Work/Bermingham_micrbiome_workshop/Supervisor_Upload_SideBySide/runs/teaching-20261116-183841/
+## Current working directory: runs/teaching-20261116-183841/
 ## 
 ## Output File Names: 
 ## current_files.summary
@@ -5792,10 +5792,10 @@ run this complete block.</p>
 ## summary=reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.summary
 ## 
 ## Current default directories saved by mothur:
-##  /USER_HOME/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
+##  ~/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
 ## 
 ## 
-## Current working directory: /USER_HOME/Documents/Dr_Mysara_Work/Bermingham_micrbiome_workshop/Supervisor_Upload_SideBySide/runs/teaching-20261116-183841/
+## Current working directory: runs/teaching-20261116-183841/
 ## 
 ## Output File Names: 
 ## current_files.summary
@@ -5854,10 +5854,10 @@ this complete block.</p>
 ## summary=reads.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.summary
 ## 
 ## Current default directories saved by mothur:
-##  /USER_HOME/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
+##  ~/Library/Caches/org.R-project.R/R/microbiome-workshop/mothur-runtime-9287b53050b/mothur/
 ## 
 ## 
-## Current working directory: /USER_HOME/Documents/Dr_Mysara_Work/Bermingham_micrbiome_workshop/Supervisor_Upload_SideBySide/runs/teaching-20261116-183841/
+## Current working directory: runs/teaching-20261116-183841/
 ## 
 ## Output File Names: 
 ## current_files.summary
@@ -5962,11 +5962,7 @@ exploratory.</p>
 <h3>Settings, colours and one table per study</h3>
 <p><strong>The idea.</strong> The five studies are first checked with
 MetaQC; every later figure shows the studies that pass next to each
-other, with the two conditions inside each study. The colours and the
-plain black-framed panels follow the figures of the reference paper
-(Marzouk <em>et al.</em>, <em>npj Parkinson&#39;s Disease</em> 2025): salmon
-for the first condition, teal for the second, and olive for taxa that
-are not significant.</p>
+other, with the two conditions inside each study. The panels use salmon for the first condition, teal for the second, and olive for taxa that are not significant.</p>
 <p>All packages were loaded once, in a single cell earlier on this page,
 so no <code>library()</code> call is needed here.</p>
 <p>List the five studies and set the colours used in every figure.

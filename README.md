@@ -1,6 +1,6 @@
 # Microbiome hands-on workshop
 
-This repository contains the microbiome workshop material. Open [the commands page](workflow-code-side-by-side.html) or [the results page](workflow-results-side-by-side.html). The complete expanded mothur runs are available as [private release downloads](RUN_ARCHIVES.md).
+This repository contains the microbiome workshop material. Open [the commands page](workflow-code-side-by-side.html) or [the results page](workflow-results-side-by-side.html). Download the completed mothur runs from [GitHub Releases](https://github.com/EKTharwat/Microbiome-workshop-hands-on/releases/tag/supervisor-material-2026-11-17) or see [the archive guide](RUN_ARCHIVES.md).
 
 This repository contains 30 pseudonymized paired-read samples. Each of five study groups, `G1` through `G5`, contains three `C1` and three `C2` samples. The sample identifiers are neutral and are used consistently in filenames, metadata, analyses and plots.
 
